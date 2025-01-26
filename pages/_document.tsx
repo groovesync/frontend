@@ -5,9 +5,9 @@ export default function Document() {
     <Html lang="en">
       <Head>
         <meta charSet="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <meta name="description" content="My awesome Next.js app" />
-        <link rel="icon" href="/favicon.ico" />
+        <meta name="description" content="Groovesync: Amplify your sounds" />
+        <link rel="icon" href="/frenchlilac.svg" />
+        <title>GrooveSync</title>
 
         {/* Google Fonts */}
         <link rel="preconnect" href="https://fonts.googleapis.com"/>
