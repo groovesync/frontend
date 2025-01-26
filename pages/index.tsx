@@ -8,6 +8,7 @@ import {
   Divider,
   useToast,
 } from "@chakra-ui/react";
+import YourObssessions from "../components/YourObssessions/YourObssessions";
 
 export default function Home() {
   const toast = useToast();
@@ -22,8 +23,10 @@ export default function Home() {
     });
   };
 
+  const rosalia = "https://s2-g1.glbimg.com/hkfGoM2o8Pnbocz_-Z4X9SQggeI=/0x0:4200x2800/924x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2023/2/u/HH2bh4RTSFiOjjuAvDgA/rosalia.jpg"
+
   return (
-    <Box p={8} maxW="600px" mx="auto">
+    <Box p={8} mx="auto">
       <Heading mb={4} textAlign="center" color="blue.500">
         Testando o Chakra UI
       </Heading>
@@ -46,6 +49,8 @@ export default function Home() {
           de componentes do Chakra UI.
         </Text>
       </Stack>
+
+      <YourObssessions mainImage={rosalia} secondaryImages={[rosalia, rosalia, rosalia, rosalia]}/>
     </Box>
   );
 }
