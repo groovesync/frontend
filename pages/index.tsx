@@ -1,6 +1,7 @@
 import {
   Box
 } from "@chakra-ui/react";
+import Head from "next/head";
 import { useRouter } from "next/router";
 import CurrentlyPlaying from "../components/CurrentlyPlaying/CurrentlyPlaying";
 import Navbar from "../components/Navbar/Navbar";
@@ -17,6 +18,12 @@ export default function Home() {
   
   return (
     <Box px={"180px"} py={"40px"} mx="auto">
+      <Head>
+        <title>
+          Home
+        </title>
+        
+      </Head>
       <Navbar />
 
       <CurrentlyPlaying albumCoverURL={beatlesAlbum} artistName="The Beatles" songTitle="Sgt. Pepper's Lonely Hearts Club Band" />

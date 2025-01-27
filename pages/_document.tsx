@@ -7,7 +7,6 @@ export default function Document() {
         <meta charSet="UTF-8" />
         <meta name="description" content="Groovesync: Amplify your sounds" />
         <link rel="icon" href="/frenchlilac.svg" />
-        <title>GrooveSync</title>
 
         {/* Google Fonts */}
         <link rel="preconnect" href="https://fonts.googleapis.com"/>
