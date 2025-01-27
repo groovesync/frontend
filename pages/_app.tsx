@@ -1,6 +1,7 @@
 import { ChakraProvider } from "@chakra-ui/react";
 import { AppProps } from "next/app";
 import theme from "../theme";
+import "@fontsource/ibm-plex-sans";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
