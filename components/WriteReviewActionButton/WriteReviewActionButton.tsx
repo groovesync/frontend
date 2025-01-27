@@ -27,7 +27,7 @@ const WriteReviewActionButton = () => {
 
 const MusicIcon = () => {
     return (
-        <Image src={"/assets/Music.svg"}/>
+        <Image alt="Music icon" src={"/assets/Music.svg"}/>
     )
 }
 
