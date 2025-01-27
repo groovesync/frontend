@@ -23,7 +23,7 @@ const CurrentlyPlaying: React.FC<CurrentlyPlayingProps> = ({
   return (
     <Box>
         <Heading color={"brand.500"} fontSize="32px" fontWeight="bold" fontStyle="italic" mb="15px">
-            What you're up to right now
+            What you&apos;re up to right now
         </Heading>
 
         <Box
