@@ -64,7 +64,7 @@ export default function Profile() {
 
         <Flex gap="40px" flexFlow={"wrap"}>
             {reviews.slice(0, visibleReviews).map((review) => 
-                <AlbumCoverReview coverURL={review.coverURL} pageURL={"/album/"+review.id} rating={review.rating} title={review.title} year={review.year}/>
+                <AlbumCoverReview key={review.id} coverURL={review.coverURL} pageURL={"/album/"+review.id} rating={review.rating} title={review.title} year={review.year}/>
             )}
         </Flex>
 
@@ -82,7 +82,7 @@ export default function Profile() {
 
         <Flex gap="40px" flexFlow={"wrap"}>
             {favorites.slice(0, visibleFavorites).map((favorite) => 
-                <AlbumCoverReview coverURL={favorite.coverURL} pageURL={"/album/"+favorite.id} rating={favorite.rating} title={favorite.title} year={favorite.year}/>
+                <AlbumCoverReview key={favorite.id} coverURL={favorite.coverURL} pageURL={"/album/"+favorite.id} rating={favorite.rating} title={favorite.title} year={favorite.year}/>
             )}
         </Flex>
 
