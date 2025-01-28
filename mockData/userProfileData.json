@@ -1,0 +1,34 @@
+{
+    "name": "Abed Nadir",
+    "profilePictureURL":
+      "https://upload.wikimedia.org/wikipedia/en/thumb/a/a1/Abed_Nadir_%28Community%29.jpg/220px-Abed_Nadir_%28Community%29.jpg",
+    "spotifyProfile": "https://open.spotify.com/user/abednadir",
+    "reviews": 15,
+    "followers": [
+      { "name": "Follower 1", "profileURL": "https://via.placeholder.com/50", "profilePictureURL": "https://via.placeholder.com/50"},
+      { "name": "Follower 2", "profileURL": "https://via.placeholder.com/50", "profilePictureURL": "https://via.placeholder.com/50"},
+      { "name": "Follower 1", "profileURL": "https://via.placeholder.com/50", "profilePictureURL": "https://via.placeholder.com/50"},
+      { "name": "Follower 2", "profileURL": "https://via.placeholder.com/50", "profilePictureURL": "https://via.placeholder.com/50"},{ "name": "Follower 1", "profileURL": "https://via.placeholder.com/50", "profilePictureURL": "https://via.placeholder.com/50"},
+      { "name": "Follower 2", "profileURL": "https://via.placeholder.com/50", "profilePictureURL": "https://via.placeholder.com/50"},{ "name": "Follower 1", "profileURL": "https://via.placeholder.com/50", "profilePictureURL": "https://via.placeholder.com/50"},
+      { "name": "Follower 2", "profileURL": "https://via.placeholder.com/50", "profilePictureURL": "https://via.placeholder.com/50"},{ "name": "Follower 1", "profileURL": "https://via.placeholder.com/50", "profilePictureURL": "https://via.placeholder.com/50"},
+      { "name": "Follower 2", "profileURL": "https://via.placeholder.com/50", "profilePictureURL": "https://via.placeholder.com/50"},{ "name": "Follower 1", "profileURL": "https://via.placeholder.com/50", "profilePictureURL": "https://via.placeholder.com/50"},
+      { "name": "Follower 2", "profileURL": "https://via.placeholder.com/50", "profilePictureURL": "https://via.placeholder.com/50"},{ "name": "Follower 1", "profileURL": "https://via.placeholder.com/50", "profilePictureURL": "https://via.placeholder.com/50"},
+      { "name": "Follower 2", "profileURL": "https://via.placeholder.com/50", "profilePictureURL": "https://via.placeholder.com/50"},{ "name": "Follower 1", "profileURL": "https://via.placeholder.com/50", "profilePictureURL": "https://via.placeholder.com/50"},
+      { "name": "Follower 2", "profileURL": "https://via.placeholder.com/50", "profilePictureURL": "https://via.placeholder.com/50"},{ "name": "Follower 1", "profileURL": "https://via.placeholder.com/50", "profilePictureURL": "https://via.placeholder.com/50"},
+      { "name": "Follower 2", "profileURL": "https://via.placeholder.com/50", "profilePictureURL": "https://via.placeholder.com/50"},{ "name": "Follower 1", "profileURL": "https://via.placeholder.com/50", "profilePictureURL": "https://via.placeholder.com/50"},
+      { "name": "Follower 2", "profileURL": "https://via.placeholder.com/50", "profilePictureURL": "https://via.placeholder.com/50"},{ "name": "Follower 1", "profileURL": "https://via.placeholder.com/50", "profilePictureURL": "https://via.placeholder.com/50"},
+      { "name": "Follower 2", "profileURL": "https://via.placeholder.com/50", "profilePictureURL": "https://via.placeholder.com/50"},{ "name": "Follower 1", "profileURL": "https://via.placeholder.com/50", "profilePictureURL": "https://via.placeholder.com/50"},
+      { "name": "Follower 2", "profileURL": "https://via.placeholder.com/50", "profilePictureURL": "https://via.placeholder.com/50"},{ "name": "Follower 1", "profileURL": "https://via.placeholder.com/50", "profilePictureURL": "https://via.placeholder.com/50"},
+      { "name": "Follower 2", "profileURL": "https://via.placeholder.com/50", "profilePictureURL": "https://via.placeholder.com/50"},{ "name": "Follower 1", "profileURL": "https://via.placeholder.com/50", "profilePictureURL": "https://via.placeholder.com/50"},
+      { "name": "Follower 2", "profileURL": "https://via.placeholder.com/50", "profilePictureURL": "https://via.placeholder.com/50"},{ "name": "Follower 1", "profileURL": "https://via.placeholder.com/50", "profilePictureURL": "https://via.placeholder.com/50"},
+      { "name": "Follower 2", "profileURL": "https://via.placeholder.com/50", "profilePictureURL": "https://via.placeholder.com/50"},{ "name": "Follower 1", "profileURL": "https://via.placeholder.com/50", "profilePictureURL": "https://via.placeholder.com/50"},
+      { "name": "Follower 2", "profileURL": "https://via.placeholder.com/50", "profilePictureURL": "https://via.placeholder.com/50"},{ "name": "Follower 1", "profileURL": "https://via.placeholder.com/50", "profilePictureURL": "https://via.placeholder.com/50"},
+      { "name": "Follower 2", "profileURL": "https://via.placeholder.com/50", "profilePictureURL": "https://via.placeholder.com/50"},{ "name": "Follower 1", "profileURL": "https://via.placeholder.com/50", "profilePictureURL": "https://via.placeholder.com/50"},
+      { "name": "Follower 2", "profileURL": "https://via.placeholder.com/50", "profilePictureURL": "https://via.placeholder.com/50"},{ "name": "Follower 1", "profileURL": "https://via.placeholder.com/50", "profilePictureURL": "https://via.placeholder.com/50"},
+      { "name": "Follower 2", "profileURL": "https://via.placeholder.com/50", "profilePictureURL": "https://via.placeholder.com/50"}
+    ],
+    "following": [
+      { "name": "Following 1", "profileURL": "https://via.placeholder.com/50", "profilePictureURL": "https://via.placeholder.com/50" },
+      { "name": "Following 2", "profileURL": "https://via.placeholder.com/50", "profilePictureURL": "https://via.placeholder.com/50" }
+    ]
+}

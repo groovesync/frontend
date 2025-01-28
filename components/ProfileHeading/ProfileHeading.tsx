@@ -1,19 +1,23 @@
-import { Box, Flex, Text, Avatar, Button, Link } from "@chakra-ui/react";
+import { Box, Flex, Text, Avatar, Link, useDisclosure, Image } from "@chakra-ui/react";
+import { useState } from "react";
+import FollowersModal from "../FollowersModal/FollowersModal";
 import OpenSpotifyButton from "../OpenSpotifyButton/OpenSpotifyButton";
+import userProfileData from "../../mockData/userProfileData.json"
 
 export default function ProfileHeading() {
 
-  const user = {
-    name: "Abed Nadir",
-    avatarURL:
-      "https://upload.wikimedia.org/wikipedia/en/thumb/a/a1/Abed_Nadir_%28Community%29.jpg/220px-Abed_Nadir_%28Community%29.jpg",
-    spotifyProfile: "https://open.spotify.com/user/abednadir",
-    reviews: 15,
-    followers: 33,
-    following: 56,
-  };
+  const {isOpen, onOpen, onClose} = useDisclosure()
+  const [modalType, setModalType] = useState<"followers"|"following">("followers")
+
+  const user = userProfileData
+
+  const openModal = (type: "followers" | "following") => {
+    setModalType(type)
+    onOpen()
+  }
 
   return (
+    <>
     <Flex
       align="center"
       justify="space-between"
@@ -22,7 +26,7 @@ export default function ProfileHeading() {
     >
       <Flex align="center">
         
-        <Avatar src={user.avatarURL} w="200px" h="200px" mr={4} />
+        <Avatar src={user.profilePictureURL} w="200px" h="200px" mr={4} />
 
         <Box
             display={"flex"}
@@ -37,21 +41,25 @@ export default function ProfileHeading() {
           </Text>
 
           <Text fontSize="16px" color="brand.500">
-            <Link href="#" fontWeight="reguçar" mr={2}>
-              {user.reviews} reviews
-            </Link>
-            •
-            <Link href="/followers" fontWeight="regular" mx={2}>
-              {user.followers} followers
-            </Link>
-            •
-            <Link href="/following" fontWeight="regular" ml={2}>
-              {user.following} following
-            </Link>
+              <Link href="#" fontWeight="regular" mr={2}>
+                {user.reviews} reviews
+              </Link>
+              •
+              <Link href="#" fontWeight="regular" mx={2} onClick={() => openModal("followers")}>
+                {user.followers.length} followers
+              </Link>
+              •
+              <Link href="#" fontWeight="regular" ml={2} onClick={() => openModal("following")}>
+                {user.following.length} following
+              </Link>
           </Text>
         </Box>
       </Flex>
-
     </Flex>
+
+    <FollowersModal isOpen={isOpen} onClose={onClose} onOpen={onOpen} modalType={modalType} userFollowers={user.followers} userFollowing={user.following}/>
+    </>
   );
 }
+
+
