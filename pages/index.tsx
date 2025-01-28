@@ -1,5 +1,5 @@
 import {
-  Box
+  Box, Divider, Flex
 } from "@chakra-ui/react";
 import Head from "next/head";
 import { useRouter } from "next/router";
@@ -26,9 +26,22 @@ export default function Home() {
       </Head>
       <Navbar />
 
-      <CurrentlyPlaying albumCoverURL={beatlesAlbum} artistName="The Beatles" songTitle="Sgt. Pepper's Lonely Hearts Club Band" />
+      <Flex justifyContent="space-between" alignItems="flex-start">
+        <Box flex="1" mr={4}>
+          <CurrentlyPlaying
+            albumCoverURL={beatlesAlbum}
+            artistName="The Beatles"
+            songTitle="Sgt. Pepper's Lonely Hearts Club Band"
+          />
+        </Box>
 
-      <YourObssessions mainImage={rosalia} secondaryImages={[charli, djavan, beatles, lorde]}/>
+        <Box flex="1" ml={4}>
+          <YourObssessions
+            mainImage={rosalia}
+            secondaryImages={[charli, djavan, beatles, lorde]}
+          />
+        </Box>
+      </Flex>
       
     </Box>
   );
