@@ -39,16 +39,16 @@ const PopularWithFriends: React.FC = () => {
         position="relative"
         borderRadius="lg"
         boxShadow="sm"
-        py={6} // Adiciona mais padding vertical
+        py={6} 
         css={{
           ".slick-dots": {
-            bottom: "-1.2em", // Ajusta a posição para mais espaço
+            bottom: "-1.2em", 
           },
           ".slick-dots li button:before": {
-            color: "#4A90E2", // Personaliza a cor das bolinhas
+            color: "#4A90E2", 
           },
           ".slick-dots li.slick-active button:before": {
-            color: "#1C4E80", // Cor para a bolinha ativa
+            color: "#1C4E80", 
           },
         }}
       >
@@ -63,14 +63,15 @@ const PopularWithFriends: React.FC = () => {
               textAlign="center"
               mx={2}
             >
-              <Image
+             <Image
                 src={item.coverURL}
                 alt={item.title}
                 boxSize="100px"
-                borderRadius="lg"
+                style={{ borderRadius: "12px" }}
                 objectFit="cover"
                 mb={2}
               />
+
               <Text fontWeight="medium" fontSize="lg">
                 {item.title}
               </Text>
