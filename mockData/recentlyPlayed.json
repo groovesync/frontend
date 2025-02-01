@@ -1,0 +1,23 @@
+[
+    {
+      "trackName": "2 é demais",
+      "artistName": "Belchior",
+      "albumCoverURL": "https://i.scdn.co/image/ab67616d0000b27300d3395dd09bc957d6b89853"
+    },
+    {
+      "trackName": "Ave Sangria",
+      "artistName": "Ave Sangria",
+      "albumCoverURL": "https://miro.medium.com/v2/resize:fit:480/1*OCxWBJVN3q6_ejzzstJFTQ.jpeg"
+    },
+    {
+        "trackName": "Hotel California",
+        "artistName": "Eagles",
+        "albumCoverURL": "https://upload.wikimedia.org/wikipedia/en/4/49/Hotelcalifornia.jpg"
+      },
+    {
+      "trackName": "Thriller",
+      "artistName": "Michael Jackson",
+      "albumCoverURL": "https://upload.wikimedia.org/wikipedia/en/5/55/Michael_Jackson_-_Thriller.png"
+    }
+  ]
+  
