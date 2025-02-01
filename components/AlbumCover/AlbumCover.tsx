@@ -1,9 +1,7 @@
-import { Box, Flex, HStack, Image, Text, Icon } from "@chakra-ui/react";
-import Link from "next/link";
-import React from "react";
-import { Rating } from "../Rating/Rating";
+import { Box, Image, Text } from "@chakra-ui/react"
+import Link from "next/link"
 
-const AlbumCoverReview: React.FC<{title: string, year: number, rating: number, coverURL: string, pageURL: string}> = ({title, year, rating, coverURL, pageURL}) => {
+const AlbumCover: React.FC<{title: string, year: number, coverURL: string, pageURL: string}> = ({title, year, coverURL, pageURL}) => {
     return (
         <Box
         width="200px"
@@ -26,14 +24,10 @@ const AlbumCoverReview: React.FC<{title: string, year: number, rating: number, c
                 {title}
                 </Text>
 
-                <Flex fontSize="16px" color="brand.500" mt={1}>
                 <Text mr={2}>{year}</Text>
-                <Text mr={2}>•</Text>
-                <Rating value={rating} readOnly/>
-                </Flex>
             </Box>
         </Box>
     )
 }
 
-export default AlbumCoverReview
+export default AlbumCover
