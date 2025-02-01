@@ -15,8 +15,8 @@ const RecentlyPlayed = () => {
               <Image
                 src={track.albumCoverURL}
                 alt={track.trackName}
-                boxSize="50px"
-                borderRadius="md"
+                boxSize="40px"
+                borderRadius="3px"
                 objectFit="cover"
               />
               <VStack align="start" spacing={0}>

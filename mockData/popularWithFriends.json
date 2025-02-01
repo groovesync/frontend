@@ -2,22 +2,62 @@
     {
       "title": "Melodrama",
       "year": 2017,
-      "coverURL": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT0_r4fY65grwDbZiINaQ26MCjYABAwpdVO8Q&s"
+      "coverURL": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT0_r4fY65grwDbZiINaQ26MCjYABAwpdVO8Q&s",
+      "id": "128203", 
+      "user": {
+        "profilePictureURL": "https://t3.ftcdn.net/jpg/02/99/04/20/360_F_299042079_vGBD7wIlSeNl7vOevWHiL93G4koMM967.jpg",
+        "rating": 5
+      }
     },
     {
       "title": "Rumors",
       "year": 1977,
-      "coverURL": "https://i.scdn.co/image/ab67616d0000b27357df7ce0eac715cf70e519a7"
+      "coverURL": "https://i.scdn.co/image/ab67616d0000b27357df7ce0eac715cf70e519a7",
+      "id": "128203", 
+      "user": {
+        "profilePictureURL": "https://cdn2.psychologytoday.com/assets/styles/manual_crop_1_1_1200x1200/public/field_blog_entry_images/2018-09/shutterstock_648907024.jpg?itok=1-9sfjwH",
+        "rating": 4
+      }
     },
     {
       "title": "Abbey Road",
       "year": 1969,
-      "coverURL": "https://upload.wikimedia.org/wikipedia/en/4/42/Beatles_-_Abbey_Road.jpg"
+      "coverURL": "https://upload.wikimedia.org/wikipedia/en/4/42/Beatles_-_Abbey_Road.jpg",
+      "id": "128203", 
+      "user": {
+        "profilePictureURL": "https://static.vecteezy.com/ti/fotos-gratis/p1/26408485-homem-estilo-de-vida-retrato-hipster-serio-camiseta-isolado-pessoa-branco-fundo-americano-sorrir-confiante-moda-foto.jpg",
+        "rating": 4
+      }
     },
     {
       "title": "Thriller",
       "year": 1982,
-      "coverURL": "https://upload.wikimedia.org/wikipedia/en/5/55/Michael_Jackson_-_Thriller.png"
+      "coverURL": "https://upload.wikimedia.org/wikipedia/en/5/55/Michael_Jackson_-_Thriller.png",
+      "id": "128203", 
+      "user": {
+        "profilePictureURL": "https://plus.unsplash.com/premium_photo-1690579805307-7ec030c75543?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cGVyc29uJTIwaWNvbnxlbnwwfHwwfHx8MA%3D%3D",
+        "rating": 5
+      }
+    },
+    {
+      "title": "2 é demais",
+      "year": 1982,
+      "coverURL": "https://i.scdn.co/image/ab67616d0000b27300d3395dd09bc957d6b89853",
+      "id": "128203", 
+      "user": {
+        "profilePictureURL": "https://images.healthshots.com/healthshots/en/uploads/2020/12/08182549/positive-person.jpg",
+        "rating": 2
+      }
+    },
+    {
+      "title": "Ave Sangria",
+      "year": 1974,
+      "coverURL": "https://miro.medium.com/v2/resize:fit:480/1*OCxWBJVN3q6_ejzzstJFTQ.jpeg",
+      "id": "128203", 
+      "user": {
+        "profilePictureURL": "https://austinmonthly.wppcdn.com/wp-content/uploads/2023/10/ALICIA-ROTH-WEIGEL-Author-Photo_credit-Tanialee-Gonzalez-1-e1697746464391.jpg",
+        "rating": 4
+      }
     }
   ]
   

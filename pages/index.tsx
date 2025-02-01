@@ -10,6 +10,7 @@ import PopularWithFriends from "../components/PopularWithFriends/PopularWithFrie
 import RecentlyPlayed from "../components/RecentlyPlayed/RecentlyPlayed";
 import YourObssessions from "../components/YourObssessions/YourObssessions";
 import GetInSync from "../components/GetInSync/GetInSync";
+import DiscoverNewAlbums from "../components/DiscoverNewAlbums/DiscoverNewAlbums";
 
 export default function Home() {
   const rosalia =
@@ -40,6 +41,7 @@ export default function Home() {
             songTitle="Sgt. Pepper's Lonely Hearts Club Band"
           />
           <PopularWithFriends />
+          <DiscoverNewAlbums />
         </Box>
 
         <Divider
