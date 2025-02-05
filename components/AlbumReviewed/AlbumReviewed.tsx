@@ -1,31 +1,116 @@
-import { Box, Text, VStack, Image, Button, HStack } from "@chakra-ui/react";
-import albums from "../../mockData/albums.json";
-
+import React, { useState } from "react";
+import {
+  Box,
+  Text,
+  VStack,
+  Image,
+  Button,
+  HStack,
+} from "@chakra-ui/react";
+import HomeButton from "../HomeButton/HomeButton";
+import UserProfileIcon from "../UserProfileIcon/UserProfileIcon";
+import { Rating } from "../Rating/Rating";
 
 const AlbumReviewed = ({ album }) => {
+  const [selectedRating, setSelectedRating] = useState(4); // Mock da avaliação do usuário
+
+  const reviews = [
+    { name: "Lucas de Medeiros", rating: 5, comment: "An amazing album." },
+    { name: "Sabrina Barbosa", rating: 4, comment: "Loved the sound!" },
+    { name: "Melissa Marques", rating: 3, comment: "Good but not groundbreaking." },
+  ];
+
+  const overallRating =
+    reviews.length > 0
+      ? (reviews.reduce((acc, review) => acc + review.rating, 0) / reviews.length).toFixed(1)
+      : "Not Rated Yet";
+
+  const handleRatingChange = (value) => {
+    setSelectedRating(value);
+  };
+
   return (
-    <Box px={8} py={4}>
-      <HStack spacing={6} align="start">
+    <Box>
+      {/* Header Section */}
+      <HStack justify="space-between" px={8} py={4} borderBottom="1px solid #E2E8F0">
+        <HomeButton />
+        <UserProfileIcon />
+      </HStack>
+
+      {/* Album Details */}
+      <HStack align="center" spacing={8} mt={8} px={8}>
         <Image
           src={album.coverURL}
           alt={album.title}
-          boxSize="150px"
+          boxSize="250px"
           borderRadius="md"
-          objectFit="cover"
         />
-        <VStack align="start" spacing={1}>
-          <Text fontSize="2xl" fontWeight="bold" fontStyle="italic">
+
+        <VStack align="flex-start" spacing={4}>
+          <Text fontSize="4xl" fontWeight="bold" fontStyle="italic">
             {album.title}
           </Text>
-          <Text fontSize="lg" color="gray.500">
-            {album.artist} • {album.year}
+          <Text fontSize="lg" color="gray.500" fontStyle="italic">
+            {album.artist}
           </Text>
-          <Button colorScheme="blue" size="sm">Listen on Spotify</Button>
+
+          <Button
+            as="a"
+            href="https://open.spotify.com"
+            colorScheme="teal"
+            variant="outline"
+            borderRadius="full"
+            size="md"
+          >
+            Listen on Spotify
+          </Button>
+
+          <Box mt={4}>
+            <Text fontWeight="bold" fontSize="xl">
+              Overall Rating
+            </Text>
+            <Text fontSize="2xl" color="blue.500" fontWeight="bold">
+              {overallRating} out of 5
+            </Text>
+
+            <Box mt={4}>
+              <Text fontWeight="bold" fontSize="xl">
+                Your Rating
+              </Text>
+              <HStack align="center" spacing={2}>
+                <Rating value={selectedRating} onChange={handleRatingChange} />
+                <Text fontSize="lg" fontWeight="bold" color="gray.600">
+                  {selectedRating} out of 5
+                </Text>
+              </HStack>
+            </Box>
+          </Box>
         </VStack>
       </HStack>
-      <Box mt={4}>
-        <Text fontSize="lg" fontWeight="bold">Overall rating</Text>
-        <Text fontSize="2xl" color="blue.500">{album.overallRating} out of 5</Text>
+
+      {/* Reviews Section */}
+      <Box mt={8} px={8}>
+        <Text fontSize="2xl" fontWeight="bold" mb={4}>
+          Reviews
+        </Text>
+        {reviews.map((review, index) => (
+          <Box
+            key={index}
+            p={4}
+            bg="#F7FAFC"
+            borderRadius="md"
+            boxShadow="sm"
+            mb={4}
+          >
+            <HStack justify="space-between">
+              <Text fontWeight="bold" fontSize="lg">
+                {review.name}
+              </Text>
+              <Rating value={review.rating} />
+            </HStack>
+            <Text mt={2}>{review.comment}</Text>
+          </Box>
+        ))}
       </Box>
     </Box>
   );

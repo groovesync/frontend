@@ -60,31 +60,32 @@ const DiscoverNewAlbums: React.FC = () => {
         <Slider {...settings}>
           {mockData.map((item, index) => (
             <Box
-              as={Link}
-              href={item.id}
-              key={index}
-              bg="white"
-              p={4}
-              borderRadius="md"
-              boxShadow="sm"
-              textAlign="center"
-              mx={2}
-            >
-              <Image
-                src={item.coverURL}
-                alt={item.title}
-                boxSize="100px"
-                style={{ borderRadius: "12px" }}
-                objectFit="cover"
-                mb={2}
-              />
-              <Text fontWeight="medium" fontSize="lg" color="brand.500">
-                {truncateText(item.title, 10)}
-              </Text>
-              <Text fontSize="sm" fontStyle="italic" color="brand.500">
-                {truncateText(item.artist, 10)}
-              </Text>
-            </Box>
+            as={Link}
+            href={item.isReviewed ? `/album-reviewed/${item.id}` : `/album-not-reviewed/${item.id}`}
+            key={index}
+            bg="white"
+            p={4}
+            borderRadius="md"
+            boxShadow="sm"
+            textAlign="center"
+            mx={2}
+          >
+            <Image
+              src={item.coverURL}
+              alt={item.title}
+              boxSize="100px"
+              style={{ borderRadius: "12px" }}
+              objectFit="cover"
+              mb={2}
+            />
+            <Text fontWeight="medium" fontSize="lg" color="brand.500">
+              {truncateText(item.title, 10)}
+            </Text>
+            <Text fontSize="sm" fontStyle="italic" color="brand.500">
+              {truncateText(item.artist, 10)}
+            </Text>
+          </Box>
+          
           ))}
         </Slider>
       </Box>

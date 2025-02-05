@@ -13,13 +13,12 @@ const GetInSync: React.FC = () => {
       <Text fontSize="32px" fontWeight="bold" fontStyle="italic" mb={4}>
         Get in sync with these releases
       </Text>
-      {/* Altere o layout para um grid responsivo */}
-      <SimpleGrid columns={[1, 2, 3, 4]} spacing={6}>
-        {mockData.map((release, index) => (
+      <SimpleGrid columns={[1, 2, 3]} spacing={6}>
+        {mockData.map((release) => (
           <Box
             as={Link}
-            href={"/album/" + release.id}
-            key={index}
+            href={`/album/${release.id}`}
+            key={release.id}
             bg="brand.400"
             pt={5}
             px={4}
@@ -42,12 +41,7 @@ const GetInSync: React.FC = () => {
               <Text fontWeight="semibold" fontSize="16px" color={"brand.500"}>
                 {truncateText(release.title, 20)}
               </Text>
-              <Text
-                fontSize="14px"
-                fontStyle="italic"
-                fontWeight="regular"
-                color={"brand.500"}
-              >
+              <Text fontSize="14px" fontStyle="italic" color={"brand.500"}>
                 {release.artist}
               </Text>
             </VStack>
