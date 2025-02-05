@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Text, VStack, Image, HStack } from "@chakra-ui/react";
+import { Box, Text, VStack, Image, SimpleGrid } from "@chakra-ui/react";
 import mockData from "../../mockData/getInSync.json";
 import Link from "next/link";
 
@@ -13,50 +13,47 @@ const GetInSync: React.FC = () => {
       <Text fontSize="32px" fontWeight="bold" fontStyle="italic" mb={4}>
         Get in sync with these releases
       </Text>
-      <HStack
-        spacing={6}
-        justify="space-between"
-        wrap="wrap"
-        alignItems="flex-start"
-      >
+      {/* Altere o layout para um grid responsivo */}
+      <SimpleGrid columns={[1, 2, 3, 4]} spacing={6}>
         {mockData.map((release, index) => (
           <Box
             as={Link}
-            href={"/album/"+release.id}
+            href={"/album/" + release.id}
             key={index}
             bg="brand.400"
             pt={5}
-            pl={5}
-            pr={5}
-            pb={1}
-            borderRadius="5px"
+            px={4}
+            pb={2}
+            borderRadius="10px"
             boxShadow="sm"
-            width="200px"
-            height="fit-content"
-            justifyItems="center"
-            alignItems={"space-between"}
+            _hover={{ boxShadow: "md" }}
+            textAlign="center"
           >
             <Image
               src={release.coverURL}
               alt={release.title}
-              width="100%"
-              height="auto"
+              boxSize="150px"
               borderRadius="md"
               objectFit="cover"
-              mb={0.25}
+              mx="auto"
+              mb={4}
             />
-
-            <Box w="100%" p={2}>
-              <Text fontWeight="semibold" fontSize="16px" isTruncated color={"brand.500"}>
-                {truncateText(release.title, 15)}
+            <VStack spacing={1}>
+              <Text fontWeight="semibold" fontSize="16px" color={"brand.500"}>
+                {truncateText(release.title, 20)}
               </Text>
-              <Text fontSize="16px" fontStyle={"italic"} fontWeight={"regular"} color={"brand.500"}>
+              <Text
+                fontSize="14px"
+                fontStyle="italic"
+                fontWeight="regular"
+                color={"brand.500"}
+              >
                 {release.artist}
               </Text>
-            </Box>
+            </VStack>
           </Box>
         ))}
-      </HStack>
+      </SimpleGrid>
     </Box>
   );
 };
