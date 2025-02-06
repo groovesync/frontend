@@ -7,18 +7,13 @@ import discoverNewAlbums from "../../mockData/discoverNewAlbums.json";
 const AlbumPage = () => {
   const router = useRouter();
   const { id } = router.query;
-
-  // Combina os dados de ambas as listas
   const albums = [...getInSync, ...discoverNewAlbums];
-
-  // Encontra o álbum correspondente pelo ID
   const album = albums.find((item) => item.id === id);
 
   if (!album) {
     return <div>Album not found</div>;
   }
 
-  // Redireciona com base no estado `isReviewed`
   return album.isReviewed ? (
     <AlbumReviewed album={album} />
   ) : (

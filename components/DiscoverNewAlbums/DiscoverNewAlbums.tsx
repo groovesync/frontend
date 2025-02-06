@@ -1,7 +1,7 @@
 import React from "react";
 import Slider from "react-slick";
 import { Box, Text, Image } from "@chakra-ui/react";
-import Link from "next/link";
+import Link from 'next/link';
 import mockData from "../../mockData/discoverNewAlbums.json";
 
 const DiscoverNewAlbums: React.FC = () => {

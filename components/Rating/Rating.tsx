@@ -4,28 +4,28 @@ import React, { useState } from "react";
 
 interface RatingProps {
   value?: number;
-  readOnly?: boolean;
+  isReadOnly?: boolean;
   onChange?: (value: number) => void;
 }
 
 export const Rating: React.FC<RatingProps> = ({
   value = 0,
-  readOnly = false,
+  isReadOnly = false,
   onChange,
 }) => {
   const [hoverValue, setHoverValue] = useState<number | null>(null);
   const [currentValue, setCurrentValue] = useState(value);
 
   const handleMouseEnter = (newValue: number) => {
-    if (!readOnly) setHoverValue(newValue);
+    if (!isReadOnly) setHoverValue(newValue);
   };
 
   const handleMouseLeave = () => {
-    if (!readOnly) setHoverValue(null);
+    if (!isReadOnly) setHoverValue(null);
   };
 
   const handleClick = (newValue: number) => {
-    if (!readOnly) {
+    if (!isReadOnly) {
       setCurrentValue(newValue);
       if (onChange) {
         onChange(newValue);
@@ -41,7 +41,7 @@ export const Rating: React.FC<RatingProps> = ({
           onMouseEnter={() => handleMouseEnter(starValue)}
           onMouseLeave={handleMouseLeave}
           onClick={() => handleClick(starValue)}
-          cursor={readOnly ? "default" : "pointer"}
+          cursor={isReadOnly ? "default" : "pointer"}
           w="fit-content"
           m={0}
           p={0}

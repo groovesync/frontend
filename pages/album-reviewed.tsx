@@ -2,7 +2,7 @@ import AlbumReviewed from "../components/AlbumReviewed/AlbumReviewed";
 import albums from "../mockData/albums.json";
 
 export async function getStaticProps() {
-  const album = albums[0]; // Certifique-se de que o array não está vazio
+  const album = albums[0]; 
   return {
     props: {
       album,

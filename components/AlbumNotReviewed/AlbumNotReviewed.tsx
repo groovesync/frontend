@@ -9,8 +9,22 @@ import {
 } from "@chakra-ui/react";
 import HomeButton from "../HomeButton/HomeButton";
 import UserProfileIcon from "../UserProfileIcon/UserProfileIcon";
+import { Rating } from "../Rating/Rating";
 
-const AlbumNotReviewed = ({ album }) => {
+interface Album {
+  title: string;
+  artist: string;
+  coverURL: string;
+  year?: number;
+  overallRating?: number;
+  id?: string;
+}
+
+interface AlbumNotReviewedProps {
+  album: Album;
+}
+
+const AlbumNotReviewed: React.FC<AlbumNotReviewedProps> = ({ album }) => {
   const reviews = [
     { name: "Lucas de Medeiros", rating: 5, comment: "An amazing album." },
     { name: "Sabrina Barbosa", rating: 4, comment: "Loved the sound!" },
@@ -38,14 +52,7 @@ const AlbumNotReviewed = ({ album }) => {
           borderRadius="md"
         />
 
-        <VStack align="flex-start" spacing={4}>
-          <Text fontSize="4xl" fontWeight="bold" fontStyle="italic">
-            {album.title}
-          </Text>
-          <Text fontSize="lg" color="gray.500" fontStyle="italic">
-            {album.artist}
-          </Text>
-
+        <VStack align="flex-start" spacing={0}>
           <Button
             as="a"
             href="https://open.spotify.com"
@@ -56,6 +63,12 @@ const AlbumNotReviewed = ({ album }) => {
           >
             Listen on Spotify
           </Button>
+          <Text fontSize="4xl" fontWeight="bold" fontStyle="italic">
+            {album.title}
+          </Text>
+          <Text fontSize="lg" color="gray.500" fontStyle="italic">
+            {album.artist}
+          </Text>
 
           <Box mt={4}>
             <Text fontWeight="bold" fontSize="xl">
@@ -92,16 +105,17 @@ const AlbumNotReviewed = ({ album }) => {
             <Box
               key={index}
               p={4}
-              bg="#F7FAFC"
+              bg="brand.400"
               borderRadius="md"
               boxShadow="sm"
               mb={4}
+              _hover={{ boxShadow: "lg" }}
             >
               <HStack justify="space-between">
                 <Text fontWeight="bold" fontSize="lg">
                   {review.name}
                 </Text>
-                <Text>{review.rating} / 5</Text>
+                <Rating value={review.rating} isReadOnly />
               </HStack>
               <Text mt={2}>{review.comment}</Text>
             </Box>
