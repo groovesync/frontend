@@ -46,9 +46,8 @@ const FollowersModal: React.FC<ModalProps> = ({isOpen, onOpen, onClose, modalTyp
 }
 
 const ArrowRight = () => {
-    return (
-      <Image src={"/assets/ArrowRight.svg"}/>
-    )
-}
+    return <Image src="/assets/ArrowRight.svg" alt="Arrow pointing right" />;
+  };
+  
 
 export default FollowersModal

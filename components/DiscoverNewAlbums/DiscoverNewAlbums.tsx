@@ -76,10 +76,10 @@ const DiscoverNewAlbums: React.FC = () => {
                 transform: "scale(1.05)",
                 transition: "0.2s ease-in-out",
               }}
-              height="13em" // Define altura fixa para todos os cards
+              height="13em" 
               display="flex"
               flexDirection="column"
-              justifyContent="space-between" // Alinha conteúdo internamente
+              justifyContent="space-between" 
             >
               <Image
                 src={item.coverURL}
