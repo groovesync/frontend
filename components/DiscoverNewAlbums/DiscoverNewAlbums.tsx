@@ -1,7 +1,7 @@
 import React from "react";
 import Slider from "react-slick";
 import { Box, Text, Image } from "@chakra-ui/react";
-import Link from 'next/link';
+import Link from "next/link";
 import mockData from "../../mockData/discoverNewAlbums.json";
 
 const DiscoverNewAlbums: React.FC = () => {
@@ -47,7 +47,7 @@ const DiscoverNewAlbums: React.FC = () => {
         py={6}
         css={{
           ".slick-dots": {
-            bottom: "-1.2em",
+            bottom: "-1.6em",
           },
           ".slick-dots li button:before": {
             color: "#4A90E2",
@@ -55,37 +55,50 @@ const DiscoverNewAlbums: React.FC = () => {
           ".slick-dots li.slick-active button:before": {
             color: "#1C4E80",
           },
+          ".slick-slide": {
+            padding: "0 10px", 
+          },
         }}
       >
         <Slider {...settings}>
           {mockData.map((item, index) => (
             <Box
-            as={Link}
-            href={item.isReviewed ? `/album-reviewed/${item.id}` : `/album-not-reviewed/${item.id}`}
-            key={index}
-            bg="white"
-            p={4}
-            borderRadius="md"
-            boxShadow="sm"
-            textAlign="center"
-            mx={2}
-          >
-            <Image
-              src={item.coverURL}
-              alt={item.title}
-              boxSize="100px"
-              style={{ borderRadius: "12px" }}
-              objectFit="cover"
-              mb={2}
-            />
-            <Text fontWeight="medium" fontSize="lg" color="brand.500">
-              {truncateText(item.title, 10)}
-            </Text>
-            <Text fontSize="sm" fontStyle="italic" color="brand.500">
-              {truncateText(item.artist, 10)}
-            </Text>
-          </Box>
-          
+              as={Link}
+              href={`/album/${item.id}`}
+              key={index}
+              bg="brand.400"
+              p={4}
+              borderRadius="md"
+              boxShadow="sm"
+              textAlign="center"
+              _hover={{
+                boxShadow: "lg",
+                transform: "scale(1.05)",
+                transition: "0.2s ease-in-out",
+              }}
+              height="13em" // Define altura fixa para todos os cards
+              display="flex"
+              flexDirection="column"
+              justifyContent="space-between" // Alinha conteúdo internamente
+            >
+              <Image
+                src={item.coverURL}
+                alt={item.title}
+                boxSize="100px"
+                borderRadius="12px"
+                objectFit="cover"
+                mb={2}
+                mx="auto" 
+              />
+              <Box>
+                <Text fontWeight="medium" fontSize="lg" color="brand.500">
+                  {truncateText(item.title, 10)}
+                </Text>
+                <Text fontSize="sm" fontStyle="italic" color="brand.500">
+                  {truncateText(item.artist, 10)}
+                </Text>
+              </Box>
+            </Box>
           ))}
         </Slider>
       </Box>

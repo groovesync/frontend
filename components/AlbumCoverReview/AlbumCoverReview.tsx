@@ -29,7 +29,7 @@ const AlbumCoverReview: React.FC<{title: string, year: number, rating: number, c
                 <Flex fontSize="16px" color="brand.500" mt={1}>
                 <Text mr={2}>{year}</Text>
                 <Text mr={2}>•</Text>
-                <Rating value={rating} readOnly/>
+                <Rating value={rating} isReadOnly />
                 </Flex>
             </Box>
         </Box>

@@ -67,6 +67,13 @@ const AlbumReviewed: React.FC<AlbumReviewedProps> = ({ album }) => {
             variant="outline"
             borderRadius="full"
             size="md"
+            leftIcon={
+              <Image src="https://upload.wikimedia.org/wikipedia/commons/8/84/Spotify_icon.svg" 
+                alt="Spotify"
+                boxSize="18px" 
+                mr={2} 
+              />
+            }
           >
             Listen on Spotify
           </Button>
@@ -149,6 +156,23 @@ const AlbumReviewed: React.FC<AlbumReviewedProps> = ({ album }) => {
             <Text mt={2}>{review.comment}</Text>
           </Box>
         ))}
+      </Box>
+      
+      {/* See More Button - Minimalista e à esquerda */}
+      <Box mt={4} mb={3} px={8} textAlign="left">
+        <Button
+            bg="brand.400"
+            color="gray.700" // Mesma cor da fonte de "Reviews"
+            _hover={{ 
+              bg: "brand.500",
+              color: "white" // Quando passa o mouse, a fonte fica branca
+            }}
+            borderRadius="full"
+            size="sm"
+            px={4}
+          >
+            See More
+          </Button>
       </Box>
     </Box>
   );

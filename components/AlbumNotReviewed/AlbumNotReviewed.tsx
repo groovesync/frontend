@@ -54,15 +54,22 @@ const AlbumNotReviewed: React.FC<AlbumNotReviewedProps> = ({ album }) => {
 
         <VStack align="flex-start" spacing={0}>
           <Button
-            as="a"
-            href="https://open.spotify.com"
-            colorScheme="teal"
-            variant="outline"
-            borderRadius="full"
-            size="md"
-          >
-            Listen on Spotify
-          </Button>
+              as="a"
+              href="https://open.spotify.com"
+              colorScheme="teal"
+              variant="outline"
+              borderRadius="full"
+              size="md"
+              leftIcon={
+                <Image src="https://upload.wikimedia.org/wikipedia/commons/8/84/Spotify_icon.svg" 
+                  alt="Spotify"
+                  boxSize="18px" 
+                  mr={2} 
+                />
+              }
+            >
+              Listen on Spotify
+            </Button>
           <Text fontSize="4xl" fontWeight="bold" fontStyle="italic">
             {album.title}
           </Text>
@@ -123,6 +130,23 @@ const AlbumNotReviewed: React.FC<AlbumNotReviewedProps> = ({ album }) => {
         ) : (
           <Text>No reviews available for this album yet.</Text>
         )}
+      </Box>
+
+      {/* See More Button - Minimalista e à esquerda */}
+      <Box mt={4} mb={3} px={8} textAlign="left">
+        <Button
+            bg="brand.400"
+            color="gray.700" // Mesma cor da fonte de "Reviews"
+            _hover={{ 
+              bg: "brand.500",
+              color: "white" // Quando passa o mouse, a fonte fica branca
+            }}
+            borderRadius="full"
+            size="sm"
+            px={4}
+          >
+            See More
+          </Button>
       </Box>
     </Box>
   );
