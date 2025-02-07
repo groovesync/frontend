@@ -6,7 +6,7 @@ const HomeButton = () => {
     return (
         <HStack
             as="button"
-            onClick={() => {router.push("/")}}
+            onClick={() => {router.push("/home")}}
             align="center"
             spacing={2}
             _hover={{ cursor: "pointer" }}

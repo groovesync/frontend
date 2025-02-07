@@ -17,7 +17,7 @@
     "incremental": true,
     "types": ["@emotion/react/types/css-prop"],
     "module": "ESNext",
-    "moduleResolution": "node16",
+    "moduleResolution": "node",
     "skipLibCheck": true,
     "paths": {
       "@/*": ["./src/*"]
