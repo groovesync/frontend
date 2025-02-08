@@ -8,12 +8,13 @@ export default function ProfileHeading() {
 
   const {isOpen, onOpen, onClose} = useDisclosure()
   const [modalType, setModalType] = useState<"followers"|"following">("followers")
-  const username = localStorage.getItem("username") || ""
+  const [username, setUsername] = useState("")
   const [userProfilePictureURL, setUserProfilePictureURL] = useState("")
 
     useEffect(() => {
         if (typeof window !== "undefined") {
           setUserProfilePictureURL(localStorage.getItem("profilePictureURL") || "")
+          setUsername(localStorage.getItem("username") || "")
         }
     }, [])
 
