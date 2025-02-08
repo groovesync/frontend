@@ -1,54 +1,64 @@
 {
     "name": "The Smiths",
+    "pictureURL": "https://th.bing.com/th/id/R.b40c036de29204745742ab79a518de75?rik=q9glmiam60w47w&pid=ImgRaw&r=0",
     "coverURL": "https://lh3.googleusercontent.com/QM50T3vF6Hvr3coPEdwB7OImuH6f2ktU3-X6LgjpCnrSukGj9fmDkY84rOcR3Ye8OWToWwGWA9QaE5Q=w2880-h1200-p-l90-rj",
     "albums": [
         {
             "title": "The Queen is Dead",
             "pageURL": "",
             "coverURL": "https://upload.wikimedia.org/wikipedia/pt/7/7e/The_Queen_is_Dead.jpg",
-            "year": 1986
+            "year": 1986,
+            "id": "1361091"
+            
         },
         {
             "title": "Hatful of Hollow",
             "pageURL": "",
             "coverURL": "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/f4/00/d1/f400d1dd-5dd6-48d3-43fc-c581dec149fc/825646642854.jpg/1200x1200bf-60.jpg",
-            "year": 1984
+            "year": 1984,
+            "id": "1361091"
         },
         {
             "title": "Louder than Bombs",
             "pageURL": "",
             "coverURL": "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/fb/73/d5/fb73d503-8e0a-c17f-7f34-ac5a566a192d/825646642847.jpg/600x600bf-60.jpg",
-            "year": 1987
+            "year": 1987,
+            "id": "1361091"
         },
         {
             "title": "The Smiths",
             "pageURL": "",
             "coverURL": "https://upload.wikimedia.org/wikipedia/pt/9/9a/The_Smiths_album.jpg",
-            "year": 1984
+            "year": 1984,
+            "id": "1361091"
         },
         {
             "title": "Strangeways, here we come",
             "pageURL": "",
             "coverURL": "https://upload.wikimedia.org/wikipedia/en/3/37/Smiths_-_Strangeways_here_we_come.jpg",
-            "year": 1986
+            "year": 1986,
+            "id": "1361091"
         },
         {
             "title": "Meat is Murder",
             "pageURL": "",
             "coverURL": "https://i.scdn.co/image/ab67616d0000b273ac345598e7697a319cb5b460",
-            "year": 1985
+            "year": 1985,
+            "id": "1361091"
         },
         {
             "title": "The World Won't Listen",
             "pageURL": "",
             "coverURL": "https://upload.wikimedia.org/wikipedia/en/8/85/TWWL.jpg",
-            "year": 1987
+            "year": 1987,
+            "id": "1361091"
         },
         {
             "title": "Rank",
             "pageURL": "",
             "coverURL": "https://upload.wikimedia.org/wikipedia/en/e/e1/SmithsRank.jpg",
-            "year": 1988
+            "year": 1988,
+            "id": "1361091"
         }
     ]
 }
