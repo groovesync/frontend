@@ -4,10 +4,27 @@ import { Box, Text, Image } from "@chakra-ui/react";
 import Link from "next/link";
 import mockData from "../../mockData/discoverNewAlbums.json";
 
+interface Artist {
+  name: string,
+  id: string
+}
+
 const DiscoverNewAlbums: React.FC = () => {
   const truncateText = (text: string, maxLength: number) => {
     return text.length > maxLength ? text.slice(0, maxLength) + "..." : text;
   };
+
+  const getArtists = (artists: Artist[]) => {
+    let result = ""
+    for (let i = 0; i < artists.length; i++) {
+      if (i == artists.length - 1) {
+        result += artists[i].name
+      } else {
+        result += artists[i].name + ", "
+      }
+    }
+    return result
+  }
 
   const settings = {
     dots: true,
@@ -43,7 +60,6 @@ const DiscoverNewAlbums: React.FC = () => {
         overflow="hidden"
         position="relative"
         borderRadius="lg"
-        boxShadow="sm"
         py={6}
         css={{
           ".slick-dots": {
@@ -68,24 +84,18 @@ const DiscoverNewAlbums: React.FC = () => {
               key={index}
               bg="brand.400"
               p={4}
-              borderRadius="md"
-              boxShadow="sm"
+              borderRadius="5px"
               textAlign="center"
-              _hover={{
-                boxShadow: "lg",
-                transform: "scale(1.05)",
-                transition: "0.2s ease-in-out",
-              }}
+              cursor={"pointer"}
               height="13em" 
               display="flex"
               flexDirection="column"
-              justifyContent="space-between" 
             >
               <Image
                 src={item.coverURL}
                 alt={item.title}
-                boxSize="100px"
-                borderRadius="12px"
+                boxSize="120px"
+                borderRadius="5px"
                 objectFit="cover"
                 mb={2}
                 mx="auto" 
@@ -95,7 +105,7 @@ const DiscoverNewAlbums: React.FC = () => {
                   {truncateText(item.title, 10)}
                 </Text>
                 <Text fontSize="sm" fontStyle="italic" color="brand.500">
-                  {truncateText(item.artist, 10)}
+                  {truncateText(getArtists(item.artist), 10)}
                 </Text>
               </Box>
             </Box>

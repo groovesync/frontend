@@ -38,7 +38,6 @@ const PopularWithFriends: React.FC = () => {
         overflow="hidden"
         position="relative"
         borderRadius="lg"
-        boxShadow="sm"
         py={6} 
         css={{
           ".slick-dots": {
@@ -58,8 +57,7 @@ const PopularWithFriends: React.FC = () => {
               key={index}
               bg="white"
               p={4}
-              borderRadius="md"
-              boxShadow="sm"
+              borderRadius="5px"
               textAlign="center"
               mx={2}
             >
@@ -67,7 +65,7 @@ const PopularWithFriends: React.FC = () => {
                 src={item.coverURL}
                 alt={item.title}
                 boxSize="100px"
-                style={{ borderRadius: "12px" }}
+                style={{ borderRadius: "5px" }}
                 objectFit="cover"
                 mb={2}
               />

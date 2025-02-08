@@ -1,44 +1,56 @@
 [
   {
     "title": "Caju",
-    "artist": "Liniker",
+    "artist": [{"name": "Liniker", "id": "104"}],
     "coverURL": "https://www.rocinantetresselos.com/image/cache/catalog/01-capa-site-caju-1000x1000.jpg",
     "id": "2372930",
-    "isReviewed": true
+    "isReviewed": true,
+    "year": 2024,
+    "overallRating": 4.5
   },
   {
     "title": "Brat",
-    "artist": "Charlie XCX",
+    "artist": [{"name": "Charli XCX", "id": "105"}],
     "coverURL": "https://upload.wikimedia.org/wikipedia/commons/6/60/Charli_XCX_-_Brat_%28album_cover%29.png",
     "id": "2372931",
-    "isReviewed": false
+    "isReviewed": true,
+    "year": 2024,
+    "overallRating": 4.5 
   },
   {
     "title": "Abbey Road",
-    "artist": "The Beatles",
+    "artist": [{"name": "The Beatles", "id": "106"}],
     "coverURL": "https://upload.wikimedia.org/wikipedia/en/4/42/Beatles_-_Abbey_Road.jpg",
     "id": "2372932",
-    "isReviewed": true
+    "isReviewed": false,
+    "year": 1968,
+    "overallRating": 4 
   },
   {
     "title": "The Dark Side of the Moon",
-    "artist": "Pink Floyd",
+    "artist": [{"name": "Pink Floyd", "id": "107"}],
     "coverURL": "https://upload.wikimedia.org/wikipedia/en/3/3b/Dark_Side_of_the_Moon.png",
     "id": "2372933",
-    "isReviewed": false
+    "isReviewed": false,
+    "year": 1974,
+    "overallRating": 4.9 
   },
   {
     "title": "Tim Maia (1973)",
-    "artist": "Tim Maia",
+    "artist": [{"name": "Tim Maia", "id": "108"}],
     "coverURL": "https://entreacordes.blog/wp-content/uploads/2023/06/tim-maia-1973.jpeg",
     "id": "2372934",
-    "isReviewed": true
+    "isReviewed": true,
+    "year": 1973,
+    "overallRating": 4.3 
   },
   {
     "title": "El Alma Que Te Trajo",
-    "artist": "Arca",
+    "artist": [{"name": "Arca", "id": "109"}],
     "coverURL": "https://i.scdn.co/image/ab67616d0000b2739db15008cd7d44e6712a1d69",
     "id": "2372935",
-    "isReviewed": false
+    "isReviewed": false,
+    "year": 2019,
+    "overallRating": 4.7 
   }
 ]
