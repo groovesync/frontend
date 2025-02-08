@@ -1,0 +1,81 @@
+[
+    {
+      "name": "The Smiths",
+      "coverURL": "https://lh3.googleusercontent.com/QM50T3vF6Hvr3coPEdwB7OImuH6f2ktU3-X6LgjpCnrSukGj9fmDkY84rOcR3Ye8OWToWwGWA9QaE5Q=w2880-h1200-p-l90-rj",
+      "albums": [
+        {
+          "title": "The Queen is Dead",
+          "pageURL": "/album-reviewed",
+          "coverURL": "https://upload.wikimedia.org/wikipedia/pt/7/7e/The_Queen_is_Dead.jpg",
+          "year": 1986
+        },
+        {
+          "title": "Hatful of Hollow",
+          "pageURL": "/album-reviewed",
+          "coverURL": "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/f4/00/d1/f400d1dd-5dd6-48d3-43fc-c581dec149fc/825646642854.jpg/1200x1200bf-60.jpg",
+          "year": 1984
+        },
+        {
+          "title": "Louder than Bombs",
+          "pageURL": "/album-reviewed",
+          "coverURL": "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/fb/73/d5/fb73d503-8e0a-c17f-7f34-ac5a566a192d/825646642847.jpg/600x600bf-60.jpg",
+          "year": 1987
+        },
+        {
+          "title": "The Smiths",
+          "pageURL": "/album-reviewed",
+          "coverURL": "https://upload.wikimedia.org/wikipedia/pt/9/9a/The_Smiths_album.jpg",
+          "year": 1984
+        },
+        {
+          "title": "Strangeways, here we come",
+          "pageURL": "/album-reviewed",
+          "coverURL": "https://upload.wikimedia.org/wikipedia/en/3/37/Smiths_-_Strangeways_here_we_come.jpg",
+          "year": 1986
+        },
+        {
+          "title": "Meat is Murder",
+          "pageURL": "/album-reviewed",
+          "coverURL": "https://i.scdn.co/image/ab67616d0000b273ac345598e7697a319cb5b460",
+          "year": 1985
+        },
+        {
+          "title": "The World Won't Listen",
+          "pageURL": "/album-reviewed",
+          "coverURL": "https://upload.wikimedia.org/wikipedia/en/8/85/TWWL.jpg",
+          "year": 1987
+        },
+        {
+          "title": "Rank",
+          "pageURL": "/album-reviewed",
+          "coverURL": "https://upload.wikimedia.org/wikipedia/en/e/e1/SmithsRank.jpg",
+          "year": 1988
+        }
+      ]
+    },
+    {
+      "title": "Usuário",
+      "artist": "Planet Hemp",
+      "coverURL": "https://i.scdn.co/image/ab67616d0000b273d8bedbdf2d6f558e234587c5",
+      "id": "394930"
+    },
+    {
+      "title": "Batidão Tropical",
+      "artist": "Pabllo Vittar",
+      "coverURL": "https://s2-g1.glbimg.com/7IC-GdbNx6hjEU2JH5_g_toz2Mg=/0x0:4095x4095/984x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2021/E/o/Idi1K0RRGmHpzKAzeu3g/bt-capa.jpg",
+      "id": "394930"
+    },
+    {
+      "title": "Djavan Ao Vivo 1999",
+      "artist": "Djavan",
+      "coverURL": "https://djavan.com.br/content/uploads/2018/11/ao_vivo.jpg",
+      "id": "394930"
+    },
+    {
+      "title": "Welcome to my Island",
+      "artist": "Caroline Polachek",
+      "coverURL": "https://cdn-images.dzcdn.net/images/cover/67e9a8272d715c88adf400c554f68f33/1900x1900-000000-80-0-0.jpg",
+      "id": "394930"
+    }
+  ]
+  

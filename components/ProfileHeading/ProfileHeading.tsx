@@ -1,5 +1,5 @@
 import { Box, Flex, Text, Avatar, Link, useDisclosure, Image } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import FollowersModal from "../FollowersModal/FollowersModal";
 import OpenSpotifyButton from "../OpenSpotifyButton/OpenSpotifyButton";
 import userProfileData from "../../mockData/userProfileData.json"
@@ -8,6 +8,15 @@ export default function ProfileHeading() {
 
   const {isOpen, onOpen, onClose} = useDisclosure()
   const [modalType, setModalType] = useState<"followers"|"following">("followers")
+  const [username, setUsername] = useState("")
+  const [userProfilePictureURL, setUserProfilePictureURL] = useState("")
+
+    useEffect(() => {
+        if (typeof window !== "undefined") {
+          setUserProfilePictureURL(localStorage.getItem("profilePictureURL") || "")
+          setUsername(localStorage.getItem("username") || "")
+        }
+    }, [])
 
   const user = userProfileData
 
@@ -26,7 +35,7 @@ export default function ProfileHeading() {
     >
       <Flex align="center">
         
-        <Avatar src={user.profilePictureURL} w="200px" h="200px" mr={4} />
+        <Avatar src={userProfilePictureURL} w="200px" h="200px" mr={4} />
 
         <Box
             display={"flex"}
@@ -37,7 +46,7 @@ export default function ProfileHeading() {
         <OpenSpotifyButton link={user.spotifyProfile} text="Open Spotify Profile"/>
 
           <Text fontSize="64px" fontWeight="bold" fontStyle="italic" color="brand.500">
-            {user.name}
+            {username}
           </Text>
 
           <Text fontSize="16px" color="brand.500">

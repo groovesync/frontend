@@ -1,12 +1,30 @@
 import React from "react";
-import { Box, Text, VStack, Image, HStack } from "@chakra-ui/react";
+import { Box, Text, VStack, Image, SimpleGrid, HStack } from "@chakra-ui/react";
 import mockData from "../../mockData/getInSync.json";
 import Link from "next/link";
+
+
+interface Artist {
+  name: string,
+  id: string
+}
 
 const GetInSync: React.FC = () => {
   const truncateText = (text: string, maxLength: number) => {
     return text.length > maxLength ? text.slice(0, maxLength) + "..." : text;
   };
+
+  const getArtists = (artists: Artist[]) => {
+    let result = ""
+    for (let i = 0; i < artists.length; i++) {
+      if (i == artists.length - 1) {
+        result += artists[i].name
+      } else {
+        result += artists[i].name + ", "
+      }
+    }
+    return result
+  }
 
   return (
     <Box mt={8} textAlign="left" px={4}>
@@ -51,7 +69,7 @@ const GetInSync: React.FC = () => {
                 {truncateText(release.title, 15)}
               </Text>
               <Text fontSize="16px" fontStyle={"italic"} fontWeight={"regular"} color={"brand.500"}>
-                {release.artist}
+                {truncateText(getArtists(release.artist), 10)}
               </Text>
             </Box>
           </Box>

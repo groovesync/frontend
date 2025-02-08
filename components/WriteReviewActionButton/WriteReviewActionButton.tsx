@@ -1,14 +1,20 @@
 import { Button, Image } from "@chakra-ui/react"
 import { useRouter } from "next/router"
+import React from "react"
 
-const WriteReviewActionButton = () => {
+interface WriteReviewProps {
+    albumId?: string,
+    customWidth?: string
+}
+
+const WriteReviewActionButton: React.FC<WriteReviewProps> = ({albumId, customWidth}) => {
     const router = useRouter()
 
     return (
         <Button
             bg="brand.500"
             h="45px"
-            w="fit-content"
+            w={customWidth ? customWidth : "fit-content"}
             fontFamily={"IBM Plex Sans"}
             fontWeight="regular"
             color="white"
@@ -18,7 +24,7 @@ const WriteReviewActionButton = () => {
             _hover={{ boxShadow: "lg" }}
             _active={{ boxShadow: "md" }}
             transition="box-shadow 0.2s ease-in-out"
-            onClick={() => router.push("/review")}
+            onClick={() => albumId ? router.push(`/review/${albumId}`) : router.push(`/review/`)}
         >
             <MusicIcon />  Write a review now!
         </Button>

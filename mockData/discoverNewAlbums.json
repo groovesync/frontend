@@ -1,21 +1,39 @@
-[{"title": "Usuário",
-    "artist": "Planet Hemp",
-    "coverURL": "https://i.scdn.co/image/ab67616d0000b273d8bedbdf2d6f558e234587c5",
-    "id": "394930"
-},{
-    "title": "Batidão Tropical",
-    "artist": "Pabllo Vittar",
-    "coverURL": "https://s2-g1.glbimg.com/7IC-GdbNx6hjEU2JH5_g_toz2Mg=/0x0:4095x4095/984x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2021/E/o/Idi1K0RRGmHpzKAzeu3g/bt-capa.jpg",
-    "id": "394930"
-},{
-    "title": "Djavan Ao Vivo 1999",
-    "artist": "Djavan",
-    "coverURL": "https://djavan.com.br/content/uploads/2018/11/ao_vivo.jpg",
-    "id": "394930"
-},{
-    "title": "Welcome to my Island",
-    "artist": "Caroline Polachek",
-    "coverURL": "https://cdn-images.dzcdn.net/images/cover/67e9a8272d715c88adf400c554f68f33/1900x1900-000000-80-0-0.jpg",
-    "id": "394930"
-}]
-
+[
+    {
+      "title": "Usuário",
+      "artist": [{"name": "Planet Hemp", "id": "100"}],
+      "coverURL": "https://i.scdn.co/image/ab67616d0000b273d8bedbdf2d6f558e234587c5",
+      "id": "394930",
+      "isReviewed": false,
+      "year": 2008,
+      "overallRating": 4.7 
+    },
+    {
+      "title": "Batidão Tropical",
+      "artist": [{"name": "Pabllo Vittar", "id": "101"}],
+      "coverURL": "https://s2-g1.glbimg.com/7IC-GdbNx6hjEU2JH5_g_toz2Mg=/0x0:4095x4095/984x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2021/E/o/Idi1K0RRGmHpzKAzeu3g/bt-capa.jpg",
+      "id": "394931",
+      "isReviewed": false,
+      "year": 2022,
+      "overallRating": 4.5 
+    },
+    {
+      "title": "Djavan Ao Vivo 1999",
+      "artist": [{"name": "Djavan", "id": "102"}],
+      "coverURL": "https://djavan.com.br/content/uploads/2018/11/ao_vivo.jpg",
+      "id": "394932",
+      "isReviewed": false,
+      "year": 1999,
+      "overallRating": 4.2 
+    },
+    {
+      "title": "Welcome to my Island",
+      "artist": [{"name": "Caroline Polachek", "id": "103"}],
+      "coverURL": "https://cdn-images.dzcdn.net/images/cover/67e9a8272d715c88adf400c554f68f33/1900x1900-000000-80-0-0.jpg",
+      "id": "394933",
+      "isReviewed": false,
+      "year": 2023,
+      "overallRating": 4.8 
+    }
+  ]
+  
