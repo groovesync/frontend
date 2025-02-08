@@ -79,7 +79,7 @@ const AlbumReviewed: React.FC<AlbumReviewedProps> = ({ album, userReview }) => {
           </Text>
           
           <Text fontSize="16px" color="brand.500">
-            {album.artist.map((a) => <Link color="brand.500" href={"/artist/"+a.id}> {a.name} </Link>)}
+            {album.artist.map((a, index) => <Link key={index} color="brand.500" href={"/artist/"+a.id}> {a.name} </Link>)}
             •
             {album.year}
           </Text>
