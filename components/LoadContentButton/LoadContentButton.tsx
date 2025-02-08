@@ -25,13 +25,10 @@ const LoadContentButton: React.FC<{loadMore: boolean,
 export default LoadContentButton
 
 const ArrowUp = () => {
-    return (
-        <Image src={"/assets/ArrowUp.svg"}/>
-    )
-}
-
-const ArrowDown = () => {
-    return (
-        <Image src={"/assets/ArrowDown.svg"}/>
-    )
-}
+    return <Image src="/assets/ArrowUp.svg" alt="Arrow pointing up" />;
+  };
+  
+  const ArrowDown = () => {
+    return <Image src="/assets/ArrowDown.svg" alt="Arrow pointing down" />;
+  };
+  
