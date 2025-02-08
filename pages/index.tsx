@@ -1,74 +1,138 @@
-import {
-  Box,
-  Divider,
-  Flex,
-} from "@chakra-ui/react";
-import Head from "next/head";
-import Navbar from "../components/Navbar/Navbar";
-import CurrentlyPlaying from "../components/CurrentlyPlaying/CurrentlyPlaying";
-import PopularWithFriends from "../components/PopularWithFriends/PopularWithFriends";
-import RecentlyPlayed from "../components/RecentlyPlayed/RecentlyPlayed";
-import YourObssessions from "../components/YourObssessions/YourObssessions";
-import GetInSync from "../components/GetInSync/GetInSync";
-import DiscoverNewAlbums from "../components/DiscoverNewAlbums/DiscoverNewAlbums";
+import { Box, Button, Image, Link, Spinner, Text } from "@chakra-ui/react";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import {motion} from "framer-motion";
 
-export default function Home() {
-  const rosalia =
-    "https://s2-g1.glbimg.com/hkfGoM2o8Pnbocz_-Z4X9SQggeI=/0x0:4200x2800/924x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2023/2/u/HH2bh4RTSFiOjjuAvDgA/rosalia.jpg";
-  const charli =
-    "https://musicainstantanea.com.br/wp-content/uploads/2024/02/Charli-XCX-%E2%80%93-Brat-e1709237963434.jpeg";
-  const djavan =
-    "https://djavan.com.br/content/uploads/2022/08/bio-1-960x0-c-default.jpg";
-  const lorde =
-    "https://i.scdn.co/image/ab6761610000e5ebc4902f080d3620b3e6da80c3";
-  const beatles =
-    "https://m.media-amazon.com/images/M/MV5BMjA2ODY1MDA5MV5BMl5BanBnXkFtZTcwNjU1MzIyOA@@._V1_FMjpg_UX1000_.jpg";
-  const beatlesAlbum =
-    "https://is1-ssl.mzstatic.com/image/thumb/Music114/v4/6f/79/8d/6f798d84-7475-8525-fc91-f7b51b2b5a9b/00602567725428.rgb.jpg/1200x1200bb.jpg";
+const MotionBox = motion(Box);
+const MotionText = motion(Text);
+const MotionButton = motion(Button);
+
+interface LoginData {
+  backend_token: string,
+  spotify_access_token: string,
+  success: boolean,
+  user_info: UserInfo,
+} 
+
+interface UserInfo {
+  email: string,
+  followers: number,
+  images: ImageData[],
+  spotify_id: string,
+  username: string
+}
+
+interface ImageData {
+  height: number,
+  width: number,
+  url: string
+}
+
+const LandingPage = () => {
+  const router = useRouter();
+  const { code } = router.query;
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    if (code) {
+      setIsLoading(true);
+
+      axios
+        .post("http://127.0.0.1:5000/auth/login/spotify", { code })
+        .then((response) => {
+          let loginData: LoginData = response.data
+
+          localStorage.setItem("backendToken", loginData.backend_token)
+          localStorage.setItem("spotifyAccessToken", loginData.spotify_access_token)
+          localStorage.setItem("profilePictureURL", loginData.user_info.images[0].url)
+          localStorage.setItem("spotifyId", loginData.user_info.spotify_id)
+          localStorage.setItem("username", loginData.user_info.username)
+          
+          router.push("/home")
+        })
+        .catch((error) => {
+          console.error("Erro ao autenticar:", error.response?.data || error.message);
+        })
+        
+    }
+  }, [code, router]);
+
+  const SPOTIFY_CLIENT_ID = "b8661362a8284aa79979401497393b3a";
+  const SPOTIFY_REDIRECT_URI = "http://localhost:3000";
+  const SPOTIFY_URL = `https://accounts.spotify.com/authorize?client_id=${SPOTIFY_CLIENT_ID}&response_type=code&redirect_uri=${SPOTIFY_REDIRECT_URI}&scope=user-read-email%20user-read-private`;
 
   return (
-    <Box px={"180px"} py={"40px"} mx="auto" position="relative">
-      <Head>
-        <title>Home</title>
-      </Head>
-      <Navbar />
+    <Box
+      backgroundImage={"/assets/HomePageBG.jpg"}
+      backgroundSize={"cover"}
+      w="100vw"
+      h="100vh"
+      display={"flex"}
+      flexDirection={"column"}
+      alignItems={"center"}
+      justifyContent={"center"}
+    >
+      <MotionBox
+        initial={{ opacity: 0, y: 50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1, delay: 0.2 }}
+      >
+        <GrooveSyncLilacIcon />
+      </MotionBox>
 
-      <Flex justifyContent="space-between" alignItems="flex-start" position="relative">
-        <Box flex="1" mr={4}>
-          <CurrentlyPlaying
-            albumCoverURL={beatlesAlbum}
-            artistName="The Beatles"
-            songTitle="Sgt. Pepper's Lonely Hearts Club Band"
-          />
-          <PopularWithFriends />
-          <DiscoverNewAlbums />
-        </Box>
+      <MotionText
+        fontSize={"80px"}
+        fontWeight={"semibold"}
+        fontStyle={"italic"}
+        color={"brand.400"}
+        pb="2rem"
+        initial={{ opacity: 0, y: 50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1, delay: 0.4 }}
+      >
+        Amplify your sounds
+      </MotionText>
 
-        <Divider
-          orientation="vertical"
-          borderColor="gray.300"
-          height="calc(100% - 20px)"
-          position="absolute"
-          left="45%" 
-          top="0"
-          transform="translateX(-50%)"
-          zIndex="0"
-        />
-
-
-        <Box flex="1" ml={4}>
-          <RecentlyPlayed />
-          <Divider  borderColor="gray.300" width="calc(100% - 10px)" my={5} />
-          <YourObssessions
-            mainImage={rosalia}
-            secondaryImages={[charli, djavan, beatles, lorde]}
-          />
-        </Box>
-      </Flex>
-
-      <Box mt={10}>
-        <GetInSync />
-      </Box>
+      <MotionButton
+        as={Link}
+        href={SPOTIFY_URL}
+        bg="brand.400"
+        color="brand.500"
+        fontWeight="regular"
+        borderRadius="full"
+        h="50px"
+        w="300px"
+        _hover={{ textDecoration: "none" }}
+        display={"flex"}
+        alignItems="center"
+        justifyContent="flex-start"
+        px={6}
+        gap={"1rem"}
+        initial={{ opacity: 0, y: 50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1, delay: 0.6 }}
+        isDisabled={isLoading}
+      >
+        {isLoading ? (
+          <Spinner size="sm" color="brand.500" />
+        ) : (
+          <>
+            <SpotifyIcon />
+            Connect with Spotify
+          </>
+        )}
+      </MotionButton>
     </Box>
   );
-}
+};
+
+export default LandingPage;
+
+const GrooveSyncLilacIcon = () => {
+  return <Image src={"/frenchlilac.svg"} />;
+};
+
+const SpotifyIcon = () => {
+  return <Image w="35px" h="35px" alt="Spotify Icon" src={"/assets/Spotify.svg"}/>;
+};

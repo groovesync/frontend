@@ -12,8 +12,8 @@
     "jsx": "preserve",
     "incremental": true,
     "types": ["@emotion/react/types/css-prop"],
-    "module": "Node16", // Corrigido
-    "moduleResolution": "node16", // Mantido
+    "module": "ESNext",
+    "moduleResolution": "node",
     "skipLibCheck": true,
     "paths": {
       "@/*": ["./src/*"]
