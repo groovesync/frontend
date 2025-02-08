@@ -1,5 +1,5 @@
 import { Box, Flex, Text, Avatar, Link, useDisclosure, Image } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import FollowersModal from "../FollowersModal/FollowersModal";
 import OpenSpotifyButton from "../OpenSpotifyButton/OpenSpotifyButton";
 import userProfileData from "../../mockData/userProfileData.json"
@@ -9,7 +9,13 @@ export default function ProfileHeading() {
   const {isOpen, onOpen, onClose} = useDisclosure()
   const [modalType, setModalType] = useState<"followers"|"following">("followers")
   const username = localStorage.getItem("username") || ""
-  const userProfilePictureURL = localStorage.getItem("profilePictureURL") || ""
+  const [userProfilePictureURL, setUserProfilePictureURL] = useState("")
+
+    useEffect(() => {
+        if (typeof window !== "undefined") {
+          setUserProfilePictureURL(localStorage.getItem("profilePictureURL") || "")
+        }
+    }, [])
 
   const user = userProfileData
 

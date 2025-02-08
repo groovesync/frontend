@@ -10,7 +10,6 @@ const UserProfileIcon = () => {
 
     useEffect(() => {
         if (typeof window !== "undefined") {
-            // Agora é seguro acessar o localStorage
             setUserProfilePictureURL(localStorage.getItem("profilePictureURL") || "")
         }
     }, [])
