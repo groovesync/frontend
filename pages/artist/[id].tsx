@@ -4,6 +4,7 @@ import { useState } from "react";
 import AlbumCover from "../../components/AlbumCover/AlbumCover";
 import LoadContentButton from "../../components/LoadContentButton/LoadContentButton";
 import Navbar from "../../components/Navbar/Navbar";
+import useAuth from "../../hooks/useAuth";
 import artistJson from "../../mockData/artist.json"
 
 export default function AlbumPage() {
@@ -27,6 +28,10 @@ export default function AlbumPage() {
             setSeeMoreAlbumsUsed(false)
         }
     }
+
+    const isAuthenticated = useAuth()
+
+    if (!isAuthenticated) return null
 
 
     return (

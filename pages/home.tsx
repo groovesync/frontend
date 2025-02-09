@@ -13,6 +13,7 @@ import {
   import DiscoverNewAlbums from "../components/DiscoverNewAlbums/DiscoverNewAlbums";
 import { useEffect } from "react";
 import axios from "axios";
+import useAuth from "../hooks/useAuth";
   
   export default function Home() {
     const rosalia =
@@ -33,6 +34,10 @@ import axios from "axios";
             console.log(response.data)
         })
     })
+
+    const isAuthenticated = useAuth()
+
+    if (!isAuthenticated) return null
   
     return (
       <Box px={"180px"} py={"40px"} mx="auto" position="relative">

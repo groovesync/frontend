@@ -7,6 +7,7 @@ import ProfileHeading from "../components/ProfileHeading/ProfileHeading";
 import LoadContentButton from "../components/LoadContentButton/LoadContentButton";
 import favoritesJson from "../mockData/favorites.json"
 import reviewsJson from "../mockData/reviews.json"
+import useAuth from "../hooks/useAuth";
 
 export default function Profile() {
 
@@ -45,6 +46,9 @@ export default function Profile() {
     const reviews = reviewsJson
     const favorites = favoritesJson
 
+    const isAuthenticated = useAuth()
+
+    if (!isAuthenticated) return null
 
     return (
       <Box px={"180px"} py={"40px"} mx="auto">

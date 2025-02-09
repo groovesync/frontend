@@ -7,6 +7,7 @@ import LoadContentButton from "../components/LoadContentButton/LoadContentButton
 import artistJson from "../mockData/artist.json"
 import ArtistProfilePicture from "../components/ArtistProfilePicture/ArtistProfilePicture";
 import userProfileData from "../mockData/userProfileData.json"
+import useAuth from "../hooks/useAuth";
 
 export default function SearchResults() {
 
@@ -32,6 +33,10 @@ export default function SearchResults() {
     const albums = artistJson.albums
     const sortedAlbums = [...albums].sort((a, b) => a.year - b.year);
     const profiles = userProfileData
+
+    const isAuthenticated = useAuth()
+
+    if (!isAuthenticated) return null
 
     return (
       <Box px={"180px"} py={"40px"} mx="auto">
