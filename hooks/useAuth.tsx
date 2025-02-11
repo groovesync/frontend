@@ -6,7 +6,7 @@ const useAuth = () => {
   const router = useRouter();
 
   useEffect(() => {
-    const token = localStorage.getItem("backendToken");
+    const token = localStorage.getItem("@groovesync-backend-token");
 
     if (!token) {
       router.push("/");

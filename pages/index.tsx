@@ -43,11 +43,11 @@ const LandingPage = () => {
         .then((response) => {
           let loginData: LoginData = response.data
 
-          localStorage.setItem("backendToken", loginData.backend_token)
-          localStorage.setItem("spotifyAccessToken", loginData.spotify_access_token)
-          localStorage.setItem("profilePictureURL", loginData.user_info.images[0].url)
-          localStorage.setItem("spotifyId", loginData.user_info.spotify_id)
-          localStorage.setItem("username", loginData.user_info.username)
+          localStorage.setItem("@groovesync-backend-token", loginData.backend_token)
+          localStorage.setItem("@groovesync-spotify-access-token", loginData.spotify_access_token)
+          localStorage.setItem("@groovesync-profile-picture-url", loginData.user_info.images[0].url)
+          localStorage.setItem("@groovesync-spotify-id", loginData.user_info.spotify_id)
+          localStorage.setItem("@groovesync-username", loginData.user_info.username)
           
           router.push("/home")
         })
@@ -60,7 +60,7 @@ const LandingPage = () => {
 
   const SPOTIFY_CLIENT_ID = "b8661362a8284aa79979401497393b3a";
   const SPOTIFY_REDIRECT_URI = "http://localhost:3000";
-  const SPOTIFY_URL = `https://accounts.spotify.com/authorize?client_id=${SPOTIFY_CLIENT_ID}&response_type=code&redirect_uri=${SPOTIFY_REDIRECT_URI}&scope=user-read-email%20user-read-private`;
+  const SPOTIFY_URL = `https://accounts.spotify.com/authorize?client_id=${SPOTIFY_CLIENT_ID}&response_type=code&redirect_uri=${SPOTIFY_REDIRECT_URI}&scope=user-read-recently-played%20user-read-currently-playing%20user-top-read%20user-library-read%20user-read-playback-state%20user-modify-playback-state%20user-read-email%20user-read-private`;
 
   return (
     <Box

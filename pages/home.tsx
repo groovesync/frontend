@@ -29,12 +29,6 @@ import useAuth from "../hooks/useAuth";
     const beatlesAlbum =
       "https://is1-ssl.mzstatic.com/image/thumb/Music114/v4/6f/79/8d/6f798d84-7475-8525-fc91-f7b51b2b5a9b/00602567725428.rgb.jpg/1200x1200bb.jpg";
 
-    useEffect(() => {
-        axios.get("http://127.0.0.1:5000/spotify/recent-tracks", {headers: {"Authorization": "Bearer "+localStorage.getItem("backendToken")}}).then((response) => {
-            console.log(response.data)
-        })
-    })
-
     const isAuthenticated = useAuth()
 
     if (!isAuthenticated) return null

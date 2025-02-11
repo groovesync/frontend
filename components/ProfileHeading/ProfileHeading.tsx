@@ -13,8 +13,8 @@ export default function ProfileHeading() {
 
     useEffect(() => {
         if (typeof window !== "undefined") {
-          setUserProfilePictureURL(localStorage.getItem("profilePictureURL") || "")
-          setUsername(localStorage.getItem("username") || "")
+          setUserProfilePictureURL(localStorage.getItem("@groovesync-profile-picture-url") || "")
+          setUsername(localStorage.getItem("@groovesync-username") || "")
         }
     }, [])
 
