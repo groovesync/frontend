@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Box, HStack, Image, VStack, Text, Heading, Divider } from "@chakra-ui/react";
+import { Box, HStack, Image, VStack, Text, Heading, Divider, Spinner } from "@chakra-ui/react";
 
 interface SpotifyRecentTracksResponse {
   data: {
@@ -22,6 +22,7 @@ interface SpotifyRecentTracksResponse {
 
 const RecentlyPlayed = () => {
   const [tracks, setTracks] = useState<SpotifyRecentTracksResponse>()
+  const [isLoading, setIsLoading] = useState(true)
 
   const formatArtistsName = (artistsNames: {name: string}[]) => {
     if (artistsNames.length == 1) {
@@ -46,8 +47,11 @@ const RecentlyPlayed = () => {
       }})
     .then((res) => res.json())
     .then((data) => setTracks(data))
+    .then(() => setIsLoading(false))
     .catch((e) => console.error(e))
 }, [])
+
+  
 
   return (
     <Box>
@@ -55,7 +59,15 @@ const RecentlyPlayed = () => {
         Recently played
       </Heading>
       <VStack spacing={4} align="start">
-        {tracks?.data.items.map((track, index) => (
+        {isLoading ? <Box
+            w="600px"
+            h="400px"
+            display={"flex"}
+            alignItems={"center"}
+            justifyContent={"center"}>
+            
+            <Spinner />
+          </Box> : tracks?.data.items.map((track, index) => (
           <React.Fragment key={index}>
             <HStack spacing={4}>
               <Image

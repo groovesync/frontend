@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Box, Grid, Heading, Image } from "@chakra-ui/react";
+import { Box, Grid, Heading, Image, Spinner } from "@chakra-ui/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
@@ -17,6 +17,7 @@ interface SpotifyObssessionsResponse {
 
 const YourObssessions = () => {
   const [images, setImages] = useState<SpotifyObssessionsResponse>()
+  const [isLoading, setIsLoading] = useState(true)
 
   const router = useRouter()
 
@@ -29,6 +30,7 @@ const YourObssessions = () => {
     })
     .then((res) => res.json())
     .then((data) => setImages(data))
+    .then(() => setIsLoading(false))
     .catch((e) => console.error(e))
   }, [])
 
@@ -41,6 +43,16 @@ const YourObssessions = () => {
             Your obsessions
         </Heading>
 
+        {isLoading ? 
+          <Box
+            w="600px"
+            h="300px"
+            display={"flex"}
+            alignItems={"center"}
+            justifyContent={"center"}>
+            
+            <Spinner />
+          </Box> : 
         <Grid
         templateColumns="300px 150px"
         alignItems="center"
@@ -72,7 +84,7 @@ const YourObssessions = () => {
             />
             ))}
         </Grid>
-        </Grid>
+        </Grid>}
     </Box>
   );
 };

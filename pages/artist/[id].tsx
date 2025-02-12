@@ -1,16 +1,90 @@
-import { Box, Flex, Image, Text } from "@chakra-ui/react";
+import { Box, Flex, Image, Spinner, Text } from "@chakra-ui/react";
+import { GetServerSidePropsContext } from "next";
 import Head from "next/head";
-import { useState } from "react";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 import AlbumCover from "../../components/AlbumCover/AlbumCover";
 import LoadContentButton from "../../components/LoadContentButton/LoadContentButton";
 import Navbar from "../../components/Navbar/Navbar";
 import useAuth from "../../hooks/useAuth";
 import artistJson from "../../mockData/artist.json"
 
-export default function AlbumPage() {
+interface SpotifyArtistResponse {
+    data: {
+        external_urls: {
+            spotify: string
+        },
+        images: {
+            url: string
+        }[],
+        name: string
+    }
+}
 
-    const artist = artistJson
-    const albums = artist.albums
+interface SpotifyAlbumResponse {
+    data: {
+        items: {
+            id: string,
+            images: {
+                url: string
+            }[],
+            name: string,
+            release_date: string
+        }[]
+    }
+}
+
+
+export default function ArtistPage() {
+
+    const router = useRouter();
+  const { id } = router.query;
+  
+  const [artist, setArtist] = useState<SpotifyArtistResponse>();
+  const [isLoading, setIsLoading] = useState(true);
+  const [albums, setAlbums] = useState<SpotifyAlbumResponse>()
+
+  useEffect(() => {
+    if (!id) return
+
+    const fetchArtist = async () => {
+      setIsLoading(true);
+      try {
+        const res = await fetch(`http://localhost:5000/spotify/artist/${id}`, {
+          headers: {
+            "Authorization": "Bearer " + localStorage.getItem("@groovesync-backend-token"),
+            "Spotify-Token": localStorage.getItem("@groovesync-spotify-access-token") || "",
+          },
+        });
+
+        const data = await res.json();
+        setArtist(data);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchArtist();
+
+    const fetchAlbums = async () => {
+        setIsLoading(true);
+        try {
+            const res = await fetch(`http://localhost:5000/spotify/artist/${id}/albums`, {
+              headers: {
+                "Authorization": "Bearer " + localStorage.getItem("@groovesync-backend-token"),
+                "Spotify-Token": localStorage.getItem("@groovesync-spotify-access-token") || "",
+              },
+            });
+    
+            const data = await res.json();
+            setAlbums(data)
+          } finally {
+            setIsLoading(false);
+          }
+    }
+
+    fetchAlbums();
+  }, [id]);
 
     const ALBUMS_COUNT = 6
     const [visibleAlbums, setVisibleAlbums] = useState(ALBUMS_COUNT)
@@ -33,11 +107,13 @@ export default function AlbumPage() {
 
     if (!isAuthenticated) return null
 
+    if (isLoading) return <Box w="100vw" h="100vh" display={"flex"} alignItems="center" justifyContent={"center"}><Spinner></Spinner></Box>
+
 
     return (
         <>
         <Head>
-            <title>{artist.name}</title>
+            <title>{"Name"}</title>
         </Head>
         <Box 
             px={"180px"} 
@@ -49,8 +125,8 @@ export default function AlbumPage() {
             <Image 
                 w={"100%"} 
                 h={"275px"} 
-                src={artist.coverURL} 
-                alt={artist.name} 
+                src={artist?.data.images[0].url} 
+                alt={artist?.data.name} 
                 objectFit={"cover"} 
                 borderRadius={"5px"}/>
 
@@ -59,7 +135,7 @@ export default function AlbumPage() {
                 fontStyle={"italic"} 
                 fontSize={"64px"} 
                 pb="35px">
-                    {artist.name}
+                    {artist?.data.name}
             </Text>
 
             <Text 
@@ -69,26 +145,28 @@ export default function AlbumPage() {
                     Albums
             </Text>
 
+            
             <Flex 
                 gap={"40px"} 
                 flexFlow={"wrap"}>
-                    {albums.slice(0, visibleAlbums).map((album, index) =>  
+                    {albums?.data.items.slice(0, visibleAlbums).map((album, index) =>  
                         <AlbumCover 
                             key={index} 
-                            coverURL={album.coverURL} 
-                            pageURL={"/album/"+album.pageURL} 
-                            title={album.title} 
-                            year={album.year}/>)}
+                            coverURL={album.images[0].url} 
+                            pageURL={"/album/"+album.id} 
+                            title={album.name} 
+                            year={parseInt(album.release_date.split("-")[0], 10)}/>)}
             </Flex>
 
-            {visibleAlbums < albums.length && (
+            {visibleAlbums < (albums?.data.items.length || 0) && (
                 <LoadContentButton loadMore={true} callback={showMoreAlbums} />
             )}
 
-            {visibleAlbums >= albums.length && seeMoreAlbumsUsed && (
+            {visibleAlbums >= (albums?.data.items.length || 0) && seeMoreAlbumsUsed && (
                 <LoadContentButton loadMore={false} callback={showLessAlbums} />
             )}
         </Box>
         </>
     )
 }
+
