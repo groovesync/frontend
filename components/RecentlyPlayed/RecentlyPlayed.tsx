@@ -1,53 +1,43 @@
 import React, { useEffect, useState } from "react";
 import { Box, HStack, Image, VStack, Text, Heading, Divider } from "@chakra-ui/react";
-import mockData from "../../mockData/recentlyPlayed.json";
 
 interface SpotifyRecentTracksResponse {
   data: {
-    cursors: {
-      after: string;
-      before: string;
-    };
-    href: string;
-    items: TrackItem[];
-  };
+    items: {
+      track: {
+        name: string,
+        album: {
+          name: string,
+          images: {
+            url: string
+          }[]
+        },
+        artists: {
+          name: string
+        }[]
+      }
+  }[]
+  }
 }
-
-interface TrackItem {
-  played_at: string;
-  track: Track;
-  name: string;
-}
-
-interface Track {
-  album: Album;
-  artists: Artist[];
-}
-
-interface Album {
-  external_urls: {
-    spotify: string;
-  };
-  images: AlbumImage[];
-  name: string;
-}
-
-interface AlbumImage {
-  height: number;
-  url: string;
-  width: number;
-}
-
-interface Artist {
-  external_urls: {
-    spotify: string;
-  };
-  name: string;
-}
-
 
 const RecentlyPlayed = () => {
   const [tracks, setTracks] = useState<SpotifyRecentTracksResponse>()
+
+  const formatArtistsName = (artistsNames: {name: string}[]) => {
+    if (artistsNames.length == 1) {
+      return artistsNames[0]["name"]
+    }
+    let result = ""
+    for (let i = 0; i < artistsNames.length; i++) {
+      if (i == artistsNames.length - 1) {
+        result = result + ", " + artistsNames[i]["name"]
+      } else {
+        result += artistsNames[i]["name"] + ", "
+      }
+    }
+
+    return result
+  }
   
   useEffect(() => {
     fetch("http://localhost:5000/spotify/recent-tracks", 
@@ -69,22 +59,22 @@ const RecentlyPlayed = () => {
           <React.Fragment key={index}>
             <HStack spacing={4}>
               <Image
-                
-                
+                src={track.track.album.images[0]["url"]}
+                alt={track.track.album.name}
                 boxSize="40px"
                 borderRadius="3px"
                 objectFit="cover"
               />
               <VStack align="start" spacing={0}>
                 <Text fontWeight="semibold" fontSize="16px" color="brand.500">
-                  
+                  {track.track.name}
                 </Text>
                 <Text fontSize="16px" fontStyle="italic" color="brand.500">
-                  
+                  {formatArtistsName(track.track.artists)}
                 </Text>
               </VStack>
             </HStack>
-            {index < mockData.length - 1 && <Divider orientation="horizontal" />}
+            {index < tracks?.data.items.length - 1 && <Divider orientation="horizontal" />}
           </React.Fragment>
         ))}
       </VStack>
