@@ -1,12 +1,9 @@
-// pages/album/[id].tsx
-
 import { Box, Spinner } from "@chakra-ui/react";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import AlbumReviewed from "../../components/AlbumReviewed/AlbumReviewed";
 
-// Interface simplificada para a resposta do álbum vindo do Spotify
 interface SpotifyAlbum1Response {
   data: {
     artists: {
@@ -31,7 +28,7 @@ interface SpotifyAlbum1Response {
   id: string;
 }
 
-// Exemplo de userReview mockado (substitua pelo review real do usuário, se tiver)
+// Exemplo de userReview mockado (substituir dps pelo review real do usuário, qnd tiver)
 const mockUserReview = {
   albumId: "someAlbumId",
   userId: "someUserId",
@@ -84,7 +81,6 @@ const AlbumPage = () => {
     );
   }
 
-  // Converte os dados do Spotify para o formato do AlbumReviewed
   const albumDataForReview = {
     title: album.data.name,
     artist: album.data.artists.map((art) => ({
@@ -92,10 +88,9 @@ const AlbumPage = () => {
       id: art.id,
     })),
     coverURL: album.data.images?.[0]?.url || "",
-    // se release_date = "2023-01-01", pegamos só o ano "2023"
     year: parseInt(album.data.release_date.split("-")[0], 10) || 0,
-    overallRating: null, // ou busque de algum backend que calcule a média
-    id: album.id,        // se preferir, use "album.data.id"
+    overallRating: null, // ta faltando ainda vei
+    id: album.data.external_urls.spotify,        
   };
 
   return (
