@@ -1,0 +1,64 @@
+{
+    "users": [
+      {
+        "spotify_id": "user_001",
+        "name": "Abed Nadir",
+        "profilePictureURL": "https://vignette.wikia.nocookie.net/community-sitcom/images/4/40/1x17_Abed_3.jpg/revision/latest/zoom-crop/width/320/height/320?cb=20150621200952",
+        "spotifyProfile": "https://open.spotify.com/user/abednadir",
+        "reviews": 15,
+        "followers": [
+          "user_002",
+          "user_003",
+          "user_004"
+        ],
+        "following": [
+          "user_002",
+          "user_003",
+          "user_004"
+        ]
+      },
+      {
+        "spotify_id": "user_002",
+        "name": "Jeff Winger",
+        "profilePictureURL": "https://via.placeholder.com/320",
+        "spotifyProfile": "https://open.spotify.com/user/jeffwinger",
+        "reviews": 20,
+        "followers": [
+          "user_004"
+        ],
+        "following": [
+          "user_001",
+          "user_003"
+        ]
+      },
+      {
+        "spotify_id": "user_003",
+        "name": "Britta Perry",
+        "profilePictureURL": "https://via.placeholder.com/320",
+        "spotifyProfile": "https://open.spotify.com/user/brittaperry",
+        "reviews": 8,
+        "followers": [
+          "user_001",
+          "user_004"
+        ],
+        "following": [
+          "user_002"
+        ]
+      },
+      {
+        "spotify_id": "user_004",
+        "name": "Annie Edison",
+        "profilePictureURL": "https://via.placeholder.com/320",
+        "spotifyProfile": "https://open.spotify.com/user/anniedison",
+        "reviews": 30,
+        "followers": [
+          "user_001",
+          "user_002"
+        ],
+        "following": [
+          "user_003"
+        ]
+      }
+    ]
+  }
+  

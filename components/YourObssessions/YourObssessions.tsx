@@ -22,7 +22,7 @@ const YourObssessions = () => {
   const router = useRouter()
 
   useEffect(() => {
-    fetch("http://localhost:5000/spotify/obsessions", {
+    fetch("http://150.165.85.37:5000/spotify/obsessions", {
       headers: {
         "Authorization": "Bearer " + localStorage.getItem("@groovesync-backend-token"),
         "Spotify-Token": localStorage.getItem("@groovesync-spotify-access-token") || ""

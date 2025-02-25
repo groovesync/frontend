@@ -49,7 +49,7 @@ const AlbumPage = () => {
     const fetchAlbum = async () => {
       setIsLoading(true);
       try {
-        const res = await fetch(`http://localhost:5000/spotify/album/${id}`, {
+        const res = await fetch(`http://150.165.85.37:5000/spotify/album/${id}`, {
           headers: {
             Authorization: "Bearer " + localStorage.getItem("@groovesync-backend-token"),
             "Spotify-Token": localStorage.getItem("@groovesync-spotify-access-token") || "",

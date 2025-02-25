@@ -1,6 +1,6 @@
 import { Avatar, Box, Image, Text } from "@chakra-ui/react";
 import Link from "next/link";
-import userProfileData from "../../mockData/userProfileData.json"
+import userProfileData from "../../mockData/userProfileDatav2.json"
 
 const ArtistProfilePicture: React.FC<{name: string, pictureURL: string, pageURL: string}> = ({name, pictureURL, pageURL}) => {
     return (

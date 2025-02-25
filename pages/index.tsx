@@ -36,29 +36,38 @@ const LandingPage = () => {
 
   useEffect(() => {
     if (code) {
-      setIsLoading(true);
+        setIsLoading(true);
 
-      axios
-        .post("http://127.0.0.1:5000/auth/login/spotify", { code })
-        .then((response) => {
-          let loginData: LoginData = response.data
+        fetch("http://150.165.85.37:5000/auth/login/spotify", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({"code": code})
+        })
+        .then(async (response) => {
+            if (!response.ok) {
+                throw new Error(`Erro HTTP! Status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then((loginData: LoginData) => {
+            localStorage.setItem("@groovesync-backend-token", loginData.backend_token);
+            localStorage.setItem("@groovesync-spotify-access-token", loginData.spotify_access_token);
+            localStorage.setItem("@groovesync-profile-picture-url", loginData.user_info.images[0].url);
+            localStorage.setItem("@groovesync-spotify-id", loginData.user_info.spotify_id);
+            localStorage.setItem("@groovesync-username", loginData.user_info.username);
 
-          localStorage.setItem("@groovesync-backend-token", loginData.backend_token)
-          localStorage.setItem("@groovesync-spotify-access-token", loginData.spotify_access_token)
-          localStorage.setItem("@groovesync-profile-picture-url", loginData.user_info.images[0].url)
-          localStorage.setItem("@groovesync-spotify-id", loginData.user_info.spotify_id)
-          localStorage.setItem("@groovesync-username", loginData.user_info.username)
-          
-          router.push("/home")
+            router.push("/home");
         })
         .catch((error) => {
-          console.error("Erro ao autenticar:", error.response?.data || error.message);
-        })
-        
+            console.error("Erro ao autenticar:", error.message);
+        });
     }
-  }, [code, router]);
+}, [code, router]);
 
-  const SPOTIFY_CLIENT_ID = "b8661362a8284aa79979401497393b3a";
+
+  const SPOTIFY_CLIENT_ID = "70dc0dae48b444afad783c41008b1e3b";
   const SPOTIFY_REDIRECT_URI = "http://localhost:3000";
   const SPOTIFY_URL = `https://accounts.spotify.com/authorize?client_id=${SPOTIFY_CLIENT_ID}&response_type=code&redirect_uri=${SPOTIFY_REDIRECT_URI}&scope=user-read-recently-played%20user-read-currently-playing%20user-top-read%20user-library-read%20user-read-playback-state%20user-modify-playback-state%20user-read-email%20user-read-private`;
 
