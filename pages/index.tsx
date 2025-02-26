@@ -139,7 +139,7 @@ const LandingPage = () => {
 export default LandingPage;
 
 const GrooveSyncLilacIcon = () => {
-  return <Image src={"/frenchlilac.svg"} />;
+  return <Image alt={"GrooveSync Logo"} src={"/frenchlilac.svg"} />;
 };
 
 const SpotifyIcon = () => {

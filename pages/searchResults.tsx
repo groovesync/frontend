@@ -112,7 +112,7 @@ export default function SearchResults() {
         </Box> :
 
          <Flex gap="40px" flexFlow={"wrap"}>
-         {artists.items ? artists?.items.slice(0, 5).map((artist) => <ArtistProfilePicture name={artist.name} pictureURL={artist.images.length > 0 ? artist.images[0].url : ""} pageURL={"artist/"+artist.id}/>) : ""}
+         {artists.items ? artists?.items.slice(0, 5).map((artist) => <ArtistProfilePicture key={artist.id} name={artist.name} pictureURL={artist.images.length > 0 ? artist.images[0].url : ""} pageURL={"artist/"+artist.id}/>) : ""}
         </Flex>}
        
 
