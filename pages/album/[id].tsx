@@ -46,6 +46,9 @@ const AlbumPage = () => {
     .then((data) => {
       setAlbum(data)
     })
+    .catch(() => {
+      router.reload()
+    })
 
     setIsLoading(false);
   }, [id]);

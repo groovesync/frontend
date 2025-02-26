@@ -57,7 +57,9 @@ export default function ArtistPage() {
 
         const data = await res.json();
         setArtist(data);
-      } finally {
+      } catch {
+        router.reload()
+      }  finally {
         setIsLoading(false);
       }
     };
@@ -76,6 +78,8 @@ export default function ArtistPage() {
     
             const data = await res.json();
             setAlbums(data)
+          } catch {
+            router.reload()
           } finally {
             setIsLoading(false);
           }
@@ -123,8 +127,8 @@ export default function ArtistPage() {
             <Image 
                 w={"100%"} 
                 h={"275px"} 
-                src={artist?.data.images[0].url} 
-                alt={artist?.data.name} 
+                src={artist?.data ? artist.data.images[0].url : ""} 
+                alt={artist?.data ? artist.data.name : "Artist Image"} 
                 objectFit={"cover"} 
                 borderRadius={"5px"}/>
 
@@ -133,7 +137,7 @@ export default function ArtistPage() {
                 fontStyle={"italic"} 
                 fontSize={"64px"} 
                 pb="35px">
-                    {artist?.data.name}
+                    {artist?.data ? artist.data.name : ""}
             </Text>
 
             <Text 
@@ -147,7 +151,7 @@ export default function ArtistPage() {
             <Flex 
                 gap={"40px"} 
                 flexFlow={"wrap"}>
-                    {albums?.data.items.slice(0, visibleAlbums).map((album, index) =>  
+                    {albums?.data && albums?.data.items.slice(0, visibleAlbums).map((album, index) =>  
                         <AlbumCover 
                             key={index} 
                             coverURL={album.images[0].url} 

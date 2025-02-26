@@ -82,8 +82,8 @@ const CurrentlyPlaying: React.FC = ({}) => {
         >
         <HStack spacing={4} align="center">
             <Image
-            src={currentTrack ? currentTrack?.data.item.album.images[0]["url"] : "/assets/Spotify.svg"}
-            alt={`${currentTrack?.data.item.album.name} album art`}
+            src={currentTrack?.data ? currentTrack?.data.item?.album.images[0]["url"] : "/assets/Spotify.svg"}
+            alt={`${currentTrack?.data ? currentTrack?.data.item.album.name : ""} album art`}
             boxSize="50px"
             borderRadius="md"
             objectFit={"cover"}
@@ -91,10 +91,10 @@ const CurrentlyPlaying: React.FC = ({}) => {
 
             <VStack align="start" spacing={0}>
             <Text fontSize="16px" fontWeight="semibold" color="brand.500">
-                {currentTrack ? truncateText(currentTrack?.data.item.name, 35) : "Nothing to display"}
+                {currentTrack?.data ? truncateText(currentTrack?.data.item.name, 35) : "Nothing to display"}
             </Text>
             <Text fontSize="16px" fontStyle="italic" color="brand.500">
-                {truncateText(formatArtistsName(currentTrack?.data.item.artists), 35)}
+                {truncateText(formatArtistsName(currentTrack?.data ? currentTrack?.data.item.artists : []), 35)}
             </Text>
             </VStack>
         </HStack>

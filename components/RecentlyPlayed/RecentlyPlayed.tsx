@@ -59,7 +59,7 @@ const RecentlyPlayed = () => {
         Recently played
       </Heading>
       <VStack spacing={4} align="start">
-        {isLoading ? <Box
+        {isLoading || !tracks?.data ? <Box
             w="600px"
             h="400px"
             display={"flex"}

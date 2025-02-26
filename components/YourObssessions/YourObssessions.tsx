@@ -60,7 +60,7 @@ const YourObssessions = () => {
         >
         <Box>
             <Image
-            src={images?.data.items[0].images ? images?.data.items[0].images[0].url : ""}
+            src={images?.data ? images?.data.items[0].images[0].url : ""}
             onClick={() => router.push("/artist/"+images?.data.items[0].id)}
             alt="Main Image"
             objectFit="cover"
@@ -71,7 +71,7 @@ const YourObssessions = () => {
         </Box>
 
         <Grid templateRows="repeat(2, 150px)" templateColumns="repeat(2, 150px)" gap={0}>
-            {images?.data.items.slice(1, images?.data.items.length).map((artist, index) => (
+            {images?.data ? images.data.items.slice(1, images?.data.items.length).map((artist, index) => (
             <Image
                 key={index}
                 onClick={() => router.push("/artist/"+artist.id)}
@@ -82,7 +82,7 @@ const YourObssessions = () => {
                 h="150px"
                 cursor={"pointer"}
             />
-            ))}
+            )) : ""}
         </Grid>
         </Grid>}
     </Box>
