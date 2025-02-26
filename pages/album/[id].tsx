@@ -4,67 +4,50 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import AlbumReviewed from "../../components/AlbumReviewed/AlbumReviewed";
 
-interface SpotifyAlbum1Response {
-  data: {
+interface SpotifyAlbumResponse {
+  album_info: {
     artists: {
-      external_urls: {
-        spotify: string;
-      };
-      href: string;
-      id: string;
-      name: string;
-      type: string;
-      uri: string;
-    }[];
-    external_urls: {
-      spotify: string;
-    };
-    images: {
-      url: string;
-    }[];
-    name: string;
-    release_date: string;
-  };
-  id: string;
+      name: string,
+      id: string
+    }[],
+    name: string,
+    id: string,
+    image: string,
+    overall_rating: number | null,
+    release_year: string,
+    reviews: [],
+    url: string,
+    your_rating: number | null,
+    your_review: string | null
+  }
 }
 
-// Exemplo de userReview mockado (substituir dps pelo review real do usuário, qnd tiver)
-const mockUserReview = {
-  albumId: "someAlbumId",
-  userId: "someUserId",
-  rating: 4,
-  text: "I really enjoyed this album!",
-};
 
 const AlbumPage = () => {
   const router = useRouter();
   const { id } = router.query;
 
-  const [album, setAlbum] = useState<SpotifyAlbum1Response | null>(null);
+  const [album, setAlbum] = useState<SpotifyAlbumResponse | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
     if (!id) return;
 
-    const fetchAlbum = async () => {
-      setIsLoading(true);
-      try {
-        const res = await fetch(`http://localhost:5000/spotify/album/${id}`, {
-          headers: {
-            Authorization: "Bearer " + localStorage.getItem("@groovesync-backend-token"),
-            "Spotify-Token": localStorage.getItem("@groovesync-spotify-access-token") || "",
-          },
-        });
-        const data: SpotifyAlbum1Response = await res.json();
-        setAlbum(data);
-      } catch (error) {
-        console.error("Erro ao carregar o álbum:", error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
+    setIsLoading(true);
 
-    fetchAlbum();
+    fetch(`http://150.165.85.37:5000/spotify/albums/${id}?user_id=${localStorage.getItem("@groovesync-spotify-id") || ""}`, {
+      headers: {
+        "Authorization": "Bearer " + localStorage.getItem("@groovesync-backend-token"),
+        "Spotify-Token": localStorage.getItem("@groovesync-spotify-access-token") || "",
+        "Content-Type": "application/json"
+      },
+    })
+    .then((res) => res.json())
+    .then((data) => {
+      setAlbum(data)
+    })
+
+    setIsLoading(false);
   }, [id]);
 
   if (isLoading || !album) {
@@ -81,26 +64,14 @@ const AlbumPage = () => {
     );
   }
 
-  const albumDataForReview = {
-    title: album.data.name,
-    artist: album.data.artists.map((art) => ({
-      name: art.name,
-      id: art.id,
-    })),
-    coverURL: album.data.images?.[0]?.url || "",
-    year: parseInt(album.data.release_date.split("-")[0], 10) || 0,
-    overallRating: null, // ta faltando ainda vei
-    id: album.data.external_urls.spotify,        
-  };
-
   return (
     <>
       <Head>
-        <title>{album.data.name}</title>
+        <title>{album.album_info.name}</title>
       </Head>
       <AlbumReviewed
-        album={albumDataForReview}
-        userReview={mockUserReview}
+        album={album}
+        userReview={{albumId: id && typeof id === "string" ? id : undefined, userId: localStorage.getItem("@groovesync-spotify-id") || "", rating: album.album_info.your_rating, text: album.album_info.your_review}}
       />
     </>
   );

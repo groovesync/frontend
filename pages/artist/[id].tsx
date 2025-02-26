@@ -1,5 +1,4 @@
 import { Box, Flex, Image, Spinner, Text } from "@chakra-ui/react";
-import { GetServerSidePropsContext } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -7,7 +6,6 @@ import AlbumCover from "../../components/AlbumCover/AlbumCover";
 import LoadContentButton from "../../components/LoadContentButton/LoadContentButton";
 import Navbar from "../../components/Navbar/Navbar";
 import useAuth from "../../hooks/useAuth";
-import artistJson from "../../mockData/artist.json"
 
 interface SpotifyArtistResponse {
     data: {
@@ -50,7 +48,7 @@ export default function ArtistPage() {
     const fetchArtist = async () => {
       setIsLoading(true);
       try {
-        const res = await fetch(`http://localhost:5000/spotify/artist/${id}`, {
+        const res = await fetch(`http://150.165.85.37:5000/spotify/artist/${id}`, {
           headers: {
             "Authorization": "Bearer " + localStorage.getItem("@groovesync-backend-token"),
             "Spotify-Token": localStorage.getItem("@groovesync-spotify-access-token") || "",
@@ -69,7 +67,7 @@ export default function ArtistPage() {
     const fetchAlbums = async () => {
         setIsLoading(true);
         try {
-            const res = await fetch(`http://localhost:5000/spotify/artist/${id}/albums`, {
+            const res = await fetch(`http://150.165.85.37:5000/spotify/artist/${id}/albums`, {
               headers: {
                 "Authorization": "Bearer " + localStorage.getItem("@groovesync-backend-token"),
                 "Spotify-Token": localStorage.getItem("@groovesync-spotify-access-token") || "",

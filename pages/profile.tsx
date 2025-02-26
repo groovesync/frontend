@@ -63,7 +63,7 @@ export default function Profile() {
         <ProfileHeading />
 
         <Text fontSize={"32px"} fontWeight={"bold"} fontStyle={"italic"} color={"brand.500"} pb={"20px"} pt={"70px"}>
-            Reviews on your own
+            My reviews
         </Text>
 
         <Flex gap="40px" flexFlow={"wrap"}>

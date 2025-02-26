@@ -22,7 +22,7 @@ const YourObssessions = () => {
   const router = useRouter()
 
   useEffect(() => {
-    fetch("http://localhost:5000/spotify/obsessions", {
+    fetch("http://150.165.85.37:5000/spotify/obsessions", {
       headers: {
         "Authorization": "Bearer " + localStorage.getItem("@groovesync-backend-token"),
         "Spotify-Token": localStorage.getItem("@groovesync-spotify-access-token") || ""
@@ -60,7 +60,7 @@ const YourObssessions = () => {
         >
         <Box>
             <Image
-            src={images?.data.items[0].images[0].url}
+            src={images?.data.items[0].images ? images?.data.items[0].images[0].url : ""}
             onClick={() => router.push("/artist/"+images?.data.items[0].id)}
             alt="Main Image"
             objectFit="cover"
@@ -75,7 +75,7 @@ const YourObssessions = () => {
             <Image
                 key={index}
                 onClick={() => router.push("/artist/"+artist.id)}
-                src={artist.images[0].url}
+                src={artist.images ? artist.images[0].url : ""}
                 alt={`Secondary Image ${index + 1}`}
                 objectFit="cover"
                 w="150px"

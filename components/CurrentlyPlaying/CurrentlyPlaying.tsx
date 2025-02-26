@@ -57,7 +57,7 @@ const CurrentlyPlaying: React.FC = ({}) => {
   };
 
   useEffect(() => {
-    fetch("http://localhost:5000/spotify/current-track", {
+    fetch("http://150.165.85.37:5000/spotify/current-track", {
       headers: {"Authorization": "Bearer " + localStorage.getItem("@groovesync-backend-token"),
                 "Spotify-Token": localStorage.getItem("@groovesync-spotify-access-token") || ""
               }
