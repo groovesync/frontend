@@ -1,5 +1,3 @@
-'use client'
-
 import { Box, Button, Image, Link, Spinner, Text } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -43,7 +41,7 @@ const LandingPage = () => {
     if (code) {
         setIsLoading(true);
 
-        fetch("http://150.165.85.37:5000/auth/login/spotify", {
+        fetch("https://fa21-45-175-218-233.ngrok-free.app/auth/login/spotify", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
