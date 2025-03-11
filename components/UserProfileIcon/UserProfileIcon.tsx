@@ -10,7 +10,7 @@ const UserProfileIcon = () => {
 
     useEffect(() => {
         if (typeof window !== "undefined") {
-            setUserProfilePictureURL(localStorage.getItem("profilePictureURL") || "")
+            setUserProfilePictureURL(localStorage.getItem("@groovesync-profile-picture-url") || "")
         }
     }, [])
 

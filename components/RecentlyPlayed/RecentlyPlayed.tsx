@@ -1,34 +1,92 @@
-import React from "react";
-import { Box, HStack, Image, VStack, Text, Heading, Divider } from "@chakra-ui/react";
-import mockData from "../../mockData/recentlyPlayed.json";
+import React, { useEffect, useState } from "react";
+import { Box, HStack, Image, VStack, Text, Heading, Divider, Spinner } from "@chakra-ui/react";
+
+interface SpotifyRecentTracksResponse {
+  data: {
+    items: {
+      track: {
+        name: string,
+        album: {
+          name: string,
+          images: {
+            url: string
+          }[]
+        },
+        artists: {
+          name: string
+        }[]
+      }
+  }[]
+  }
+}
 
 const RecentlyPlayed = () => {
+  const [tracks, setTracks] = useState<SpotifyRecentTracksResponse>()
+  const [isLoading, setIsLoading] = useState(true)
+
+  const formatArtistsName = (artistsNames: {name: string}[]) => {
+    if (artistsNames.length == 1) {
+      return artistsNames[0]["name"]
+    }
+    let result = ""
+    for (let i = 0; i < artistsNames.length; i++) {
+      if (i == artistsNames.length - 1) {
+        result = result + ", " + artistsNames[i]["name"]
+      } else {
+        result += artistsNames[i]["name"] + ", "
+      }
+    }
+
+    return result
+  }
+  
+  useEffect(() => {
+    fetch("http://150.165.85.37:5000/spotify/recent-tracks", 
+      {headers: {"Authorization": "Bearer " + localStorage.getItem("@groovesync-backend-token"),
+                "Spotify-Token": localStorage.getItem("@groovesync-spotify-access-token") || ""
+      }})
+    .then((res) => res.json())
+    .then((data) => setTracks(data))
+    .then(() => setIsLoading(false))
+    .catch((e) => console.error(e))
+}, [])
+
+  
+
   return (
     <Box>
       <Heading color="brand.500" fontSize="32px" fontWeight="bold" fontStyle="italic" mb="15px">
         Recently played
       </Heading>
       <VStack spacing={4} align="start">
-        {mockData.map((track, index) => (
+        {isLoading || !tracks?.data ? <Box
+            w="600px"
+            h="400px"
+            display={"flex"}
+            alignItems={"center"}
+            justifyContent={"center"}>
+            
+            <Spinner />
+          </Box> : tracks?.data.items.map((track, index) => (
           <React.Fragment key={index}>
             <HStack spacing={4}>
               <Image
-                src={track.albumCoverURL}
-                alt={track.trackName}
+                src={track.track.album.images[0]["url"]}
+                alt={track.track.album.name}
                 boxSize="40px"
                 borderRadius="3px"
                 objectFit="cover"
               />
               <VStack align="start" spacing={0}>
                 <Text fontWeight="semibold" fontSize="16px" color="brand.500">
-                  {track.trackName}
+                  {track.track.name}
                 </Text>
                 <Text fontSize="16px" fontStyle="italic" color="brand.500">
-                  {track.artistName}
+                  {formatArtistsName(track.track.artists)}
                 </Text>
               </VStack>
             </HStack>
-            {index < mockData.length - 1 && <Divider orientation="horizontal" />}
+            {index < tracks?.data.items.length - 1 && <Divider orientation="horizontal" />}
           </React.Fragment>
         ))}
       </VStack>

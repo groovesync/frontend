@@ -4,12 +4,9 @@ import {
   Text,
   VStack,
   Image,
-  Button,
   HStack,
   Avatar,
 } from "@chakra-ui/react";
-import HomeButton from "../HomeButton/HomeButton";
-import UserProfileIcon from "../UserProfileIcon/UserProfileIcon";
 import { Rating } from "../Rating/Rating";
 import WriteReviewActionButton from "../WriteReviewActionButton/WriteReviewActionButton";
 import OpenSpotifyButton from "../OpenSpotifyButton/OpenSpotifyButton";

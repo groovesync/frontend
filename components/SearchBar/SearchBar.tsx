@@ -1,9 +1,15 @@
 import { HStack, Image, Input } from "@chakra-ui/react";
+import { useRouter } from "next/router";
+import { useState } from "react";
 
 const Searchbar = () => {
+    const router = useRouter()
+    const [searchQuery, setSearchQuery] = useState("")
+
     const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
-        if (e.key === "Enter") {
-          console.log("Searching:", e.currentTarget.value);
+        if (e.key === "Enter" && searchQuery.trim() !== "") {
+          sessionStorage.setItem("@groovesync-latest-search-query-value", searchQuery.trim())
+          router.push(`/searchResults?query=${encodeURIComponent(searchQuery)}`);
         }
       };
     
@@ -23,6 +29,8 @@ const Searchbar = () => {
       <Input
         variant="unstyled"
         placeholder="Search here for the new..."
+        value={searchQuery}
+        onChange={(e) => setSearchQuery(e.target.value)}
         onKeyPress={handleKeyPress}
         color="brand.500"
         _placeholder={{ color: "gray.400" }}

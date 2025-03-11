@@ -31,7 +31,7 @@ const PopularWithFriends: React.FC = () => {
 
   return (
     <Box mt={8} width="70%" maxW="40em" textAlign="left">
-      <Text fontSize="2xl" fontWeight="bold" fontStyle="italic" mb={4}>
+      <Text fontSize="32px" fontWeight="bold" fontStyle="italic" mb={4}>
         Popular with friends
       </Text>
       <Box

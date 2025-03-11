@@ -12,40 +12,47 @@ import Navbar from "../Navbar/Navbar";
 import Link from "next/link";
 import OpenSpotifyButton from "../OpenSpotifyButton/OpenSpotifyButton";
 import Head from "next/head";
+import WriteReviewActionButton from "../WriteReviewActionButton/WriteReviewActionButton";
 
 interface Album {
-  title: string;
-  artist: Artist[];
-  coverURL: string;
-  year: number;
-  overallRating: number | null | undefined;
-  id: string;
+  album_info: {
+    artists: {
+      name: string,
+      id: string
+    }[],
+    name: string,
+    id: string,
+    image: string,
+    overall_rating: number | null,
+    release_year: string,
+    reviews: {
+      username: string,
+      profile_picture: string,
+      rate: number,
+      text: string
+    }[],
+    url: string,
+    your_rating: number | null,
+    your_review: string | null
+  }
 }
 
+
 interface UserReview {
-  albumId: string,
+  albumId?: string,
   userId: string,
-  rating: number,
-  text?: string 
+  rating?: number | null,
+  text?: string | null
 }
 
 interface AlbumReviewedProps {
   album: Album;
-  userReview: UserReview | undefined
-}
-
-interface Artist {
-  name: string,
-  id: string
+  userReview: UserReview
 }
 
 const AlbumReviewed: React.FC<AlbumReviewedProps> = ({ album, userReview }) => {
 
-  const reviews = [
-    { name: "Lucas de Medeiros", rating: 5, comment: "An amazing album.", userProfilePictureURL: "" },
-    { name: "Sabrina Barbosa", rating: 4, comment: "Loved the sound!", userProfilePictureURL: ""},
-    { name: "Melissa Marques", rating: 3, userProfilePictureURL: ""},
-  ];
+
 
   const userProfilePictureURL = localStorage.getItem("profilePictureURL") || ""
 
@@ -54,14 +61,14 @@ const AlbumReviewed: React.FC<AlbumReviewedProps> = ({ album, userReview }) => {
           py={"40px"} 
           mx="auto">
       <Head>
-        <title>{album.title}</title>
+        <title>{album.album_info.name}</title>
       </Head>
       <Navbar />
 
       <HStack align="center" spacing={8} mt={8}>
         <Image
-          src={album.coverURL}
-          alt={album.title}
+          src={album.album_info.image}
+          alt={album.album_info.name}
           boxSize="250px"
           borderRadius="md"
         />
@@ -72,16 +79,16 @@ const AlbumReviewed: React.FC<AlbumReviewedProps> = ({ album, userReview }) => {
             alignItems={"start"}
             h="250px">
 
-          <OpenSpotifyButton link={album.id} text="Listen on Spotify"/>
+          <OpenSpotifyButton link={album.album_info.url} text="Listen on Spotify"/>
 
           <Text fontSize="64px" fontWeight="bold" fontStyle="italic" color={"brand.500"}>
-            {album.title}
+            {album.album_info.name}
           </Text>
           
           <Text fontSize="16px" color="brand.500">
-            {album.artist.map((a, index) => <Link key={index} color="brand.500" href={"/artist/"+a.id}> {a.name} </Link>)}
+            {album.album_info.artists.map((a, index) => <Link key={index} color="brand.500" href={"/artist/"+a.id}> {a.name} </Link>)}
             •
-            {album.year}
+            {album.album_info.release_year}
           </Text>
 
 
@@ -100,10 +107,10 @@ const AlbumReviewed: React.FC<AlbumReviewedProps> = ({ album, userReview }) => {
 
               <HStack alignItems={"end"}>
                 <Text fontSize="32px" color="brand.500" fontWeight="bold" fontStyle={"italic"}>
-                  {album.overallRating && album.overallRating}
+                  {album.album_info.overall_rating}
                 </Text>
                 <Text fontSize="16px" color="brand.500" pb={2}>
-                {album.overallRating ? "out of 5" : "No reviews yet"}
+                {album.album_info.overall_rating ? "out of 5" : "No reviews yet..."}
                 </Text>
               </HStack>
 
@@ -111,23 +118,31 @@ const AlbumReviewed: React.FC<AlbumReviewedProps> = ({ album, userReview }) => {
                 Your Rating
               </Text>
 
-              <HStack alignItems={"end"}>
+              {userReview.rating ? <HStack alignItems={"end"}>
                 <Text fontSize="32px" color="brand.500" fontWeight="bold" fontStyle={"italic"}>
                   {userReview?.rating && userReview.rating}
                 </Text>
                 <Text fontSize="16px" color="brand.500" pb={2}>
                   out of 5
                 </Text>
-              </HStack>
+              </HStack> : 
+              <HStack alignItems={"end"} mt={2}>
+                <WriteReviewActionButton albumId={album.album_info.id} customWidth="220px"/>
+              </HStack>}
+
+              
 
         </Box>
 
       <VStack m="0" p="0">
       <Box>
+        {userReview.rating ?
+        <>
         <Text fontSize="32px" fontWeight="bold" fontStyle="italic" mb={4} color={"brand.500"}>
-          Your Review
+        Your Review
         </Text>
-        <Box
+
+          <Box
           p={4}
           bg="brand.400"
           borderRadius="md"
@@ -144,7 +159,7 @@ const AlbumReviewed: React.FC<AlbumReviewedProps> = ({ album, userReview }) => {
               <Text fontWeight="medium" fontSize="16px">
                 Yourself
               </Text>
-              <Rating value={userReview?.rating} isReadOnly/>
+              <Rating value={userReview?.rating ? userReview.rating : 0} isReadOnly/>
               </HStack>
           
               <Text mt={2}>
@@ -153,14 +168,16 @@ const AlbumReviewed: React.FC<AlbumReviewedProps> = ({ album, userReview }) => {
             </VStack>
           </HStack>          
         </Box>
+        </>
+      : ""}
       </Box>
 
       {/* Reviews Section */}
-      <Box mt={8}>
+      <Box mt={userReview.rating ? 8 : 0}>
         <Text fontSize="32px" fontWeight="bold" fontStyle="italic" mb={4} color={"brand.500"}>
           Reviews
         </Text>
-        {reviews.map((review, index) => (
+        {album.album_info.reviews.length > 0 ? album.album_info.reviews.map((review, index) => (
           <Box
             key={index}
             p={4}
@@ -172,24 +189,24 @@ const AlbumReviewed: React.FC<AlbumReviewedProps> = ({ album, userReview }) => {
           >
             <HStack>
               <VStack h="100%">
-                <Avatar src={review.userProfilePictureURL}/>
+                <Avatar src={review.profile_picture}/>
               </VStack>
 
               <VStack alignItems={"flex-start"} justifyContent={"center"} m="0" p="0">
                 <HStack justifyContent={"space-between"} m="0" p="0">
                   <Text fontWeight="medium" fontSize="16px">
-                    {review.name}
+                    {review.username}
                   </Text>
-                  <Rating value={review.rating} isReadOnly />
+                  <Rating value={review.rate} isReadOnly />
                 </HStack>
-                <Text mt={2}>{review?.comment}</Text>
+                <Text mt={2}>{review?.text}</Text>
               </VStack>
               
               
             </HStack>
             
           </Box>
-        ))}
+        )) : "No reviews yet..."}
       </Box>
       </VStack>
       </HStack>
