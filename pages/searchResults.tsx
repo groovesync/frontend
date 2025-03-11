@@ -1,15 +1,12 @@
-import { Box, Button, Flex, Image, Spinner, Text } from "@chakra-ui/react";
+import { Box, Flex, Spinner, Text } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import Head from "next/head";
 import AlbumCover from "../components/AlbumCover/AlbumCover";
 import Navbar from "../components/Navbar/Navbar";
 import LoadContentButton from "../components/LoadContentButton/LoadContentButton";
-import artistJson from "../mockData/artist.json"
 import ArtistProfilePicture from "../components/ArtistProfilePicture/ArtistProfilePicture";
-import userProfileData from "../mockData/userProfileData.json"
 import useAuth from "../hooks/useAuth";
 import { useRouter } from "next/router";
-import { headers } from "next/headers";
 
 
 interface SpotifyArtistResponse {
@@ -91,7 +88,7 @@ export default function SearchResults() {
       <Box px={"180px"} py={"40px"} mx="auto">
         <Head>
           <title>
-            Search Results
+            Search Results for “{searchQuery}”
           </title>
           
         </Head>
