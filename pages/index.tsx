@@ -1,8 +1,11 @@
+'use client'
+
 import { Box, Button, Image, Link, Spinner, Text } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import {motion} from "framer-motion";
+import { usePathname } from "next/navigation";
 
 const MotionBox = motion(Box);
 const MotionText = motion(Text);
@@ -31,8 +34,10 @@ interface ImageData {
 
 const LandingPage = () => {
   const router = useRouter();
+  
   const { code } = router.query;
   const [isLoading, setIsLoading] = useState(false);
+  const origin = process.env.NEXT_PUBLIC_URL
 
   useEffect(() => {
     if (code) {
@@ -68,7 +73,7 @@ const LandingPage = () => {
 
 
   const SPOTIFY_CLIENT_ID = "70dc0dae48b444afad783c41008b1e3b";
-  const SPOTIFY_REDIRECT_URI = "http://localhost:3000";
+  const SPOTIFY_REDIRECT_URI = origin;
   const SPOTIFY_URL = `https://accounts.spotify.com/authorize?client_id=${SPOTIFY_CLIENT_ID}&response_type=code&redirect_uri=${SPOTIFY_REDIRECT_URI}&scope=user-read-recently-played%20user-read-currently-playing%20user-top-read%20user-library-read%20user-read-playback-state%20user-modify-playback-state%20user-read-email%20user-read-private`;
 
   return (
