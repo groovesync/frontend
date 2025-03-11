@@ -41,7 +41,7 @@ const LandingPage = () => {
     if (code) {
         setIsLoading(true);
 
-        fetch("https://fa21-45-175-218-233.ngrok-free.app/auth/login/spotify", {
+        fetch("http://150.165.85.37:5000/auth/login/spotify", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
