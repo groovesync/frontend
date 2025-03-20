@@ -1,14 +1,14 @@
-import { Button, Image } from "@chakra-ui/react"
-import { useRouter } from "next/router"
-import React from "react"
+import { Button, Image } from "@chakra-ui/react";
+import { useRouter } from "next/router";
+import React from "react";
 
 interface WriteReviewProps {
-    albumId?: string,
-    customWidth?: string
+    customWidth?: string;
+    albumId?: string
 }
 
-const WriteReviewActionButton: React.FC<WriteReviewProps> = ({albumId, customWidth}) => {
-    const router = useRouter()
+const WriteReviewActionButton: React.FC<WriteReviewProps> = ({ customWidth, albumId }) => {
+    const router = useRouter();
 
     return (
         <Button
@@ -24,17 +24,15 @@ const WriteReviewActionButton: React.FC<WriteReviewProps> = ({albumId, customWid
             _hover={{ boxShadow: "lg" }}
             _active={{ boxShadow: "md" }}
             transition="box-shadow 0.2s ease-in-out"
-            onClick={() => albumId ? router.push(`/review/${albumId}`) : router.push(`/review/`)}
+            onClick={() => router.push("/review?albumId="+albumId)} 
         >
-            <MusicIcon />  Write a review now!
+            <MusicIcon /> Write a review now!
         </Button>
-    )
-}
+    );
+};
 
 const MusicIcon = () => {
-    return (
-        <Image alt="Music icon" src={"/assets/Music.svg"}/>
-    )
-}
+    return <Image alt="Music icon" src={"/assets/Music.svg"} />;
+};
 
-export default WriteReviewActionButton
+export default WriteReviewActionButton;

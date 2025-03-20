@@ -6,6 +6,7 @@ import {
   Image,
   HStack,
   Avatar,
+  Button,
 } from "@chakra-ui/react";
 import { Rating } from "../Rating/Rating";
 import Navbar from "../Navbar/Navbar";
@@ -33,7 +34,9 @@ interface Album {
     }[],
     url: string,
     your_rating: number | null,
-    your_review: string | null
+    your_review: string | null,
+    is_favorite: boolean,
+    favorite_id: string | null
   }
 }
 
@@ -52,9 +55,36 @@ interface AlbumReviewedProps {
 
 const AlbumReviewed: React.FC<AlbumReviewedProps> = ({ album, userReview }) => {
 
+  const [isFavorite, setIsFavorite] = useState(album?.album_info ? album?.album_info.is_favorite : false)
+  const [favoriteId, setFavoriteId] = useState(album?.album_info?.favorite_id)
 
+  const handleClickFavorite = () => {
+    if (isFavorite) {
+      setIsFavorite(false)
+      fetch(`http://150.165.85.37:5000/favorite/delete/${favoriteId}`, 
+        {headers: {"Authorization": "Bearer " + localStorage.getItem("@groovesync-backend-token"),
+                  "Spotify-Token": localStorage.getItem("@groovesync-spotify-access-token") || ""
+        },
+        method: "DELETE"})
+      .catch((e) => console.error(e))
+    } else {
+      setIsFavorite(true)
+      fetch(`http://150.165.85.37:5000/favorite/save`,
+        {headers: {"Authorization": "Bearer " + localStorage.getItem("@groovesync-backend-token"),
+                  "Spotify-Token": localStorage.getItem("@groovesync-spotify-access-token") || "",
+                  "Content-Type": "application/json"
+        },
+        method: "POST",
+        body: JSON.stringify({"userId": localStorage.getItem("@groovesync-spotify-id") || "", "albumId": album?.album_info.id})})
+      .then((res) => res.json())
+      .then((data) => {
+        setFavoriteId(data["favorite_id"])
+      })
+      .catch((e) => console.error(e))
+    }
 
-  const userProfilePictureURL = localStorage.getItem("profilePictureURL") || ""
+  }
+  const userProfilePictureURL = localStorage.getItem("@groovesync-profile-picture-url") || ""
 
   return (
     <Box px={"180px"} 
@@ -79,7 +109,17 @@ const AlbumReviewed: React.FC<AlbumReviewedProps> = ({ album, userReview }) => {
             alignItems={"start"}
             h="250px">
 
-          <OpenSpotifyButton link={album.album_info.url} text="Listen on Spotify"/>
+          <HStack>
+            <OpenSpotifyButton link={album.album_info.url} text="Listen on Spotify"/>
+            <Button
+              onClick={handleClickFavorite}
+              gap={"1rem"}
+              borderRadius={"100px"}
+              px="1.5rem">
+              <Image alt={"Heart icon"} src={"/assets/HeartIcon.png"} />
+              {isFavorite ? "Remove from favorites" : "Add to favorites"}
+            </Button>
+          </HStack>
 
           <Text fontSize="64px" fontWeight="bold" fontStyle="italic" color={"brand.500"}>
             {album.album_info.name}
@@ -90,7 +130,6 @@ const AlbumReviewed: React.FC<AlbumReviewedProps> = ({ album, userReview }) => {
             •
             {album.album_info.release_year}
           </Text>
-
 
         </Box>
       </HStack>
@@ -134,7 +173,7 @@ const AlbumReviewed: React.FC<AlbumReviewedProps> = ({ album, userReview }) => {
 
         </Box>
 
-      <VStack m="0" p="0">
+      <VStack m="0" p="0" alignItems={"start"}>
       <Box>
         {userReview.rating ?
         <>

@@ -86,7 +86,7 @@ export default function ArtistPage() {
     }
 
     fetchAlbums();
-  }, [id]);
+  }, [id, router]);
 
     const ALBUMS_COUNT = 6
     const [visibleAlbums, setVisibleAlbums] = useState(ALBUMS_COUNT)
