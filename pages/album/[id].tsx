@@ -18,7 +18,9 @@ interface SpotifyAlbumResponse {
     reviews: [],
     url: string,
     your_rating: number | null,
-    your_review: string | null
+    your_review: string | null,
+    is_favorite: boolean,
+    favorite_id: string | null
   }
 }
 
@@ -70,11 +72,11 @@ const AlbumPage = () => {
   return (
     <>
       <Head>
-        <title>{album.album_info.name}</title>
+        <title>{album?.album_info?.name}</title>
       </Head>
       <AlbumReviewed
         album={album}
-        userReview={{albumId: id && typeof id === "string" ? id : undefined, userId: localStorage.getItem("@groovesync-spotify-id") || "", rating: album.album_info.your_rating, text: album.album_info.your_review}}
+        userReview={{albumId: album?.album_info?.id, userId: localStorage.getItem("@groovesync-spotify-id") || "", rating: album?.album_info?.your_rating, text: album?.album_info?.your_review}}
       />
     </>
   );

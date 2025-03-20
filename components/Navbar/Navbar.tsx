@@ -22,7 +22,7 @@ const Navbar = () => {
       w="65%"
       gap={8}>
       <Searchbar />
-      <WriteReviewActionButton />
+      <WriteReviewActionButton albumId=""/>
     </HStack>
     <UserProfileIcon />
 
