@@ -171,6 +171,7 @@ const ReviewPage = () => {
                             <Box width={"100%"}>
                             {searchResults?.data?.albums?.items.map((album) => (
                                 <HStack p="0.25rem"
+                                key={album.id}
                                 border={"1px solid white"}
                                 _hover={{
                                     border: "1px solid #153243",
@@ -180,7 +181,7 @@ const ReviewPage = () => {
                                     transition: "all 0.2s ease-in-out"
                                 }}
                                 onClick={() => setSelectedAlbum(album)}>
-                                    <Image src={album.images ? album.images[0].url : "/assets/DefaultAlbumCover.png"} w="50px" h="50px" borderRadius={"5px"}/>
+                                    <Image alt={album.name} src={album.images ? album.images[0].url : "/assets/DefaultAlbumCover.png"} w="50px" h="50px" borderRadius={"5px"}/>
                                     <Text>{album.name},</Text>
                                     <Text>{formatArtistsString(album.artists)}</Text>
                                 </HStack>
@@ -256,12 +257,12 @@ export default ReviewPage;
 
 const PostIcon = () => {
     return (
-        <Image src={"/assets/PostIcon.png"}/>
+        <Image alt={"Confirmation icon"} src={"/assets/PostIcon.png"}/>
     )
 }
 
 const DiscardIcon = () => {
     return (
-        <Image src={"/assets/DiscardIcon.png"}/>
+        <Image alt={"Deletion icon"} src={"/assets/DiscardIcon.png"}/>
     )
 }

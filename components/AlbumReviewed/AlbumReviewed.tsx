@@ -116,7 +116,7 @@ const AlbumReviewed: React.FC<AlbumReviewedProps> = ({ album, userReview }) => {
               gap={"1rem"}
               borderRadius={"100px"}
               px="1.5rem">
-              <Image src={"/assets/HeartIcon.png"} />
+              <Image alt={"Heart icon"} src={"/assets/HeartIcon.png"} />
               {isFavorite ? "Remove from favorites" : "Add to favorites"}
             </Button>
           </HStack>

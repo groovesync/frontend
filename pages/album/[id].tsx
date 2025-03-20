@@ -53,7 +53,7 @@ const AlbumPage = () => {
     })
 
     setIsLoading(false);
-  }, [id]);
+  }, [id, router]);
 
   if (isLoading || !album) {
     return (

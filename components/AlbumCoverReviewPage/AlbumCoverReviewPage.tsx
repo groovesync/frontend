@@ -12,12 +12,13 @@ const AlbumCoverReviewPage: React.FC<AlbumCoverReviewPageProps> = ({coverURL, ar
     return (
         <>
         <VStack alignItems={"start"}>
-            <Image src={coverURL ? coverURL : "/assets/DefaultAlbumCover.png"} minW="300px" h="300px" borderRadius={"5px"}/>
+            <Image alt={"Album Cover"} src={coverURL ? coverURL : "/assets/DefaultAlbumCover.png"} minW="300px" h="300px" borderRadius={"5px"}/>
 
             {/*Artists*/}
             <VStack>
                 {artists.map((artist) => (
-                    <HStack>
+                    <HStack
+                    key={artist.id}>
                         <Text
                             as={Link}
                             href={"/artist/"+artist.id}>
