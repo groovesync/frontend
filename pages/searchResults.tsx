@@ -1,5 +1,5 @@
 import { Box, Flex, Spinner, Text } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import Head from "next/head";
 import AlbumCover from "../components/AlbumCover/AlbumCover";
 import Navbar from "../components/Navbar/Navbar";
@@ -33,6 +33,16 @@ interface SpotifyAlbumResponse {
   }[]
 }
 
+interface ProfileResponse {
+  data: {
+    users: {
+      image: string,
+      spotify_id: string,
+      username: string
+    }[]
+  }
+}
+
 export default function SearchResults() {
 
     const router = useRouter();
@@ -40,12 +50,16 @@ export default function SearchResults() {
     const searchQuery = query.query || "";
     const [albums, setAlbums] = useState<SpotifyAlbumResponse>()
     const [artists, setArtists] = useState<SpotifyArtistResponse>()
+    const [profiles, setProfiles] = useState<ProfileResponse>()
     const [isLoadingAlbums, setIsLoadingAlbums] = useState(true)
     const [isLoadingArtists, setIsLoadingArtists] = useState(true)
+    const [isLoadingProfiles, setIsLoadingProfiles] = useState(true)
 
     useEffect(() => {
       setIsLoadingAlbums(true)
       setIsLoadingArtists(true)
+      setIsLoadingProfiles(true)
+
       fetch(`http://150.165.85.37:5000/spotify/search?q=${encodeURIComponent(typeof searchQuery === "string" ? searchQuery : searchQuery[0])}`,{
       headers: {
         "Authorization": "Bearer " + localStorage.getItem("@groovesync-backend-token"),
@@ -60,6 +74,23 @@ export default function SearchResults() {
         setIsLoadingAlbums(false)
         setIsLoadingArtists(false) }
       )
+
+      fetch(`http://150.165.85.37:5000/user/search?q=${encodeURIComponent(typeof searchQuery === "string" ? searchQuery : searchQuery[0])}`,{
+        headers: {
+          "Authorization": "Bearer " + localStorage.getItem("@groovesync-backend-token"),
+          "Spotify-Token": localStorage.getItem("@groovesync-spotify-access-token") || ""
+        }})
+        .then((res) => res.json())
+        .then((data) => {
+          setProfiles(data)
+        })
+        .then(() => {
+          setIsLoadingProfiles(false)
+        })
+        .catch((e) => {
+          setProfiles({data: {users: []}})
+        })
+        
     }, [searchQuery]);
 
     const ALBUMS_COUNTS = 5
@@ -143,19 +174,20 @@ export default function SearchResults() {
           )}
         </>
         }
-
-        
-
-        {/*
+  
         <Text fontSize={"32px"} fontWeight={"bold"} color={"brand.500"} pb={"10px"} pt={"40px"}>
             Profiles
         </Text>
 
+        {isLoadingProfiles &&
+          <Box w="100%" h="200px" display={"flex"} alignItems="center" justifyContent={"center"}>
+            <Spinner />
+          </Box>}
+
         <Flex gap="40px" flexFlow={"wrap"}>
-            <ArtistProfilePicture name={profiles.name} pictureURL={profiles.profilePictureURL} pageURL={"/profile"}/>
-            <ArtistProfilePicture name={profiles.name} pictureURL={profiles.profilePictureURL} pageURL={"/profile"}/>
-            <ArtistProfilePicture name={profiles.name} pictureURL={profiles.profilePictureURL} pageURL={"/profile"}/>
-        </Flex>*/}
+            {profiles?.data?.users.length == 0 && <Text>Looks like we couldn't find users with this username</Text>}
+            {profiles?.data?.users?.map((user) => <ArtistProfilePicture name={user.username} pictureURL={user.image} pageURL={"/profile/"+user.spotify_id}/>)}
+        </Flex>
       </Box>
     );
   }

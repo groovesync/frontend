@@ -64,7 +64,7 @@ const PopularWithFriends: React.FC = () => {
              <Image
                 src={item.coverURL}
                 alt={item.title}
-                boxSize="100px"
+                boxSize="100%"
                 style={{ borderRadius: "5px" }}
                 objectFit="cover"
                 mb={2}
