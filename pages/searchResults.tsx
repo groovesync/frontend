@@ -185,8 +185,8 @@ export default function SearchResults() {
           </Box>}
 
         <Flex gap="40px" flexFlow={"wrap"}>
-            {profiles?.data?.users.length == 0 && <Text>Looks like we couldn't find users with this username</Text>}
-            {profiles?.data?.users?.map((user) => <ArtistProfilePicture name={user.username} pictureURL={user.image} pageURL={"/profile/"+user.spotify_id}/>)}
+            {profiles?.data?.users.length == 0 && <Text>Looks like we could not find users with this username</Text>}
+            {profiles?.data?.users?.map((user) => <ArtistProfilePicture key={user.spotify_id} name={user.username} pictureURL={user.image} pageURL={"/profile/"+user.spotify_id}/>)}
         </Flex>
       </Box>
     );
