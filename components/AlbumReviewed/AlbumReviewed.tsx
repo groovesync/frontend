@@ -7,6 +7,14 @@ import {
   HStack,
   Avatar,
   Button,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalCloseButton,
+  ModalBody,
+  ModalFooter,
+  useDisclosure,
 } from "@chakra-ui/react";
 import { Rating } from "../Rating/Rating";
 import Navbar from "../Navbar/Navbar";
@@ -14,6 +22,7 @@ import Link from "next/link";
 import OpenSpotifyButton from "../OpenSpotifyButton/OpenSpotifyButton";
 import Head from "next/head";
 import WriteReviewActionButton from "../WriteReviewActionButton/WriteReviewActionButton";
+import { useRouter } from "next/router";
 
 interface Album {
   album_info: {
@@ -35,6 +44,7 @@ interface Album {
     url: string,
     your_rating: number | null,
     your_review: string | null,
+    your_review_id: string | null,
     is_favorite: boolean,
     favorite_id: string | null
   }
@@ -57,6 +67,19 @@ const AlbumReviewed: React.FC<AlbumReviewedProps> = ({ album, userReview }) => {
 
   const [isFavorite, setIsFavorite] = useState(album?.album_info ? album?.album_info.is_favorite : false)
   const [favoriteId, setFavoriteId] = useState(album?.album_info?.favorite_id)
+  const [isReviewDeleted, setIsReviewDelete] = useState(false)
+
+  const deleteReview = () => {
+    fetch(`http://150.165.85.37:5000/review/delete/${album?.album_info.your_review_id}`, 
+      {headers: {"Authorization": "Bearer " + localStorage.getItem("@groovesync-backend-token"),
+                "Spotify-Token": localStorage.getItem("@groovesync-spotify-access-token") || ""
+      },
+      method: "DELETE"})
+      .then(() =>
+        setIsReviewDelete(true)
+      )
+      .catch((e) => console.error(e))
+  }
 
   const handleClickFavorite = () => {
     if (isFavorite) {
@@ -157,7 +180,7 @@ const AlbumReviewed: React.FC<AlbumReviewedProps> = ({ album, userReview }) => {
                 Your Rating
               </Text>
 
-              {userReview.rating ? <HStack alignItems={"end"}>
+              {userReview.rating && !isReviewDeleted ? <HStack alignItems={"end"}>
                 <Text fontSize="32px" color="brand.500" fontWeight="bold" fontStyle={"italic"}>
                   {userReview?.rating && userReview.rating}
                 </Text>
@@ -175,7 +198,7 @@ const AlbumReviewed: React.FC<AlbumReviewedProps> = ({ album, userReview }) => {
 
       <VStack m="0" p="0" alignItems={"start"}>
       <Box>
-        {userReview.rating ?
+        {userReview.rating && !isReviewDeleted ?
         <>
         <Text fontSize="32px" fontWeight="bold" fontStyle="italic" mb={4} color={"brand.500"}>
         Your Review
@@ -193,7 +216,7 @@ const AlbumReviewed: React.FC<AlbumReviewedProps> = ({ album, userReview }) => {
             <VStack h="100%">
               <Avatar src={userProfilePictureURL}/>
             </VStack>
-            <VStack alignItems={"flex-start"} justifyContent={"center"} m="0" p="0">
+            <VStack alignItems={"flex-start"} justifyContent={"center"} m="0" p="0" w={"80%"}>
               <HStack m="0" p="0">
               <Text fontWeight="medium" fontSize="16px">
                 Yourself
@@ -204,6 +227,12 @@ const AlbumReviewed: React.FC<AlbumReviewedProps> = ({ album, userReview }) => {
               <Text mt={2}>
                 {userReview?.text}
               </Text>
+            </VStack>
+            <VStack>
+              <HStack>
+                <RemoveReview onConfirm={deleteReview} />
+                <EditReview reviewId={album?.album_info.your_review_id ? album?.album_info.your_review_id : ""}/>
+              </HStack>
             </VStack>
           </HStack>          
         </Box>
@@ -255,3 +284,55 @@ const AlbumReviewed: React.FC<AlbumReviewedProps> = ({ album, userReview }) => {
 };
 
 export default AlbumReviewed;
+
+const RemoveReview = ({ onConfirm }: { onConfirm: () => void }) => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
+  return (
+    <>
+      <Button onClick={onOpen}>
+        <Image src={"/assets/TrashIcon.svg"} w="20px" h="20px" />
+      </Button>
+
+      <Modal isOpen={isOpen} onClose={onClose} isCentered>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Confirm Deletion</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <Text>Are you sure you want to delete this review? This action cannot be undone.</Text>
+          </ModalBody>
+          <ModalFooter>
+            <Button variant="ghost" onClick={onClose}>
+              Cancel
+            </Button>
+
+            <Button 
+              colorScheme="red" 
+              ml={3} 
+              onClick={() => {
+                onConfirm();
+                onClose();
+              }}
+            >
+              Delete
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+    </>
+  );
+};
+
+interface EditReviewProps {
+  reviewId: string
+}
+const EditReview: React.FC<EditReviewProps> = ({reviewId}) => {
+  const router = useRouter()
+  return (
+    <Button
+      onClick={() => router.push("/edit/"+reviewId)}>
+      <Image src={"/assets/EditIcon.svg"} w="18px" h="18px"/>
+    </Button>
+  )
+}

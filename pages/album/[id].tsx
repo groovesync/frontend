@@ -19,6 +19,7 @@ interface SpotifyAlbumResponse {
     url: string,
     your_rating: number | null,
     your_review: string | null,
+    your_review_id: string | null
     is_favorite: boolean,
     favorite_id: string | null
   }
