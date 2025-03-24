@@ -46,6 +46,7 @@ const ReviewPage = () => {
     const [didSearch, setDidSearch] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
     const [searchResults, setSearchResults] = useState<SpotifyAlbumResponse>();
+    const [isLoadingRedirect, setIsLoadingRedirect] = useState(false)
     const [reviewText, setReviewText] = useState("");
     const [rating, setRating] = useState(0);
     const router = useRouter()
@@ -53,6 +54,7 @@ const ReviewPage = () => {
 
     useEffect(() => {
         if (params.get('albumId')) {
+            setIsLoadingRedirect(true)
             fetch(`http://150.165.85.37:5000/spotify/albums/${params.get('albumId')}?user_id=${localStorage.getItem('@groovesync-spotify-id')}`, {
                 headers: {
                     "Authorization": "Bearer " + localStorage.getItem("@groovesync-backend-token"),
@@ -69,7 +71,7 @@ const ReviewPage = () => {
                                         id: data.album_info.id,
                                         images: [{ url: data.album_info.image }],
                                         name: data.album_info.name,
-                                        release_date: data.album_info.release_year, // Pode precisar formatar para AAAA-MM-DD
+                                        release_date: data.album_info.release_year,
                                         artists: data.album_info.artists.map((artist: {name: string, id: string}) => ({
                                             name: artist.name,
                                             id: artist.id
@@ -81,7 +83,7 @@ const ReviewPage = () => {
                     };
                     
                     setSelectedAlbum(transformedData.data.albums.items[0]);
-                    
+                    setIsLoadingRedirect(false)
                 });
         }
     }, [params]);
@@ -100,7 +102,6 @@ const ReviewPage = () => {
             setSearchResults(data)
         })
         .then(() => setIsLoading(false))
-        setIsLoading(false)
     };
 
     const postReview = () => {
@@ -147,6 +148,7 @@ const ReviewPage = () => {
                 <HStack spacing={4} mt={5} justifyContent="start" alignItems={"start"}>
                     <AlbumCoverReviewPage coverURL="" artists={[{name: "", id: ""}]}/>
                     <VStack w="100%">
+                            {!isLoadingRedirect ? 
                             <HStack w="100%">
                             <Input
                                 placeholder="Search for the album"
@@ -166,7 +168,7 @@ const ReviewPage = () => {
                             >
                                 Search
                             </Button>
-                        </HStack>
+                        </HStack> : <Spinner />}
                         {didSearch && isLoading ? <Spinner /> : (
                             <Box width={"100%"}>
                             {searchResults?.data?.albums?.items.map((album) => (

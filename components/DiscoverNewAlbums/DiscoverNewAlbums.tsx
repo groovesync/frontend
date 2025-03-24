@@ -1,20 +1,59 @@
-import React from "react";
+'use client'
+
+import React, { useEffect, useState } from "react";
 import Slider from "react-slick";
-import { Box, Text, Image } from "@chakra-ui/react";
+import { Box, Text, Image, Spinner } from "@chakra-ui/react";
 import Link from "next/link";
-import mockData from "../../mockData/discoverNewAlbums.json";
 
 interface Artist {
-  name: string,
-  id: string
+  name: string
+}
+
+interface SpotifyAlbumResponse {
+  data: {
+    albums: {
+      items: {
+          id: string,
+          images: {
+              url: string
+          }[],
+          name: string,
+          release_date: string,
+          artists: {
+            name: string
+          }[]
+      }[]
+  }
+}
 }
 
 const DiscoverNewAlbums: React.FC = () => {
+
+  const [recommendations, setRecommendations] = useState<SpotifyAlbumResponse>();
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    setIsLoading(true)
+    fetch(`http://150.165.85.37:5000/spotify/recommendations`,{
+      headers: {
+        "Authorization": "Bearer " + localStorage.getItem("@groovesync-backend-token"),
+        "Spotify-Token": localStorage.getItem("@groovesync-spotify-access-token") || ""
+      }})
+      .then((res) => res.json())
+      .then((data) => {
+        setRecommendations(data)
+      })
+      .then(() => setIsLoading(false))
+  }, [])
+
   const truncateText = (text: string, maxLength: number) => {
     return text.length > maxLength ? text.slice(0, maxLength) + "..." : text;
   };
 
   const getArtists = (artists: Artist[]) => {
+    if (!artists) {
+      return ""
+    }
     let result = ""
     for (let i = 0; i < artists.length; i++) {
       if (i == artists.length - 1) {
@@ -76,41 +115,45 @@ const DiscoverNewAlbums: React.FC = () => {
           },
         }}
       >
-        <Slider {...settings}>
-          {mockData.map((item, index) => (
+        {isLoading &&
+          <Box w="100%" h="200px" display={"flex"} alignItems="center" justifyContent={"center"}>
+            <Spinner />
+          </Box>}
+      <Slider {...settings}>
+          {recommendations?.data?.albums.items.map((album, index) => (
             <Box
               as={Link}
-              href={`/album/${item.id}`}
+              href={`/album/${album.id}`}
               key={index}
               bg="brand.400"
               p={4}
               borderRadius="5px"
               textAlign="center"
               cursor={"pointer"}
-              height="13em" 
+              height="15em"
               display="flex"
               flexDirection="column"
+              alignItems={"start"}
+              justifyContent={"end"}
             >
               <Image
-                src={item.coverURL}
-                alt={item.title}
-                boxSize="120px"
+                src={album.images[0].url}
+                alt={album.name}
                 borderRadius="5px"
                 objectFit="cover"
-                mb={2}
-                mx="auto" 
+                
               />
-              <Box>
-                <Text fontWeight="medium" fontSize="lg" color="brand.500">
-                  {truncateText(item.title, 10)}
+              
+                <Text fontWeight="medium" fontSize="lg" color="brand.500" align={"left"} mt={2}>
+                  {truncateText(album.name, 10)}
                 </Text>
-                <Text fontSize="sm" fontStyle="italic" color="brand.500">
-                  {truncateText(getArtists(item.artist), 10)}
+                <Text fontSize="sm" fontStyle="italic" color="brand.500" align={"left"}>
+                  {truncateText(getArtists(album.artists), 10)}
                 </Text>
-              </Box>
+              
             </Box>
           ))}
-        </Slider>
+      </Slider>
       </Box>
     </Box>
   );

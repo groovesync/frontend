@@ -20,6 +20,8 @@ interface UserReviews {
     }[]
 }
 
+
+
 interface Favorite {
     favorites: {
         album_id: string,
@@ -62,7 +64,6 @@ export default function Profile() {
         .then((data) => setFavorites(data))
         .then(() => setIsLoadingFavorites(false))
         .catch((e) => console.error(e))
-
     }, [])
 
 
