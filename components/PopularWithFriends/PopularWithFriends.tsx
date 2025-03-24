@@ -1,9 +1,37 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Slider from "react-slick";
 import { Box, Text, VStack, Image } from "@chakra-ui/react";
 import mockData from "../../mockData/popularWithFriends.json";
 
+interface PopularResponse {
+  albums: {
+    name: string,
+    image: string,
+    release_year: string,
+    id: string
+  }[]
+}
+
 const PopularWithFriends: React.FC = () => {
+
+  const [isLoading, setIsLoading] = useState(true)
+  const [popular, setPopular] = useState<PopularResponse>()
+
+
+  useEffect(() => {
+    setIsLoading(true)
+    fetch(`http://150.165.85.37:5000/review/popular-with-friends`,{
+      headers: {
+        "Authorization": "Bearer " + localStorage.getItem("@groovesync-backend-token"),
+        "Spotify-Token": localStorage.getItem("@groovesync-spotify-access-token") || ""
+      }})
+      .then((res) => res.json())
+      .then((data) => {
+        setPopular(data)
+      })
+      .then(() => setIsLoading(false))
+  }, [])
+
   const settings = {
     dots: true,
     infinite: true,
@@ -52,7 +80,7 @@ const PopularWithFriends: React.FC = () => {
         }}
       >
         <Slider {...settings}>
-          {mockData.map((item, index) => (
+          {popular?.albums.map((item, index) => (
             <Box
               key={index}
               bg="white"
@@ -62,8 +90,8 @@ const PopularWithFriends: React.FC = () => {
               mx={2}
             >
              <Image
-                src={item.coverURL}
-                alt={item.title}
+                src={item.image}
+                alt={item.name}
                 boxSize="100%"
                 style={{ borderRadius: "5px" }}
                 objectFit="cover"
@@ -71,10 +99,10 @@ const PopularWithFriends: React.FC = () => {
               />
 
               <Text fontWeight="medium" fontSize="lg">
-                {item.title}
+                {item.name}
               </Text>
               <Text fontSize="sm" color="gray.500">
-                {item.year}
+                {item.release_year}
               </Text>
             </Box>
           ))}
