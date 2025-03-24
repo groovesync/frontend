@@ -8,15 +8,25 @@ interface ModalProps {
     onOpen: () => void,
     onClose: () => void,
     modalType: "followers" | "following",
-    userFollowers: userFollowerFollowing[],
-    userFollowing: userFollowerFollowing[]
+    userFollowers: FollowersResponse,
+    userFollowing: FollowingResponse
 }
 
-interface userFollowerFollowing {
-    name: string,
-    profileURL: string,
-    profilePictureURL: string
-}
+interface FollowersResponse {
+    followers: {
+        user_id: string,
+        user_display_name: string,
+        user_image: string
+    }[]
+  }
+  
+  interface FollowingResponse {
+    following: {
+        user_id: string,
+        user_display_name: string,
+        user_image: string
+    }[]
+  }
 
 const FollowersModal: React.FC<ModalProps> = ({isOpen, onOpen, onClose, modalType, userFollowers, userFollowing}) => {
     return (
@@ -29,11 +39,11 @@ const FollowersModal: React.FC<ModalProps> = ({isOpen, onOpen, onClose, modalTyp
             <ModalCloseButton />
             <ModalBody maxH="400px" overflowY="auto">
                 <VStack spacing={4} align="start">
-                {(modalType === "followers" ? userFollowers : userFollowing).map((person, index) => (
-                    <HStack key={index} w="100%" justifyContent="space-between" as={Link} href={"/"+person.profileURL}>
+                {(modalType === "followers" ? (userFollowers?.followers ? userFollowers?.followers : []) : (userFollowing?.following ? userFollowing?.following : [])).map((person, index) => (
+                    <HStack key={index} w="100%" justifyContent="space-between" as={Link} href={"/user/"+person.user_id}>
                     <HStack >
-                        <Avatar size="sm" src={person.profilePictureURL} />
-                        <Text>{person.name}</Text>
+                        <Avatar size="sm" src={person.user_image} />
+                        <Text>{person.user_display_name}</Text>
                     </HStack>
                     <ArrowRight />
                     </HStack>
