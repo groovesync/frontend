@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Slider from "react-slick";
 import { Box, Text, VStack, Image } from "@chakra-ui/react";
+import mockData from "../../mockData/popularWithFriends.json";
 
 interface PopularResponse {
   albums: {
@@ -19,7 +20,7 @@ const PopularWithFriends: React.FC = () => {
 
   useEffect(() => {
     setIsLoading(true)
-    fetch(`http://150.165.85.37:5000/review/popular-with-friends?spotifyId=${localStorage.getItem("@groovesync-spotify-id") || ""}`,{
+    fetch(`http://150.165.85.37:5000/review/popular-with-friends`,{
       headers: {
         "Authorization": "Bearer " + localStorage.getItem("@groovesync-backend-token"),
         "Spotify-Token": localStorage.getItem("@groovesync-spotify-access-token") || ""

@@ -142,7 +142,6 @@ export default function ProfileHeading({ isMyProfile, user }: ProfileHeadingProp
     </Text>
   );
 
-  const user = userProfileData
 
   return (
     <>

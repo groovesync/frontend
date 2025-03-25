@@ -7,9 +7,8 @@ import AlbumCoverReview from "../../components/AlbumCoverReview/AlbumCoverReview
 import Navbar from "../../components/Navbar/Navbar";
 import ProfileHeading, { UserResponse } from "../../components/ProfileHeading/ProfileHeading";
 import LoadContentButton from "../../components/LoadContentButton/LoadContentButton";
-import favoritesJson from "../../mockData/favorites.json";
-import reviewsJson from "../../mockData/reviews.json";
 import useAuth from "../../hooks/useAuth";
+import { headers } from "next/headers";
 
 interface UserReviews {
   reviews: {
@@ -176,18 +175,11 @@ export default function Profile() {
             </Box>
           ) : null}
 
-          <Flex gap="40px" flexWrap="wrap">
-            {reviews?.reviews?.slice(0, visibleReviews).map((review) => (
-              <AlbumCoverReview
-                key={review.album_id}
-                coverURL={review.album_image}
-                pageURL={`/album/${review.album_id}`}
-                rating={review.rating}
-                title={review.album_name}
-                year={parseInt(review.release_year, 10)}
-              />
-            ))}
-          </Flex>
+        <Flex gap="40px" flexFlow={"wrap"}>
+            {reviews?.reviews?.slice(0, visibleReviews).map((review) => 
+                <AlbumCoverReview key={review.album_id} coverURL={review.album_image} pageURL={"/album/"+review.album_id} rating={review.rating} title={review.album_name} year={parseInt(review.release_year,10)}/>
+            )}
+        </Flex>
 
           {visibleReviews < (reviews?.reviews ? reviews.reviews.length : 0) && (
             <LoadContentButton loadMore={true} callback={showMoreReviews} />
@@ -208,19 +200,6 @@ export default function Profile() {
           >
             Favorite Albums
           </Text>
-
-          <Flex gap="40px" flexWrap="wrap">
-            {favoritesJson.slice(0, visibleFavorites).map((favorite) => (
-              <AlbumCoverReview
-                key={favorite.id}
-                coverURL={favorite.coverURL}
-                pageURL={`/album/${favorite.id}`}
-                rating={favorite.rating}
-                title={favorite.title}
-                year={favorite.year}
-              />
-            ))}
-          </Flex>
 
           {isLoadingFavorites ? (
             <Box
