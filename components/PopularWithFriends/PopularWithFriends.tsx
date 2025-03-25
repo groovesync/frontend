@@ -16,7 +16,17 @@ const PopularWithFriends: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true)
   const [popular, setPopular] = useState<PopularResponse>()
   const router = useRouter()
+  
+  const truncateText = (text: string | undefined, maxLength: number) => {
+    if (!text) {
+      return ""
+    }
 
+    if (text.length > maxLength) {
+        return text.slice(0, maxLength) + "...";
+    }
+    return text;
+  };
 
   useEffect(() => {
     setIsLoading(true)
@@ -75,10 +85,10 @@ const PopularWithFriends: React.FC = () => {
                 mb={2}
               />
 
-              <Text fontWeight="medium" fontSize="lg">
-                {item.name}
+              <Text fontWeight="medium" fontSize="lg" textAlign={"left"}>
+                {truncateText(item.name, 15)}
               </Text>
-              <Text fontSize="sm" color="gray.500">
+              <Text fontSize="sm" color="gray.500" textAlign={"left"}>
                 {item.release_year}
               </Text>
             </Box>
