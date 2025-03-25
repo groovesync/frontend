@@ -53,7 +53,7 @@ const PopularWithFriends: React.FC = () => {
               alignItems={"center"}
               color={"brand.500"}>
               Follow people to discover what&apos;s popular!  
-            </Box> : popular?.albums.slice(5).map((item, index) => (
+            </Box> : popular?.albums.slice(0, 5).map((item, index) => (
             <Box
               key={index}
               bg="white"
