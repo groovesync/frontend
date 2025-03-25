@@ -21,8 +21,14 @@ interface SpotifyAlbumResponse {
     your_review: string | null,
     your_review_id: string | null
     is_favorite: boolean,
-    favorite_id: string | null
+    favorite_id: Favorite | null
   }
+}
+
+interface Favorite {
+  _id: string,
+  albumId: string,
+  userId: string
 }
 
 
@@ -35,9 +41,9 @@ const AlbumPage = () => {
 
   useEffect(() => {
     if (!id) return;
-
+  
     setIsLoading(true);
-
+  
     fetch(`http://150.165.85.37:5000/spotify/albums/${id}?user_id=${localStorage.getItem("@groovesync-spotify-id") || ""}`, {
       headers: {
         "Authorization": "Bearer " + localStorage.getItem("@groovesync-backend-token"),
@@ -47,14 +53,14 @@ const AlbumPage = () => {
     })
     .then((res) => res.json())
     .then((data) => {
-      setAlbum(data)
+      setAlbum(data);
+      setIsLoading(false);
     })
     .catch(() => {
-      router.reload()
-    })
-
-    setIsLoading(false);
+      router.reload();
+    });
   }, [id, router]);
+  
 
   if (isLoading || !album) {
     return (

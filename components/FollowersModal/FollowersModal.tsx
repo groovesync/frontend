@@ -38,7 +38,7 @@ const FollowersModal: React.FC<FollowersModalProps> = ({ isOpen, onClose, modalT
         <ModalBody maxH="400px" overflowY="auto">
           <VStack spacing={4} align="start">
             {list.map((person, index) => (
-              <HStack key={index} w="100%" justifyContent="space-between" as={Link} href={"/profile/" + person.user_id}>
+              <HStack key={index} w="100%" justifyContent="space-between" as={Link} href={"/profile/" + person.user_id} onClick={onClose}>
                 <HStack>
                   <Avatar size="sm" src={person.user_image} />
                   <Text>{person.user_display_name}</Text>

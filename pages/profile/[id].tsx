@@ -8,7 +8,6 @@ import Navbar from "../../components/Navbar/Navbar";
 import ProfileHeading, { UserResponse } from "../../components/ProfileHeading/ProfileHeading";
 import LoadContentButton from "../../components/LoadContentButton/LoadContentButton";
 import useAuth from "../../hooks/useAuth";
-import { headers } from "next/headers";
 
 interface UserReviews {
   reviews: {
@@ -84,7 +83,7 @@ export default function Profile() {
     setIsLoadingReviews(true);
     setIsLoadingFavorites(true);
 
-    fetch(`http://150.165.85.37:5000/review/get/${localStorage.getItem("@groovesync-spotify-id") || ""}`, {
+    fetch(`http://150.165.85.37:5000/review/get/${userId}`, {
       headers: {
         "Authorization": "Bearer " + localStorage.getItem("@groovesync-backend-token"),
         "Spotify-Token": localStorage.getItem("@groovesync-spotify-access-token") || "",
@@ -94,7 +93,7 @@ export default function Profile() {
       .then((data) => setReviews(data))
       .then(() => setIsLoadingReviews(false));
 
-    fetch(`http://150.165.85.37:5000/favorite/get/${localStorage.getItem("@groovesync-spotify-id") || ""}`, {
+    fetch(`http://150.165.85.37:5000/favorite/get/${userId}`, {
       headers: {
         "Authorization": "Bearer " + localStorage.getItem("@groovesync-backend-token"),
         "Spotify-Token": localStorage.getItem("@groovesync-spotify-access-token") || "",
@@ -104,7 +103,7 @@ export default function Profile() {
       .then((data) => setFavorites(data))
       .then(() => setIsLoadingFavorites(false))
       .catch((e) => console.error(e));
-  }, [id]);
+  }, [id, router]);
 
   const showMoreReviews = () => {
     setSeeMoreReviewsUsed(true);
@@ -137,12 +136,13 @@ export default function Profile() {
       </Head>
       <Navbar />
 
-      {!isAuthenticated ? (
-        <Text>Você precisa estar autenticado</Text>
-      ) : (
+      {!isAuthenticated ? ( <Text>Você precisa estar autenticado</Text> ) : (
         <>
           {isLoadingUser ? (
-            <Text>Carregando...</Text>
+            <ProfileHeading
+            isMyProfile={false}
+            user={{display_name: "Loading...", id: "", external_urls: {spotify: "/assets/UserIcon.svg"}, images: [{url: ""}], reviews: 0}}
+            />
           ) : !user ? (
             <Text>Usuário não encontrado</Text>
           ) : (
@@ -160,7 +160,7 @@ export default function Profile() {
             pb="20px"
             pt="70px"
           >
-            My reviews
+            {user && user.id === localStorage.getItem("@groovesync-spotify-id") ? "My reviews" : "Their reviews"}
           </Text>
 
           {isLoadingReviews ? (
@@ -173,13 +173,26 @@ export default function Profile() {
             >
               <Spinner color="brand.500" />
             </Box>
-          ) : null}
-
-        <Flex gap="40px" flexFlow={"wrap"}>
+          ) : reviews?.reviews.length == 0 ? 
+            <Box
+              w={"100%"}
+              h={"200px"}
+              backgroundColor={"#e6e8fa"}
+              borderRadius={"10px"}
+              display={"flex"}
+              justifyContent={"center"}
+              alignItems={"center"}
+              color={"brand.500"}>
+              Looks like there are no reviews yet!
+            </Box>
+            : 
+            (
+            <Flex gap="40px" flexFlow={"wrap"}>
             {reviews?.reviews?.slice(0, visibleReviews).map((review) => 
                 <AlbumCoverReview key={review.album_id} coverURL={review.album_image} pageURL={"/album/"+review.album_id} rating={review.rating} title={review.album_name} year={parseInt(review.release_year,10)}/>
             )}
-        </Flex>
+            </Flex>
+          )}
 
           {visibleReviews < (reviews?.reviews ? reviews.reviews.length : 0) && (
             <LoadContentButton loadMore={true} callback={showMoreReviews} />
@@ -211,9 +224,8 @@ export default function Profile() {
             >
               <Spinner color="brand.500" />
             </Box>
-          ) : null}
-
-          <Flex gap="40px" flexWrap="wrap">
+          ) : (favorites?.favorites ? favorites?.favorites.length : 0)  > 0 ? (
+            <Flex gap="40px" flexWrap="wrap">
             {favorites?.favorites?.slice(0, visibleFavorites).map((favorite) => (
               <AlbumCoverReview
                 key={favorite.album_id}
@@ -224,6 +236,21 @@ export default function Profile() {
               />
             ))}
           </Flex>
+          ) : (
+            <Box
+              w={"100%"}
+              h={"200px"}
+              backgroundColor={"#e6e8fa"}
+              borderRadius={"10px"}
+              display={"flex"}
+              justifyContent={"center"}
+              alignItems={"center"}
+              color={"brand.500"}>
+              Looks like there are no favorites yet!
+            </Box>
+          )}
+
+          
 
           {visibleFavorites < (favorites?.favorites ? favorites.favorites.length : 0) && (
             <LoadContentButton loadMore={true} callback={showMoreFavorites} />

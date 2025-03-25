@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
-import Slider from "react-slick";
 import { Box, Text, VStack, Image } from "@chakra-ui/react";
-import mockData from "../../mockData/popularWithFriends.json";
+import { useRouter } from "next/router";
 
 interface PopularResponse {
   albums: {
@@ -16,11 +15,12 @@ const PopularWithFriends: React.FC = () => {
 
   const [isLoading, setIsLoading] = useState(true)
   const [popular, setPopular] = useState<PopularResponse>()
+  const router = useRouter()
 
 
   useEffect(() => {
     setIsLoading(true)
-    fetch(`http://150.165.85.37:5000/review/popular-with-friends`,{
+    fetch(`http://150.165.85.37:5000/review/popular-with-friends?spotifyId=${localStorage.getItem("@groovesync-spotify-id") || ""}`,{
       headers: {
         "Authorization": "Bearer " + localStorage.getItem("@groovesync-backend-token"),
         "Spotify-Token": localStorage.getItem("@groovesync-spotify-access-token") || ""
@@ -32,68 +32,29 @@ const PopularWithFriends: React.FC = () => {
       .then(() => setIsLoading(false))
   }, [])
 
-  const settings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 3,
-    slidesToScroll: 1,
-    arrows: false,
-    responsive: [
-      {
-        breakpoint: 1024,
-        settings: {
-          slidesToShow: 2,
-          slidesToScroll: 1,
-        },
-      },
-      {
-        breakpoint: 768,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
-        },
-      },
-    ],
-  };
-
   return (
     <Box mt={8} width="70%" maxW="40em" textAlign="left">
       <Text fontSize="32px" fontWeight="bold" fontStyle="italic" mb={4}>
         Popular with friends
       </Text>
       <Box
-        overflow="hidden"
-        position="relative"
-        borderRadius="lg"
-        py={6} 
-        css={{
-          ".slick-dots": {
-            bottom: "-1.2em", 
-          },
-          ".slick-dots li button:before": {
-            color: "#4A90E2", 
-          },
-          ".slick-dots li.slick-active button:before": {
-            color: "#1C4E80", 
-          },
-        }}
-      >
-        <Slider {...settings}>
+        gap={3}>
           {popular?.albums.map((item, index) => (
             <Box
               key={index}
               bg="white"
-              p={4}
               borderRadius="5px"
               textAlign="center"
-              mx={2}
+              w="150px"
+              onClick={() => router.push(`/album/${item.id}`)}
+              cursor={"pointer"}
             >
              <Image
                 src={item.image}
                 alt={item.name}
-                boxSize="100%"
                 style={{ borderRadius: "5px" }}
+                w={"150px"}
+                h={"150px"}
                 objectFit="cover"
                 mb={2}
               />
@@ -106,7 +67,6 @@ const PopularWithFriends: React.FC = () => {
               </Text>
             </Box>
           ))}
-        </Slider>
       </Box>
     </Box>
   );

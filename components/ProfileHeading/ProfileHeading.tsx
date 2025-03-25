@@ -38,10 +38,8 @@ export default function ProfileHeading({ isMyProfile, user }: ProfileHeadingProp
   const [followers, setFollowers] = useState<Follower[]>([]);
   const [following, setFollowing] = useState<Following[]>([]);
 
-  // Obtém o ID do usuário logado
   const localSpotifyId = localStorage.getItem("@groovesync-spotify-id");
 
-  // Verifica se o usuário logado já está seguindo o perfil exibido
   const isAlreadyFollowing = localSpotifyId 
     ? followers.some(follower => follower.user_id === localSpotifyId)
     : false;
@@ -91,6 +89,7 @@ export default function ProfileHeading({ isMyProfile, user }: ProfileHeadingProp
   };
 
   useEffect(() => {
+    if (user.id) {
     fetch(`http://150.165.85.37:5000/follow/followers/${user.id}`, {
       headers: {
         "Authorization": "Bearer " + localStorage.getItem("@groovesync-backend-token"),
@@ -116,13 +115,9 @@ export default function ProfileHeading({ isMyProfile, user }: ProfileHeadingProp
         // Se a API retorna { following: [...] }
         setFollowing(data.following || []);
       });
+    }
   }, [user.id]);
 
-  const ReviewsLink = () => (
-    <Link href="#" fontWeight="regular" mr={2}>
-      {user.reviews} reviews
-    </Link>
-  );
 
   const FollowersLink = () => (
     <Link href="#" fontWeight="regular" mx={2} onClick={() => openModal("followers")}>
@@ -138,7 +133,7 @@ export default function ProfileHeading({ isMyProfile, user }: ProfileHeadingProp
 
   const statsLinks: React.ReactNode = (
     <Text fontSize="16px" color="brand.500">
-      <ReviewsLink /> • <FollowersLink /> • <FollowingLink />
+      <FollowersLink /> • <FollowingLink />
     </Text>
   );
 
@@ -147,7 +142,7 @@ export default function ProfileHeading({ isMyProfile, user }: ProfileHeadingProp
     <>
       <Flex align="center" justify="space-between" bg="white" w="100%">
         <Flex align="center">
-          <Avatar src={user.images[0]?.url || "https://via.placeholder.com/200"} w="200px" h="200px" mr={4} />
+          <Avatar src={user.images[0]?.url || "/assets/UserIcon.svg"} w="200px" h="200px" mr={4} />
           <Box display="flex" flexDirection="column" justifyContent="end" alignItems="start" h="200px">
             <HStack>
               <OpenSpotifyButton link={user.external_urls.spotify} text="Open Spotify Profile" />

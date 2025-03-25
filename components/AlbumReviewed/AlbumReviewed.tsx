@@ -46,10 +46,15 @@ interface Album {
     your_review: string | null,
     your_review_id: string | null,
     is_favorite: boolean,
-    favorite_id: string | null
+    favorite_id: Favorite | null
   }
 }
 
+interface Favorite {
+  _id: string,
+  albumId: string,
+  userId: string
+}
 
 interface UserReview {
   albumId?: string,
@@ -84,7 +89,7 @@ const AlbumReviewed: React.FC<AlbumReviewedProps> = ({ album, userReview }) => {
   const handleClickFavorite = () => {
     if (isFavorite) {
       setIsFavorite(false)
-      fetch(`http://150.165.85.37:5000/favorite/delete/${favoriteId}`, 
+      fetch(`http://150.165.85.37:5000/favorite/delete/${favoriteId ? favoriteId["_id"] : ""}`, 
         {headers: {"Authorization": "Bearer " + localStorage.getItem("@groovesync-backend-token"),
                   "Spotify-Token": localStorage.getItem("@groovesync-spotify-access-token") || ""
         },
@@ -327,12 +332,13 @@ const RemoveReview = ({ onConfirm }: { onConfirm: () => void }) => {
 interface EditReviewProps {
   reviewId: string
 }
-const EditReview: React.FC<EditReviewProps> = ({reviewId}) => {
-  const router = useRouter()
+
+const EditReview: React.FC<EditReviewProps> = ({ reviewId }) => {
+  const router = useRouter() as ReturnType<typeof useRouter>;
+
   return (
-    <Button
-      onClick={() => router.push("/edit/"+reviewId)}>
-      <Image src={"/assets/EditIcon.svg"} w="18px" h="18px"/>
+    <Button onClick={() => router.push(`/edit/${reviewId}`)}>
+      <Image src="/assets/EditIcon.svg" width={18} height={18} alt="Edit Icon" />
     </Button>
-  )
-}
+  );
+};
