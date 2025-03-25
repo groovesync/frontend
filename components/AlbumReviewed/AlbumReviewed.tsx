@@ -39,7 +39,8 @@ interface Album {
       username: string,
       profile_picture: string,
       rate: number,
-      text: string
+      text: string,
+      user_id: string
     }[],
     url: string,
     your_rating: number | null,
@@ -113,6 +114,8 @@ const AlbumReviewed: React.FC<AlbumReviewedProps> = ({ album, userReview }) => {
 
   }
   const userProfilePictureURL = localStorage.getItem("@groovesync-profile-picture-url") || ""
+
+  const router = useRouter()
 
   return (
     <Box px={"180px"} 
@@ -259,6 +262,7 @@ const AlbumReviewed: React.FC<AlbumReviewedProps> = ({ album, userReview }) => {
             mb={4}
             cursor="pointer"
             w="1000px"
+            onClick={() => router.push(`/profile/${review.user_id}`)}
           >
             <HStack>
               <VStack h="100%">

@@ -39,6 +39,8 @@ const PopularWithFriends: React.FC = () => {
       </Text>
       <Box
         overflowY={"revert-layer"}
+        display={"flex"}
+        flexDirection={"row"}
         gap={3}>
           {isLoading ? 
             <Box w="100%" h="250px" display={"flex"} alignItems={"center"} justifyContent={"center"}>
