@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Box, Text, VStack, Image } from "@chakra-ui/react";
+import { Box, Text, VStack, Image, Spinner } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 
 interface PopularResponse {
@@ -39,7 +39,21 @@ const PopularWithFriends: React.FC = () => {
       </Text>
       <Box
         gap={3}>
-          {popular?.albums.map((item, index) => (
+
+          {isLoading ? 
+            <Box w="100%" h="250px" display={"flex"} alignItems={"center"} justifyContent={"center"}>
+              <Spinner />
+            </Box> : (popular?.albums.length || 0) == 0 ?  <Box
+              w={"100%"}
+              h={"200px"}
+              backgroundColor={"#e6e8fa"}
+              borderRadius={"10px"}
+              display={"flex"}
+              justifyContent={"center"}
+              alignItems={"center"}
+              color={"brand.500"}>
+              Follow people to discover what's popular!  
+            </Box> : popular?.albums.map((item, index) => (
             <Box
               key={index}
               bg="white"
