@@ -52,7 +52,7 @@ const PopularWithFriends: React.FC = () => {
               justifyContent={"center"}
               alignItems={"center"}
               color={"brand.500"}>
-              Follow people to discover what's popular!  
+              Follow people to discover what&apos;s popular!  
             </Box> : popular?.albums.slice(5).map((item, index) => (
             <Box
               key={index}
