@@ -1,6 +1,6 @@
 // components/ProfileHeading/ProfileHeading.tsx
 import { Box, Flex, Text, Avatar, Link, useDisclosure, HStack } from "@chakra-ui/react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import FollowersModal from "../FollowersModal/FollowersModal";
 import OpenSpotifyButton from "../OpenSpotifyButton/OpenSpotifyButton";
 import FollowButton from "../FollowButton/FollowButton";
@@ -8,13 +8,23 @@ import FollowButton from "../FollowButton/FollowButton";
 export interface UserResponse {
   display_name: string;
   id: string;
-  images: { url: string }[];  // Lista de imagens com URL
+  images: { url: string }[];
   external_urls: {
     spotify: string;
-  };  // Link para o perfil do Spotify
+  };
   reviews: number;
-  followers: any[];
-  following: any[];
+}
+
+interface Follower {
+  user_id: string;
+  user_display_name: string;
+  user_image: string;
+}
+
+interface Following {
+  user_id: string;
+  user_display_name: string;
+  user_image: string;
 }
 
 interface ProfileHeadingProps {
@@ -25,6 +35,16 @@ interface ProfileHeadingProps {
 export default function ProfileHeading({ isMyProfile, user }: ProfileHeadingProps) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [modalType, setModalType] = useState<"followers" | "following">("followers");
+  const [followers, setFollowers] = useState<Follower[]>([]);
+  const [following, setFollowing] = useState<Following[]>([]);
+
+  // Obtém o ID do usuário logado
+  const localSpotifyId = localStorage.getItem("@groovesync-spotify-id");
+
+  // Verifica se o usuário logado já está seguindo o perfil exibido
+  const isAlreadyFollowing = localSpotifyId 
+    ? followers.some(follower => follower.user_id === localSpotifyId)
+    : false;
 
   const openModal = (type: "followers" | "following") => {
     setModalType(type);
@@ -59,18 +79,44 @@ export default function ProfileHeading({ isMyProfile, user }: ProfileHeadingProp
   };
 
   const handleFollow = () => {
-    const localSpotifyId = localStorage.getItem("@groovesync-spotify-id");
     if (localSpotifyId) {
       seguir(localSpotifyId, user.id);
     }
   };
 
   const handleUnfollow = () => {
-    const localSpotifyId = localStorage.getItem("@groovesync-spotify-id");
     if (localSpotifyId) {
       pararSeguir(localSpotifyId, user.id);
     }
   };
+
+  useEffect(() => {
+    fetch(`http://150.165.85.37:5000/follow/followers/${user.id}`, {
+      headers: {
+        "Authorization": "Bearer " + localStorage.getItem("@groovesync-backend-token"),
+        "Spotify-Token": localStorage.getItem("@groovesync-spotify-access-token") || "",
+        "Content-Type": "application/json"
+      }
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        // Se a API retorna { followers: [...] }
+        setFollowers(data.followers || []);
+      });
+
+    fetch(`http://150.165.85.37:5000/follow/following/${user.id}`, {
+      headers: {
+        "Authorization": "Bearer " + localStorage.getItem("@groovesync-backend-token"),
+        "Spotify-Token": localStorage.getItem("@groovesync-spotify-access-token") || "",
+        "Content-Type": "application/json"
+      }
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        // Se a API retorna { following: [...] }
+        setFollowing(data.following || []);
+      });
+  }, [user.id]);
 
   const ReviewsLink = () => (
     <Link href="#" fontWeight="regular" mr={2}>
@@ -78,27 +124,21 @@ export default function ProfileHeading({ isMyProfile, user }: ProfileHeadingProp
     </Link>
   );
 
-  // Exibe o número de seguidores conforme os dados do usuário
   const FollowersLink = () => (
     <Link href="#" fontWeight="regular" mx={2} onClick={() => openModal("followers")}>
-      {user.followers?.length || 0} followers
+      {followers.length} followers
     </Link>
   );
 
-  // Exibe o número de usuários que o usuário está seguindo
   const FollowingLink = () => (
     <Link href="#" fontWeight="regular" ml={2} onClick={() => openModal("following")}>
-      {user.following?.length || 0} following
+      {following.length} following
     </Link>
   );
 
   const statsLinks: React.ReactNode = (
     <Text fontSize="16px" color="brand.500">
-      <ReviewsLink />
-      •
-      <FollowersLink />
-      •
-      <FollowingLink />
+      <ReviewsLink /> • <FollowersLink /> • <FollowingLink />
     </Text>
   );
 
@@ -111,7 +151,11 @@ export default function ProfileHeading({ isMyProfile, user }: ProfileHeadingProp
             <HStack>
               <OpenSpotifyButton link={user.external_urls.spotify} text="Open Spotify Profile" />
               {!isMyProfile && (
-                <FollowButton onFollow={handleFollow} onUnfollow={handleUnfollow} ml={4} />
+                <FollowButton
+                  onFollow={handleFollow}
+                  onUnfollow={handleUnfollow}
+                  initialFollowing={isAlreadyFollowing}
+                />
               )}
             </HStack>
             <Text fontSize="64px" fontWeight="bold" fontStyle="italic" color="brand.500">
@@ -125,10 +169,9 @@ export default function ProfileHeading({ isMyProfile, user }: ProfileHeadingProp
       <FollowersModal 
         isOpen={isOpen} 
         onClose={onClose} 
-        onOpen={onOpen} 
         modalType={modalType} 
-        userFollowers={user.followers} 
-        userFollowing={user.following}
+        userFollowers={followers} 
+        userFollowing={following} 
       />
     </>
   );

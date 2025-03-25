@@ -1,50 +1,31 @@
 // components/FollowersModal/FollowersModal.tsx
-import { Avatar, chakra, Image, Text } from "@chakra-ui/react";
+import { Avatar, Image, Text } from "@chakra-ui/react";
 import Link from "next/link";
 import React from "react";
-import {
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalCloseButton,
-  ModalBody,
-  VStack,
-  HStack,
-} from "@chakra-ui/react";
+import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, VStack, HStack } from "@chakra-ui/react";
 
-interface ModalProps {
+interface Follower {
+  user_id: string;
+  user_display_name: string;
+  user_image: string;
+}
+
+interface Following {
+  user_id: string;
+  user_display_name: string;
+  user_image: string;
+}
+
+interface FollowersModalProps {
   isOpen: boolean;
-  onOpen: () => void;
   onClose: () => void;
   modalType: "followers" | "following";
-  userFollowers: userFollowerFollowing[];
-  userFollowing: userFollowerFollowing[];
+  userFollowers: Follower[];
+  userFollowing: Following[];
 }
 
-interface userFollowerFollowing {
-  name: string;
-  profileURL: string;
-  profilePictureURL: string;
-}
-
-const FollowersModal: React.FC<ModalProps> = ({
-  isOpen,
-  onOpen,
-  onClose,
-  modalType,
-  userFollowers,
-  userFollowing,
-}) => {
-  // Se o valor não for um array, utiliza um array vazio.
-  const peopleList =
-    modalType === "followers"
-      ? Array.isArray(userFollowers)
-        ? userFollowers
-        : []
-      : Array.isArray(userFollowing)
-      ? userFollowing
-      : [];
+const FollowersModal: React.FC<FollowersModalProps> = ({ isOpen, onClose, modalType, userFollowers, userFollowing }) => {
+  const list = modalType === "followers" ? userFollowers : userFollowing;
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} size="md">
@@ -56,17 +37,11 @@ const FollowersModal: React.FC<ModalProps> = ({
         <ModalCloseButton />
         <ModalBody maxH="400px" overflowY="auto">
           <VStack spacing={4} align="start">
-            {peopleList.map((person, index) => (
-              <HStack
-                key={index}
-                w="100%"
-                justifyContent="space-between"
-                as={Link}
-                href={`/${person.profileURL}`}
-              >
+            {list.map((person, index) => (
+              <HStack key={index} w="100%" justifyContent="space-between" as={Link} href={"/profile/" + person.user_id}>
                 <HStack>
-                  <Avatar size="sm" src={person.profilePictureURL} />
-                  <Text>{person.name}</Text>
+                  <Avatar size="sm" src={person.user_image} />
+                  <Text>{person.user_display_name}</Text>
                 </HStack>
                 <ArrowRight />
               </HStack>
