@@ -38,8 +38,8 @@ const PopularWithFriends: React.FC = () => {
         Popular with friends
       </Text>
       <Box
+        overflowY={"revert-layer"}
         gap={3}>
-
           {isLoading ? 
             <Box w="100%" h="250px" display={"flex"} alignItems={"center"} justifyContent={"center"}>
               <Spinner />
@@ -53,7 +53,7 @@ const PopularWithFriends: React.FC = () => {
               alignItems={"center"}
               color={"brand.500"}>
               Follow people to discover what's popular!  
-            </Box> : popular?.albums.map((item, index) => (
+            </Box> : popular?.albums.slice(5).map((item, index) => (
             <Box
               key={index}
               bg="white"
