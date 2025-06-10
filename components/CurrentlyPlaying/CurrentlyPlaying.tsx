@@ -23,27 +23,10 @@ const CurrentlyPlaying: React.FC = ({}) => {
 
   const [currentTrack, setCurrentTrack] = useState<SpotifyCurrentlyPlayingResponse>()
 
-  const formatArtistsName = (artistsNames: {name: string}[] | undefined) => {
-    console.log()
-
-    if (!artistsNames) {
-      return ""
-    }
-
-    if (artistsNames && artistsNames.length == 1) {
-      return artistsNames[0]["name"]
-    }
-    let result = ""
-    for (let i = 0; i < artistsNames.length; i++) {
-      if (i == artistsNames.length - 1) {
-        result = result + ", " + artistsNames[i]["name"]
-      } else {
-        result += artistsNames[i]["name"] + ", "
-      }
-    }
-
-    return result
-  }
+  const formatArtistsName = (artistsNames: { name: string }[]) => {
+    return artistsNames.map(artist => artist.name).join(", ");
+  };
+  
 
   const truncateText = (text: string | undefined, maxLength: number) => {
     if (!text) {

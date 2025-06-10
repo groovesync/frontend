@@ -1,7 +1,27 @@
 import { Box, Image, Text } from "@chakra-ui/react"
 import Link from "next/link"
 
+/**
+ * AlbumCover component renders a clickable album cover with title and year.
+ * Navigates to a specific album page when clicked.
+ *
+ * @component
+ * @param {Object} props - Component props.
+ * @param {string} props.title - Title of the album.
+ * @param {number} props.year - Release year of the album.
+ * @param {string} props.coverURL - URL of the album cover image.
+ * @param {string} props.pageURL - URL to navigate to when the album is clicked.
+ * @returns {JSX.Element} The rendered album cover.
+ */
 const AlbumCover: React.FC<{title: string, year: number, coverURL: string, pageURL: string}> = ({title, year, coverURL, pageURL}) => {
+
+    /**
+     * Truncates a given text if it exceeds the specified maximum length.
+     *
+     * @param {string | undefined} text - The text to truncate.
+     * @param {number} maxLength - Maximum number of characters allowed before truncation.
+     * @returns {string} Truncated text with ellipsis or original text if within limit.
+     */
     const truncateText = (text: string | undefined, maxLength: number) => {
         if (!text) {
           return ""

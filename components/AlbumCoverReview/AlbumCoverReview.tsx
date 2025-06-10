@@ -3,6 +3,13 @@ import Link from "next/link";
 import React from "react";
 import { Rating } from "../Rating/Rating";
 
+/**
+ * Truncates the provided text if it exceeds the specified maximum length.
+ *
+ * @param {string | undefined} text - The text to truncate.
+ * @param {number} maxLength - The maximum allowed length before truncating.
+ * @returns {string} The truncated text with ellipsis or the original text.
+ */
 const truncateText = (text: string | undefined, maxLength: number) => {
     if (!text) {
       return ""
@@ -15,6 +22,20 @@ const truncateText = (text: string | undefined, maxLength: number) => {
   };
 
 
+  
+/**
+ * AlbumCoverReview component displays an album cover with title, release year,
+ * and an optional rating. It links to a detailed page when clicked.
+ *
+ * @component
+ * @param {Object} props - Component props.
+ * @param {string} props.title - The title of the album.
+ * @param {number} props.year - The release year of the album.
+ * @param {number} [props.rating] - The optional rating of the album.
+ * @param {string} props.coverURL - The URL of the album cover image.
+ * @param {string} props.pageURL - The URL to navigate to when the component is clicked.
+ * @returns {JSX.Element} A styled box containing album information and a link.
+ */
 const AlbumCoverReview: React.FC<{title: string, year: number, rating?: number, coverURL: string, pageURL: string}> = ({title, year, rating, coverURL, pageURL}) => {
     return (
         <Box
