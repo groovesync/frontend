@@ -24,21 +24,10 @@ const RecentlyPlayed = () => {
   const [tracks, setTracks] = useState<SpotifyRecentTracksResponse>()
   const [isLoading, setIsLoading] = useState(true)
 
-  const formatArtistsName = (artistsNames: {name: string}[]) => {
-    if (artistsNames.length == 1) {
-      return artistsNames[0]["name"]
-    }
-    let result = ""
-    for (let i = 0; i < artistsNames.length; i++) {
-      if (i == artistsNames.length - 1) {
-        result = result + ", " + artistsNames[i]["name"]
-      } else {
-        result += artistsNames[i]["name"] + ", "
-      }
-    }
-
-    return result
-  }
+  const formatArtistsName = (artistsNames: { name: string }[]) => {
+    return artistsNames.map(artist => artist.name).join(", ");
+  };
+  
   
   useEffect(() => {
     fetch("http://150.165.85.37:5000/spotify/recent-tracks", 

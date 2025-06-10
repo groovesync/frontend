@@ -21,7 +21,7 @@ const Navbar = () => {
       w="65%"
       gap={8}>
       <Searchbar />
-      <WriteReviewActionButton albumId=""/>
+      <WriteReviewActionButton albumId={undefined}/>
     </HStack>
 
     <HStack

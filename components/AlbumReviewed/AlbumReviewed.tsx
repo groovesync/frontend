@@ -51,12 +51,25 @@ interface Album {
   }
 }
 
+/**
+ * @typedef {Object} Favorite
+ * @property {string} _id - Favorite entry ID.
+ * @property {string} albumId - ID of the favorited album.
+ * @property {string} userId - ID of the user who favorited the album.
+ */
 interface Favorite {
   _id: string,
   albumId: string,
   userId: string
 }
 
+/**
+ * @typedef {Object} UserReview
+ * @property {string} [albumId] - ID of the album.
+ * @property {string} userId - ID of the reviewing user.
+ * @property {number | null} [rating] - Rating given by the user.
+ * @property {string | null} [text] - Review text written by the user.
+ */
 interface UserReview {
   albumId?: string,
   userId: string,
@@ -64,11 +77,26 @@ interface UserReview {
   text?: string | null
 }
 
+/**
+ * Props for the AlbumReviewed component.
+ * 
+ * @typedef {Object} AlbumReviewedProps
+ * @property {Album} album - Album data including details and reviews.
+ * @property {UserReview} userReview - Current user's review info (if any).
+ */
 interface AlbumReviewedProps {
   album: Album;
   userReview: UserReview
 }
 
+/**
+ * Displays detailed information about a reviewed album,
+ * including user's rating and review, favorite toggle, and all reviews.
+ *
+ * @component
+ * @param {AlbumReviewedProps} props - Props for the component.
+ * @returns {JSX.Element} The rendered album detail and review component.
+ */
 const AlbumReviewed: React.FC<AlbumReviewedProps> = ({ album, userReview }) => {
 
   const [isFavorite, setIsFavorite] = useState(album?.album_info ? album?.album_info.is_favorite : false)
@@ -294,6 +322,13 @@ const AlbumReviewed: React.FC<AlbumReviewedProps> = ({ album, userReview }) => {
 
 export default AlbumReviewed;
 
+/**
+ * A button that opens a modal to confirm the deletion of a review.
+ *
+ * @component
+ * @param {RemoveReviewProps} props - Props for the component.
+ * @returns {JSX.Element} The rendered remove review confirmation button and modal.
+ */
 const RemoveReview = ({ onConfirm }: { onConfirm: () => void }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -333,10 +368,25 @@ const RemoveReview = ({ onConfirm }: { onConfirm: () => void }) => {
   );
 };
 
+
+/**
+ * Props for the EditReview component.
+ * 
+ * @typedef {Object} EditReviewProps
+ * @property {string} reviewId - The ID of the review to be edited.
+ */
 interface EditReviewProps {
   reviewId: string
 }
 
+
+/**
+ * A button that navigates to the review editing page.
+ *
+ * @component
+ * @param {EditReviewProps} props - Props for the component.
+ * @returns {JSX.Element} The rendered edit review button.
+ */
 const EditReview: React.FC<EditReviewProps> = ({ reviewId }) => {
   const router = useRouter() as ReturnType<typeof useRouter>;
 

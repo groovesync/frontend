@@ -9,6 +9,17 @@ interface WriteReviewProps {
 
 const WriteReviewActionButton: React.FC<WriteReviewProps> = ({ customWidth, albumId }) => {
     const router = useRouter();
+    const { id } = router.query;
+
+    const handleOnClick = () => {
+        if (albumId) {
+            router.push("/review?albumId="+albumId)
+        } else if (id) {
+            router.push("/review?albumId="+id)
+        } else {
+            router.push("/review?albumId=")
+        }
+    }
 
     return (
         <Button
@@ -24,7 +35,7 @@ const WriteReviewActionButton: React.FC<WriteReviewProps> = ({ customWidth, albu
             _hover={{ boxShadow: "lg" }}
             _active={{ boxShadow: "md" }}
             transition="box-shadow 0.2s ease-in-out"
-            onClick={() => router.push("/review?albumId="+albumId)} 
+            onClick={handleOnClick} 
         >
             <MusicIcon /> Write a review now!
         </Button>

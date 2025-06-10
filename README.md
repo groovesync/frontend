@@ -1,34 +1,48 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 🎵 GrooveSync
 
-## Getting Started
+GrooveSync is a modern music review web app where users can rate, review, and favorite their favorite albums. Built with **Next.js** and **Chakra UI**, GrooveSync integrates with **Spotify** to let users explore albums, read public reviews, and manage their own opinions.
 
-First, run the development server:
+---
+
+## 🚀 Features
+
+- ✅ Browse and view album details from Spotify
+- ⭐ Rate albums and leave detailed reviews
+- ❤️ Add or remove albums from favorites
+- 📝 Edit or delete your own reviews
+- 👥 View community reviews
+- 🔒 Token-based user authentication
+- 🎧 Seamless Spotify integration
+
+---
+
+## 🛠️ Tech Stack
+
+- **Frontend:** [Next.js](https://nextjs.org/), [Chakra UI](https://chakra-ui.com/)
+- **Backend:** Python + Flask API, check out [GrooveSync Backend](https://github.com/groovesync/backend)
+- **APIs:** Spotify Web API, Custom REST endpoints (`/favorite`, `/review`)
+- **Authentication:** Token-based
+
+---
+
+## 📦 Installation
+
+### Prerequisites
+
+- Node.js >= 18.x
+- NPM
+- A valid Spotify developer account (for integration)
+
+### Steps
 
 ```bash
+# Clone the repository
+git clone https://github.com/groovesync/frontend.git
+cd groovesync
+
+# Install dependencies
+npm install
+
+# Run the development server
 npm run dev
-# or
-yarn dev
-```
 
-Open [http://150.165.85.37:3000](http://150.165.85.37:3000) with your browser to see the result.
-
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
-
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://150.165.85.37:3000/api/hello](http://150.165.85.37:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
