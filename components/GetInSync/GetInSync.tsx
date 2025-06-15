@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Box, Text, VStack, Image, SimpleGrid, HStack, Spinner } from "@chakra-ui/react";
-import mockData from "../../mockData/getInSync.json";
+import { Box, Text, Image, HStack, Spinner } from "@chakra-ui/react";
 import Link from "next/link";
 
 
@@ -8,6 +7,9 @@ interface Artist {
   name: string,
 }
 
+/**
+ * Interface representing the Spotify album API response structure.
+ */
 interface SpotifyAlbumResponse {
   data: {
     albums: {
@@ -26,6 +28,35 @@ interface SpotifyAlbumResponse {
 }
 }
 
+/**
+ * **GetInSync Component**
+ *
+ * Displays a horizontally scrollable list of newly released albums
+ * fetched from the Spotify API. Each album includes:
+ * - Album cover image
+ * - Album name
+ * - Artist names
+ *
+ * Clicking an album navigates the user to the album's detail page.
+ *
+ * **Features:**
+ * - Loading spinner while fetching data
+ * - Truncated text for long album and artist names
+ * - Responsive layout with Chakra UI
+ *
+ * **API Endpoint Used:**
+ * - `GET http://150.165.85.37:5000/spotify/new-releases`
+ *
+ * **Expected Local Storage Keys for Authorization:**
+ * - `@groovesync-backend-token`
+ * - `@groovesync-spotify-access-token`
+ *
+ * @component
+ * @example
+ * ```tsx
+ * <GetInSync />
+ * ```
+ */
 const GetInSync: React.FC = () => {
 
   const [releases, setReleases] = useState<SpotifyAlbumResponse>();
@@ -45,24 +76,29 @@ const GetInSync: React.FC = () => {
       .then(() => setIsLoading(false))
   }, [])
 
+  
+/**
+ * Utility function to truncate a text string to a maximum length,
+ * adding an ellipsis ("...") if it exceeds that length.
+ *
+ * @param text - The input text to truncate.
+ * @param maxLength - The maximum allowed length for the text.
+ * @returns The truncated text.
+ */
   const truncateText = (text: string, maxLength: number) => {
     return text.length > maxLength ? text.slice(0, maxLength) + "..." : text;
   };
 
-  const getArtists = (artists: Artist[]) => {
-    if (!artists) {
-      return ""
-    }
-    let result = ""
-    for (let i = 0; i < artists.length; i++) {
-      if (i == artists.length - 1) {
-        result += artists[i].name
-      } else {
-        result += artists[i].name + ", "
-      }
-    }
-    return result
-  }
+  /**
+   * Formats an array of artists into a comma-separated string.
+   *
+   * @param artists - Array of artist objects.
+   * @returns A string with artist names separated by commas.
+   */
+  const getArtists = (artists: Artist[]): string => {
+    if (!artists) return "";
+    return artists.map((artist) => artist.name).join(", ");
+  };
 
   return (
     <Box mt={8} textAlign="left" px={4}>

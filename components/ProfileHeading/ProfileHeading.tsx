@@ -32,6 +32,49 @@ interface ProfileHeadingProps {
   user: UserResponse;
 }
 
+/**
+ * ProfileHeading Component
+ * 
+ * This component displays the profile heading section of a user's profile page.
+ * It includes the user's display name, avatar, Spotify profile link, follow/unfollow buttons,
+ * and clickable links to view their followers and following lists in a modal.
+ * 
+ * @component
+ * @param {ProfileHeadingProps} props - The props for the ProfileHeading component.
+ * @param {boolean} props.isMyProfile - Indicates if the profile being viewed is the logged-in user's own profile.
+ * @param {UserResponse} props.user - The user data containing display name, Spotify ID, profile image, Spotify link, and number of reviews.
+ * 
+ * @returns {JSX.Element} The rendered profile heading with user details and follow/follower controls.
+ * 
+ * @example
+ * ```tsx
+ * <ProfileHeading
+ *   isMyProfile={true}
+ *   user={{
+ *     display_name: "John Doe",
+ *     id: "spotify-user-id",
+ *     images: [{ url: "https://..." }],
+ *     external_urls: { spotify: "https://open.spotify.com/user/spotify-user-id" },
+ *     reviews: 5
+ *   }}
+ * />
+ * ```
+ * 
+ * @description
+ * Features:
+ * - Shows user's avatar and display name
+ * - Links to open Spotify profile
+ * - Shows number of followers and following with clickable links (open a modal)
+ * - Displays follow/unfollow button if viewing another user's profile
+ * - Loads followers and following info via API on mount
+ * - Modal to list followers and following users
+ * 
+ * Backend Endpoints Used:
+ * - `GET /follow/followers/:userId` - Get user's followers
+ * - `GET /follow/following/:userId` - Get users the user is following
+ * - `POST /follow/add` - Follow a user
+ * - `DELETE /follow/remove` - Unfollow a user
+ */
 export default function ProfileHeading({ isMyProfile, user }: ProfileHeadingProps) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [modalType, setModalType] = useState<"followers" | "following">("followers");
