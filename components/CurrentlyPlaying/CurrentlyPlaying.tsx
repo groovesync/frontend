@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Box, HStack, Image, VStack, Text, Heading } from "@chakra-ui/react";
 
+/**
+ * Interface representing the structure of the Spotify API response
+ * for the currently playing track.
+ */
 interface SpotifyCurrentlyPlayingResponse {
   data: {
     item: {
@@ -19,15 +23,56 @@ interface SpotifyCurrentlyPlayingResponse {
   }
 };
 
+/**
+ * **CurrentlyPlaying Component**
+ *
+ * Displays the user's currently playing Spotify track, showing:
+ * - Album artwork
+ * - Track name
+ * - Artists
+ *
+ * If the user is not currently playing anything, a placeholder image and message are shown.
+ *
+ * **API Endpoint Used:**
+ * - `GET http://150.165.85.37:5000/spotify/current-track`
+ *
+ * **Expected Local Storage Keys for Authorization:**
+ * - `@groovesync-backend-token`
+ * - `@groovesync-spotify-access-token`
+ *
+ * **Features:**
+ * - Fetches current playing track from the backend on component mount.
+ * - Handles error states silently (logs to console).
+ * - Limits the displayed text length for both track and artist names.
+ *
+ * @component
+ * @example
+ * ```tsx
+ * <CurrentlyPlaying />
+ * ```
+ */
 const CurrentlyPlaying: React.FC = ({}) => {
 
   const [currentTrack, setCurrentTrack] = useState<SpotifyCurrentlyPlayingResponse>()
 
+  /**
+   * Formats an array of artist objects into a comma-separated string of artist names.
+   *
+   * @param artistsNames - Array of artist objects.
+   * @returns A string of artist names separated by commas.
+   */
   const formatArtistsName = (artistsNames: { name: string }[]) => {
     return artistsNames.map(artist => artist.name).join(", ");
   };
   
 
+  /**
+   * Truncates a given text to a specified maximum length, appending an ellipsis if it exceeds the limit.
+   *
+   * @param text - The text to truncate.
+   * @param maxLength - Maximum allowed length of the text.
+   * @returns The truncated text with ellipsis if necessary.
+   */
   const truncateText = (text: string | undefined, maxLength: number) => {
     if (!text) {
       return ""

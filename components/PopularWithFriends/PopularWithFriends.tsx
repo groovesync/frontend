@@ -2,6 +2,9 @@ import React, { useEffect, useState } from "react";
 import { Box, Text, VStack, Image, Spinner } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 
+/**
+ * Type definition for the API response containing popular albums among friends.
+ */
 interface PopularResponse {
   albums: {
     name: string,
@@ -11,12 +14,42 @@ interface PopularResponse {
   }[]
 }
 
+
+/**
+ * React component to display a horizontal scrollable list of albums
+ * that are popular among the user's friends.
+ *
+ * This component:
+ * - Fetches popular albums from a backend API.
+ * - Handles loading and empty states.
+ * - Displays album covers and release years.
+ * - Navigates to the album detail page when an album is clicked.
+ *
+ * **Expected Environment Variables/Local Storage Keys:**
+ * - `@groovesync-spotify-id`
+ * - `@groovesync-backend-token`
+ * - `@groovesync-spotify-access-token`
+ *
+ * @component
+ * @example
+ * ```tsx
+ * <PopularWithFriends />
+ * ```
+ */
 const PopularWithFriends: React.FC = () => {
 
   const [isLoading, setIsLoading] = useState(true)
   const [popular, setPopular] = useState<PopularResponse>()
   const router = useRouter()
   
+  /**
+ * Utility function to truncate a given text to a specified maximum length,
+ * appending an ellipsis if the text exceeds that length.
+ *
+ * @param text - The input text to truncate.
+ * @param maxLength - The maximum allowed length of the text.
+ * @returns The truncated text with ellipsis if needed.
+ */
   const truncateText = (text: string | undefined, maxLength: number) => {
     if (!text) {
       return ""
@@ -48,7 +81,7 @@ const PopularWithFriends: React.FC = () => {
         Popular with friends
       </Text>
       <Box
-        overflowY={"revert-layer"}
+        overflowX={"scroll"}
         display={"flex"}
         flexDirection={"row"}
         gap={3}>
@@ -79,7 +112,7 @@ const PopularWithFriends: React.FC = () => {
                 src={item.image}
                 alt={item.name}
                 style={{ borderRadius: "5px" }}
-                w={"150px"}
+                minW={"150px"}
                 h={"150px"}
                 objectFit="cover"
                 mb={2}

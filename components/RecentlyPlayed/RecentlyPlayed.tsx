@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Box, HStack, Image, VStack, Text, Heading, Divider, Spinner } from "@chakra-ui/react";
 
+
+/**
+ * Interface representing the structure of the Spotify API response
+ * for a user's recently played tracks.
+ */
 interface SpotifyRecentTracksResponse {
   data: {
     items: {
@@ -20,13 +25,48 @@ interface SpotifyRecentTracksResponse {
   }
 }
 
+/**
+ * **RecentlyPlayed Component**
+ *
+ * Displays the user's recently played Spotify tracks as a vertical list.
+ *
+ * Features:
+ * - Fetches data from GrooveSync backend's `/spotify/recent-tracks` endpoint.
+ * - Shows a loading spinner while data is being fetched.
+ * - Displays each track with:
+ *   - Album cover image
+ *   - Track name
+ *   - Artists (comma-separated)
+ * - Adds dividers between each track item for visual separation.
+ *
+ * **API Endpoint Used:**
+ * - `GET http://150.165.85.37:5000/spotify/recent-tracks`
+ *
+ * **Expected Local Storage Keys for Authorization:**
+ * - `@groovesync-backend-token`
+ * - `@groovesync-spotify-access-token`
+ *
+ * @component
+ * @example
+ * ```tsx
+ * <RecentlyPlayed />
+ * ```
+ */
 const RecentlyPlayed = () => {
   const [tracks, setTracks] = useState<SpotifyRecentTracksResponse>()
   const [isLoading, setIsLoading] = useState(true)
 
-  const formatArtistsName = (artistsNames: { name: string }[]) => {
-    return artistsNames.map(artist => artist.name).join(", ");
+  
+  /**
+   * Formats an array of artist objects into a comma-separated string of artist names.
+   *
+   * @param artistsNames - Array of artist objects with `name` property.
+   * @returns A single string with artist names separated by commas.
+   */
+  const formatArtistsName = (artistsNames: { name: string }[]): string => {
+    return artistsNames.map((artist) => artist.name).join(", ");
   };
+
   
   
   useEffect(() => {

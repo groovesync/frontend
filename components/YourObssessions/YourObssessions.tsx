@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Box, Grid, Heading, Image, Spinner } from "@chakra-ui/react";
-import Link from "next/link";
 import { useRouter } from "next/router";
 
-
+/**
+ * Interface representing the structure of the Spotify API response
+ * for the user's top artists (obsessions).
+ */
 interface SpotifyObssessionsResponse {
   data: {
     items: {
@@ -15,6 +17,34 @@ interface SpotifyObssessionsResponse {
   }
 }
 
+
+/**
+ * **YourObssessions Component**
+ *
+ * Displays a visual grid of the user's current top Spotify artists (their "obsessions").
+ *
+ * Layout:
+ * - **Main artist** (largest image on the left)
+ * - **Four secondary artists** (smaller grid on the right)
+ *
+ * Behavior:
+ * - Fetches artist data from the GrooveSync backend API.
+ * - Handles loading state with a spinner.
+ * - Clicking on an artist navigates the user to the artist's detail page (`/artist/[id]`).
+ *
+ * **API Endpoint Used:**
+ * - `GET http://150.165.85.37:5000/spotify/obsessions`
+ *
+ * **Expected Local Storage Keys for Authorization:**
+ * - `@groovesync-backend-token`
+ * - `@groovesync-spotify-access-token`
+ *
+ * @component
+ * @example
+ * ```tsx
+ * <YourObssessions />
+ * ```
+ */
 const YourObssessions = () => {
   const [images, setImages] = useState<SpotifyObssessionsResponse>()
   const [isLoading, setIsLoading] = useState(true)

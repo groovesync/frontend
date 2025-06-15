@@ -9,6 +9,9 @@ import ProfileHeading, { UserResponse } from "../../components/ProfileHeading/Pr
 import LoadContentButton from "../../components/LoadContentButton/LoadContentButton";
 import useAuth from "../../hooks/useAuth";
 
+/**
+ * Interface for user's album reviews response from the backend.
+ */
 interface UserReviews {
   reviews: {
     album_id: string;
@@ -19,6 +22,9 @@ interface UserReviews {
   }[];
 }
 
+/**
+ * Interface for user's favorite albums response from the backend.
+ */
 interface Favorite {
   favorites: {
     album_id: string;
@@ -28,6 +34,31 @@ interface Favorite {
   }[];
 }
 
+/**
+ * **Profile Page Component**
+ *
+ * Displays a user's Spotify profile along with their album reviews and favorite albums.
+ *
+ * - Reads the user ID from the dynamic route (`/profile/[username]`).
+ * - Fetches user data from backend endpoints:
+ *   - `GET /spotify/users/:userId`
+ *   - `GET /review/get/:userId`
+ *   - `GET /favorite/get/:userId`
+ * - Handles both authenticated and unauthenticated states.
+ * - Provides "Load More" and "Show Less" functionality for both sections.
+ *
+ * **Backend endpoints required:**
+ * - `/spotify/users/:userId`
+ * - `/review/get/:userId`
+ * - `/favorite/get/:userId`
+ *
+ * **Local storage keys required:**
+ * - `@groovesync-backend-token`
+ * - `@groovesync-spotify-access-token`
+ * - `@groovesync-spotify-id`
+ *
+ * @returns The user's profile page as a React component.
+ */
 export default function Profile() {
   const isAuthenticated = useAuth();
   const router = useRouter();

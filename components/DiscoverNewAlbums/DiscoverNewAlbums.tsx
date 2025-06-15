@@ -5,10 +5,19 @@ import Slider from "react-slick";
 import { Box, Text, Image, Spinner } from "@chakra-ui/react";
 import Link from "next/link";
 
+
+/**
+ * Interface representing an individual artist.
+ */
 interface Artist {
   name: string
 }
 
+
+/**
+ * Interface representing the structure of the Spotify API response
+ * for recommended albums.
+ */
 interface SpotifyAlbumResponse {
   data: {
     albums: {
@@ -27,6 +36,36 @@ interface SpotifyAlbumResponse {
 }
 }
 
+/**
+ * **DiscoverNewAlbums Component**
+ *
+ * Displays a horizontally scrollable carousel (slider) of Spotify album recommendations
+ * for the user, fetched from the GrooveSync backend API.
+ *
+ * Features:
+ * - Responsive carousel with breakpoints for different screen sizes.
+ * - Displays album cover image, album name, and artist(s).
+ * - Handles loading state with a Chakra UI spinner.
+ * - Clicking on an album navigates the user to the album's detail page.
+ *
+ * **API Endpoint Used:**
+ * - `GET http://150.165.85.37:5000/spotify/recommendations`
+ *
+ * **Expected Local Storage Keys for Authorization:**
+ * - `@groovesync-backend-token`
+ * - `@groovesync-spotify-access-token`
+ *
+ * **Responsive Carousel Settings:**
+ * - Desktop: 3 albums per view
+ * - Tablet: 2 albums
+ * - Mobile: 1 album
+ *
+ * @component
+ * @example
+ * ```tsx
+ * <DiscoverNewAlbums />
+ * ```
+ */
 const DiscoverNewAlbums: React.FC = () => {
 
   const [recommendations, setRecommendations] = useState<SpotifyAlbumResponse>();
@@ -46,24 +85,28 @@ const DiscoverNewAlbums: React.FC = () => {
       .then(() => setIsLoading(false))
   }, [])
 
+  
+  /**
+   * Truncates a given text to a specified maximum length and appends an ellipsis if needed.
+   *
+   * @param text - The text to truncate.
+   * @param maxLength - The maximum allowed length.
+   * @returns The truncated text with "..." if it exceeds the limit.
+   */
   const truncateText = (text: string, maxLength: number) => {
     return text.length > maxLength ? text.slice(0, maxLength) + "..." : text;
   };
 
-  const getArtists = (artists: Artist[]) => {
-    if (!artists) {
-      return ""
-    }
-    let result = ""
-    for (let i = 0; i < artists.length; i++) {
-      if (i == artists.length - 1) {
-        result += artists[i].name
-      } else {
-        result += artists[i].name + ", "
-      }
-    }
-    return result
-  }
+  /**
+   * Converts an array of artist objects into a single comma-separated string of artist names.
+   *
+   * @param artists - Array of artist objects.
+   * @returns A comma-separated string of artist names.
+   */
+  const getArtists = (artists: Artist[]): string => {
+    if (!artists) return "";
+    return artists.map((artist) => artist.name).join(", ");
+  };
 
   const settings = {
     dots: true,
